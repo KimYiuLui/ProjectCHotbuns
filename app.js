@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"))
 
-mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
+mongoose.connect("mongodb://kimyiu:admin2@ds113443.mlab.com:13443/we_sell_stuff", { useNewUrlParser: true });
 
 
 // passport config
