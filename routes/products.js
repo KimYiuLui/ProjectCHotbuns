@@ -6,13 +6,13 @@ var Product= require("../models/product");
 //-------------------------------BROOD
 //-------------------------------------------------------------------
 router.get("/brood", function(req, res){
-    Product.find({category: "brood"}, function(error, allBrood){
-        if(error){
+    Product.find({ category: "brood" }, function (error, allBrood) {
+        if (error) {
             console.log(error)
             res.redirect("/")
         }
-        else{
-            res.render("product/category", {product: allBrood});
+        else {
+            res.render("product/category", { product: allBrood });
         }
     });
 });

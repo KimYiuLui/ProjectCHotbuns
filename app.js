@@ -12,9 +12,10 @@ var methodOverride  = require("method-override");
 var User            = require("./models/user")
 var Products        = require("./models/product")
 
-//reqoure Routes
+//require Routes
 var indexRoutes     = require("./routes/index");
-var productsRoutes     = require("./routes/products");
+var productsRoutes = require("./routes/products");
+var overigeRoutes = require("./routes/overige");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -44,10 +45,10 @@ app.use(function(req, res, next){
    next();
 });
 
-
+// Routes
 app.use(indexRoutes);
 app.use(productsRoutes);
-
+app.use(overigeRoutes)
 
 // Products.create({
 //     name: " Hazelnootschuimtaart",
