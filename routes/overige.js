@@ -5,12 +5,20 @@ router.get("/about", function (req, res) {
     res.render("overige/about");
 })
 
-//exports every router so app.js can use these routes
-module.exports = router;
 
 
 router.get("/veelgesteldevragen", function (req, res) {
     res.render("overige/veelgesteldevragen");
+})
+
+
+
+router.get("/termsandconditions", function (req, res) {
+    res.render("overige/termsandconditions");
+})
+
+router.get("/privacypolicy", function (req, res) {
+    res.render("overige/privacypolicy");
 })
 
 //exports every router so app.js can use these routes
