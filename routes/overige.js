@@ -11,7 +11,7 @@ router.get("/veelgesteldevragen", function (req, res) {
 
 router.get("/contact", function (req, res) {
     res.render("overige/contact");
-
+})
 router.get("/termsandconditions", function (req, res) {
     res.render("overige/termsandconditions");
 })
