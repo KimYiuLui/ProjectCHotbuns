@@ -16,6 +16,7 @@ var Products        = require("./models/product")
 var indexRoutes     = require("./routes/index");
 var productsRoutes = require("./routes/products");
 var overigeRoutes = require("./routes/overige");
+var purchasesRoutes = require("./routes/purchases");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -48,7 +49,8 @@ app.use(function(req, res, next){
 // Routes
 app.use(indexRoutes);
 app.use(productsRoutes);
-app.use(overigeRoutes)
+app.use(overigeRoutes);
+app.use(purchasesRoutes)
 
 // Products.create({
 //     name: " Hazelnootschuimtaart",
