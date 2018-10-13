@@ -1,11 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\models",
+    "\\public",
+    "\\public\\image",
     "\\routes",
     "\\views",
-    "\\views\\overige",
-    "\\views\\partials"
+    "\\views\\product",
+    "\\views\\purchases"
   ],
-  "SelectedNode": "\\views\\overige\\termsandconditions.ejs",
+  "SelectedNode": "\\routes\\purchases.js",
   "PreviewInSolutionExplorer": false
 }
