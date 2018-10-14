@@ -7,6 +7,8 @@ var mongoose        = require("mongoose");
 var passport        = require("passport");
 var Localstrategy   = require("passport-local");
 var methodOverride  = require("method-override");
+var flash           = require("connect-flash");
+
 
 //require Models 
 var User            = require("./models/user")
@@ -17,11 +19,15 @@ var indexRoutes     = require("./routes/index");
 var productsRoutes = require("./routes/products");
 var overigeRoutes = require("./routes/overige");
 var purchasesRoutes = require("./routes/purchases");
+var UserRoutes     = require("./routes/user");
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"))
+app.use(flash());
+
 
 mongoose.connect("mongodb://kimyiu:admin2@ds113443.mlab.com:13443/we_sell_stuff", { useNewUrlParser: true });
 
@@ -41,16 +47,19 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
-   req.body.username
-   res.locals.currentUser = req.user;
-   next();
+    req.body._id;
+    req.body.username;
+    res.locals.currentUser = req.user;
+    res.locals.message =req.flash("error");
+    next();
 });
 
 // Routes
 app.use(indexRoutes);
 app.use(productsRoutes);
 app.use(overigeRoutes);
-app.use(purchasesRoutes)
+app.use(purchasesRoutes);
+app.use(UserRoutes);
 
 // Products.create({
 //     name: " Hazelnootschuimtaart",

@@ -16,8 +16,11 @@ var UserSchema = new mongoose.Schema({
         zipcode:String, 
         city: String
     },
-    favorite:[{}],
-    shoppingcart:[{}]
+    favorite:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+    }],
+    shoppingcart:[String]
 });
 
 

@@ -1,0 +1,37 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#home">Mijn profiel</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#menu1">Mijn Orders</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#menu2">Mijn favorietenlijst</a>
+    </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="home">...</div>
+        <div class="tab-pane container fade" id="menu1">...</div>
+        
+        <!-- favorite list overview --> 
+        <div class="tab-pane container fade" id="menu2">
+        
+            <% User.favorite.forEach(function(product){ %>    
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="img-thmbnail" src="/image/<%= product.image %>"></div>
+                        <p><%= product.name %></p>
+                        <p><strong>€ <%= product.price %></strong></p>
+                        <p><a href="/<%=product.category %>/<%= product._id %>" class="btn btn-primary">Meer info</a></p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
