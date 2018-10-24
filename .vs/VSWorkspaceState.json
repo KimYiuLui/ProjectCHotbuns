@@ -6,8 +6,8 @@
     "\\public\\image",
     "\\routes",
     "\\views",
-    "\\views\\product",
-    "\\views\\purchases"
+    "\\views\\purchases",
+    "\\views\\user"
   ],
   "SelectedNode": "\\routes\\purchases.js",
   "PreviewInSolutionExplorer": false

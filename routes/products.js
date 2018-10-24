@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
-var Product= require("../models/product");
+var Product = require("../models/product");
+var passport = require("passport");
+var mongoose = require("mongoose");
+var User = require("../models/user");
 
 //-------------------------------------------------------------------
 //-------------------------------BROOD

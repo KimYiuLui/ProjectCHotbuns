@@ -5,18 +5,28 @@ var Product     = require("../models/product");
 var passport    = require("passport");
 var mongoose        = require("mongoose");
 
-router.get("/gebruiker/:id", isLoggedIn, function(req, res){
-    User.findById(req.params.id, function(error, foundUser){
-        if(error){
+router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
+    User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
+
+        if (error) {
             console.log(error)
         }
-        else{
-                    res.render("user/user", {User: foundUser})
-                }
-            })
+        else {
+            res.render("user/user", { User: foundUser })
         }
-    );
+    });
+});
 
+router.put("/gebruiker/:id", function (req, res) {
+
+    User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id } }, function (err, updatedComment) {
+        if (err) {
+            res.redirect("back");
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    })
+});
 
 router.post("/brood/:id", function(req, res){
     User.findByIdAndUpdate(req.params.id,  )

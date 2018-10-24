@@ -11,10 +11,24 @@
                     <br>
                     <p class="ml-2"><%= product.description %></p>
                 </div>
-                    <h4 class="ml-2">€ <%= product.price %>  </p>
-                    <button id="detailbutton" class="btn btn-sm btn-dark">Toevoegen aan winkelwagen</button>
-                    <a class="ml-2" href="#" ><i class="far fa-heart fa-lg"></i></a>
-                </div>
+                <h4 class="ml-2">
+                    € <%= product.price %>  </p>
+                    <% if(!currentUser){ %>
+                    <form class="form-inline">
+                        <div class="form-group float-right">
+                            <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-dark">Toevoegen aan winkelwagen</button>
+                        </div>
+                    </form>
+                    <% } else{ %>
+                    <form class="form-inline" action="/gebruiker/<%= currentUser._id  %>?_method=PUT" method="POST">
+                        <div class="form-group float-right">
+                            <input type="hidden" name="user_id" value="<%= currentUser._id %>">
+                            <input type="hidden" name="product_id" value="<%= product._id %>">
+                            <button class="btn btn-sm btn-dark">Toevoegen aan winkelwagen</button>
+                        </div>
+                    </form>
+                    <% } %>
+</div>
             </div>
     
     <div class="row">
