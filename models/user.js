@@ -20,10 +20,7 @@ var UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
     }],
-    shoppingcart: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
-    }],
+    shoppingcart:[String]
 });
 
 

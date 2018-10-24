@@ -6,11 +6,9 @@
     "\\public\\image",
     "\\routes",
     "\\views",
-    "\\views\\admin",
-    "\\views\\overige",
-    "\\views\\partials",
-    "\\views\\product"
+    "\\views\\product",
+    "\\views\\purchases"
   ],
-  "SelectedNode": "\\models\\user.js",
+  "SelectedNode": "\\routes\\purchases.js",
   "PreviewInSolutionExplorer": false
 }
