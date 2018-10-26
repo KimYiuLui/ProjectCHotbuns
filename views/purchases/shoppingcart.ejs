@@ -1,4 +1,12 @@
 <% include ../partials/header %>
+<%
+
+    var total = 0.00
+    User.shoppingcart.forEach(function (product) {
+    total = total + parseFloat(product.price)
+    
+    }); %>
+    
 <div class="container">
 
     <div class="row">
@@ -7,27 +15,32 @@
             <a> Hieronder staan de producten die zich momenteel in uw winkelmandje bevinden.</a>
             <br />
             <a> Druk op de knop 'Afrekenen' om te beginnen met te betalen</a>
-			<div class="container">
+            <div class="container">
                 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                     <!-- VERANDER DEZE LIJN ALS JE DINGEN IN WINKELWAGEN KAN ZETTEN -->
-                <% User.shoppingcart.forEach(function(product){ %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="img-thmbnail" src="/image/<%= product.image %>"></div>
-                            <p><%= product.name %></p>
-                            <p><strong>€ <%= product.price %></strong></p>
-                            <p><a href="/<%=product.category %>/<%= product._id %>" class="btn btn-primary">Meer info</a></p>
+                    <% User.shoppingcart.forEach(function(product){ %>
+                    <div class="col-lg-2 col-md-4 col-sm-6 mb-2 d-block">
+                        <div class="img-thumbnail">
+                            <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
+                            <div class="caption">
+                                <a href="/<%=product.category %>/<%= product._id %>"><%= product.name %><a /></h4>
+                            </div>
+                            <p><strong>€ <%=product.price %></strong></p>
+
                         </div>
                     </div>
-                <% }); %>
+                    <% }); %>
                 </div>
-			</div>
-            <h3>De totale prijs is ____</h3>
+            </div>
+            <h3>
+                De totale prijs is € <%=total%>
+            </h3>
             <a href="/purchase" class="btn btn-primary">Nu Afrekenen</a>
 
         </div>
     </div>
 
 </div>
+
 
 <% include ../partials/footer %>

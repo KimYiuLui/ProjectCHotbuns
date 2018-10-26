@@ -6,13 +6,14 @@ var passport = require("passport");
 var mongoose = require("mongoose");
 
 ////TEST//// ZORG ERVOOR DAT HET ALLE ITEMS PAKT DIE IN WINKELWAGEN ZITTEN
-router.get("/shoppingcart", isLoggedIn, function (req, res) {
+router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
     User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
 
         if (error) {
             console.log(error)
         }
         else {
+
             res.render("purchases/shoppingcart", { User: foundUser })
         }
     });
