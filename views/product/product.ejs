@@ -20,7 +20,7 @@
                         </div>
                     </form>
                     <% } else{ %>
-                    <form class="form-inline" action="/gebruiker/<%= currentUser._id  %>?_method=PUT" method="POST">
+                    <form class="form-inline" action="/shoppingcart/add?_method=PUT" method="POST">
                         <div class="form-group float-right">
                             <input type="hidden" name="user_id" value="<%= currentUser._id %>">
                             <input type="hidden" name="product_id" value="<%= product._id %>">

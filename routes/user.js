@@ -17,9 +17,19 @@ router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
     });
 });
 
-router.put("/gebruiker/:id", function (req, res) {
+router.put("/shoppingcart/add", function (req, res) {
 
-    User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id } }, function (err, updatedComment) {
+    User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id } }, function (err, newfav) {
+        if (err) {
+            res.redirect("back");
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    })
+});
+
+router.put("/shoppingcart/delete", function (req, res) {
+    User.findByIdAndUpdate(req.body.user_id, { $pull: { shoppingcart: { $in: req.body.product_id } } }, function (err, removefav) {
         if (err) {
             res.redirect("back");
         } else {

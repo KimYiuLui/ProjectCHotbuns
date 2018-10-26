@@ -26,7 +26,15 @@
                                 <a href="/<%=product.category %>/<%= product._id %>"><%= product.name %><a /></h4>
                             </div>
                             <p><strong>€ <%=product.price %></strong></p>
-
+                            <p>
+                                <form class="form-inline" action="/shoppingcart/delete?_method=PUT" method="POST">
+                                    
+                                        <input type="hidden" name="user_id" value="<%= currentUser._id %>">
+                                        <input type="hidden" name="product_id" value="<%= product._id %>">
+                                        <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-danger">Verwijder</button>
+                                    
+                                </form>
+                            </p>
                         </div>
                     </div>
                     <% }); %>
