@@ -67,6 +67,40 @@ html {
     color: red;
 }
 
+#Email{
+    margin: 8px 0;
+}
+
+.form-container{
+    width: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+input:invalid + span:after {
+    content: '✖';
+    color: #f00;
+    padding-left: 5px;
+}
+
+input:valid + span:after {
+    content: '✓';
+    color: #26b72b;
+    padding-left: 5px;
+}
+
+div.img-thumbnail{
+    height: 425px;;
+}
+
+.fa-heart{
+    color: red
+}
+
+.custom{
+    background-color: transparent;
+    border: 0;
+}
 /*CSS FROM SOMEONEELSE NEED TO FIGURE OUT LATER WHAT IT ALL DO*/
 
 
@@ -75,11 +109,7 @@ html {
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+
 
 .navbar-nav > li {
     padding-left: 15px;
@@ -249,8 +279,8 @@ img {
 }
 /* nieuwsbrief  als we dat wilde dan*/
 
-#newsletter {
-    padding: 15px;
+/* #newsletter { */
+    /* padding: 15px;
     color: white;
     background: rgb(239, 95, 61)
 }
@@ -258,16 +288,16 @@ img {
     #newsletter form {
         float: right;
         margin-top: -55px;
-    }
+    } */
 
-    #newsletter input[type="email"] {
+    /* #newsletter input[type="email"] {
         padding: 4px;
         height: 25px;
         width: 250px;
-    }
+    } */
 
 /*boxes*/
-#boxes {
+/* #boxes {
     margin-top: 0;
 }
 
@@ -276,7 +306,7 @@ img {
         width: 30%;
         height: 30%;
         padding: 10px;
-    }
+    } */
 
 img1 {
     height: 550px;

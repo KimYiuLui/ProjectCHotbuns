@@ -20,6 +20,7 @@ var productsRoutes = require("./routes/products");
 var overigeRoutes = require("./routes/overige");
 var purchasesRoutes = require("./routes/purchases");
 var UserRoutes     = require("./routes/user");
+var FavoriteRoutes = require("./routes/favorite");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,6 +61,7 @@ app.use(productsRoutes);
 app.use(overigeRoutes);
 app.use(purchasesRoutes);
 app.use(UserRoutes);
+app.use(FavoriteRoutes);
 
 // Products.create({
 //     name: " Hazelnootschuimtaart",

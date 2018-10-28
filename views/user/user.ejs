@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-<div class="container">
+<div class="container mt-4 mb-4">
     <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home">Mijn profiel</a>
@@ -20,18 +20,32 @@
         
         <!-- favorite list overview --> 
         <div class="tab-pane container fade" id="menu2">
-        
-            <% User.favorite.forEach(function(product){ %>    
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="img-thmbnail" src="/image/<%= product.image %>"></div>
-                        <p><%= product.name %></p>
-                        <p><strong>€ <%= product.price %></strong></p>
-                        <p><a href="/<%=product.category %>/<%= product._id %>" class="btn btn-primary">Meer info</a></p>
-                    </div>
-                </div>
-            <% }); %>
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <% User.favorite.forEach(function(product){ %>    
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-block">
+                        <div class="img-thumbnail">
+                            <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
+                            <div class="caption">
+                                <p><%= product.name %></h4>
+                            </div>
+                            <p><strong>€ <%=product.price %></strong></p>
+                            <p>
+                                <a href="/<%=product.category %>/<%= product._id %>" class="btn btn-info">Meer info</a>
+                            </p>
+                        </div>
+                    </div>               
+                <% }); %>
+            </div>
         </div>
+        <!-- end of favorite list overview -->
+
+
+
+
+
+
+
+
     </div>
 </div>
 <% include ../partials/footer %>
