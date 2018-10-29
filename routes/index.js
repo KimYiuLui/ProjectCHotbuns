@@ -27,7 +27,7 @@ router.post("/signup", function(req, res){
     }), req.body.password, function(error, user){
        if(error){
            console.log(error);
-           req.flash("error", "Gebruikersnaam en/of e-mail adress bestaat al. Gebruik een ander gebruikersnaam of e-mail adres.");
+           req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
            res.redirect("/signup");
        }
        passport.authenticate("local")(req, res, function(){
@@ -46,7 +46,7 @@ router.post("/login", passport.authenticate("local",
     {
         successRedirect: "/",
         failureRedirect: "/login",
-        failureFlash: "Uw inlog gegevens zijn niet correct. Probeer nog een keer."
+        failureFlash: "Uw inlog gegevens zijn niet correct. Probeer het nog een keer."
     }),function(req, res){
 })
 
