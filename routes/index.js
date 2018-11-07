@@ -21,6 +21,7 @@ router.post("/signup", function(req, res){
     User.register(new User({username: req.body.username,
                             email: req.body.email,
                             name: req.body.name,
+                            naamToevoeging: req.body.naamToevoeging,
                             surname: req.body.surname,
                             phonenumber: req.body.phonenumber,
                             address: req.body.address
