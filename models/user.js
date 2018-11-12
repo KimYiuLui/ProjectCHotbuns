@@ -24,8 +24,9 @@ var UserSchema = new mongoose.Schema({
     }],
     shoppingcart: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
+        ref: "Product"  
     }],
+    amount: [String]
 });
 
 

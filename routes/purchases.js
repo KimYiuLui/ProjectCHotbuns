@@ -20,21 +20,32 @@ router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
 });
 
 router.put("/shoppingcart/add", function (req, res) {
-
-    User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id } }, function (err, newfav) {
+    amountString = req.body.amount + " " + req.body.amountLink;
+    console.log(amountString);
+    User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id, amount: amountString} }, function (err, newfav) {
         if (err) {
+            console.log(req.body.amount);
+            console.log(req.body.product_id);
             res.redirect("back");
         } else {
+            console.log(req.body.amount);
+            console.log(req.body.product_id);
             res.redirect(req.get("referer"));
         }
     })
 });
 
 router.put("/shoppingcart/delete", function (req, res) {
-    User.findByIdAndUpdate(req.body.user_id, { $pull: { shoppingcart: { $in: req.body.product_id } } }, function (err, removefav) {
+    console.log("Test 1 " + req.body.amountValue);
+    console.log("Test 1 " + req.body.amountSearch);
+    amountDeleteString = req.body.amountValue + " " + req.body.amountSearch;
+    console.log("Test 2 " + amountDeleteString);
+    User.findByIdAndUpdate(req.body.user_id, { $pull: { shoppingcart: { $in: req.body.product_id }, amount: { $in: amountDeleteString } } }, function (err, removefav) {
         if (err) {
+            console.log(amountDeleteString);
             res.redirect("back");
         } else {
+            console.log(amountDeleteString);
             res.redirect(req.get("referer"));
         }
     })
