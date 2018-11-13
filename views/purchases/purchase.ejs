@@ -60,9 +60,9 @@
             <a> Kies een van de onderstaande betaalservices om het betaalprocess te beginnen</a>
             <br />
             <br />
-            <a href="/purchase/:id" class="btn btn-primary">Betaal met Paypal</a>
+            <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Betaal met Paypal</a>
 
-            <a href="/purchase/:id" class="btn btn-primary">Betaal met Ideal</a>
+            <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Betaal met Ideal</a>
             <br />
             <br />
             <br />
