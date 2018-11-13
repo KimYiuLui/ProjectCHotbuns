@@ -51,17 +51,18 @@ router.put("/shoppingcart/delete", function (req, res) {
     })
 });
 
-router.get("/purchase", function (req, res) {
-    Product.find({ category: "koek" }, function (error, allBrood) {
+router.get("/purchase/:id", isLoggedIn, function (req, res) {
+    User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
+
         if (error) {
             console.log(error)
-            res.redirect("/")
         }
         else {
-            res.render("purchases/purchase", { product: allBrood });
+
+            res.render("purchases/purchase", { User: foundUser })
         }
     });
-})
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
