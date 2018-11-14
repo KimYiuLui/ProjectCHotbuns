@@ -88,7 +88,7 @@
                             <th scope="row"><%=rowAmountUser%></th>
                             <td><%= user.name %></td>
                             <td><%= user.email %></td>
-
+                            <% if(currentUser.id != user.id) {  %>
                             <td>
                                 <form class="form-inline" action="/admin/modifyUser?_method=PUT" method="POST">
                                     <input type="hidden" name="user_id" value="<%= user._id %>">
@@ -96,6 +96,12 @@
 
                                 </form>
                             </td>
+                            <% } else { %>
+                            <td>
+                                Dit bent U.
+                            </td>
+                            <% } %>
+                            <% if(currentUser.id != user.id) {  %>
                             <td>
                                 <form class="form-inline" action="/admin/deleteUser?_method=PUT" method="POST">
                                     <input type="hidden" name="user_id" value="<%= user._id %>">
@@ -103,6 +109,11 @@
 
                                 </form>
                             </td>
+                            <% } else { %>
+                            <td>
+                                Dit bent U.
+                            </td>
+                            <% } %>
                         </tr>
                         <% }) %>
 

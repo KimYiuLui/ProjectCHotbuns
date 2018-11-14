@@ -22,7 +22,7 @@ router.get("/admin/", isLoggedIn, function (req, res) {
             }
         });});
 });
-
+//Pagina productbewerking.
 router.put("/admin/modifyProduct", isLoggedIn, function (req, res) {
     Product.findById(req.body.product_id, function (err, givenProduct) {
         User.find({}, function (err, allUsers) {
@@ -42,27 +42,21 @@ router.put("/admin/modifyProduct", isLoggedIn, function (req, res) {
 });
 
 
-
+//Bewerk het product werkelijk.
 router.post("/admin/finishModifyProduct", isLoggedIn, function (req, res) {
-    Product.findByIdAndRemove(req.body.product_id, function (err) {
+    Product.findByIdAndUpdate(req.body.product_id, { $set: { name: req.body.name, image: req.body.image, description: req.body.description, price: req.body.price, category: req.body.category, ingredients: req.body.ingredients, allergy: req.body.allergy } }, function (err, updateProduct) {
         if (err) {
-            console.log(err)
-        } else {
-            console.log("Product Deleted Succesfully")
+            console.log(err);
+            res.redirect("/admin/")
         }
-    });
-    Product.create(new Product({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        image: req.body.image,
-        ingredients: req.body.ingredients,
-        allergy: req.body.allergy
-    }));
-    res.redirect("/admin/");
-});
+        else {
+            console.log("No Error, Updated?");
+            res.redirect("/admin/")
+        }
 
+    })
+});
+//Delete een product.
 router.put("/admin/deleteProduct", function (req, res) {
     Product.findByIdAndRemove(req.body.product_id, function (err) {
         if (err) {
@@ -74,7 +68,7 @@ router.put("/admin/deleteProduct", function (req, res) {
     });
 }
 );
-
+//Pagina voor user modify
 router.put("/admin/modifyUser", isLoggedIn, function (req, res) {
     User.findById(req.body.user_id, function (err, givenUser) {
 
