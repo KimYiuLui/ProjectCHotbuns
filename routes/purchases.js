@@ -89,32 +89,20 @@ router.put("/admin/modifyUser", isLoggedIn, function (req, res) {
 });
 
 router.post("/admin/finishModifyUser", isLoggedIn, function (req, res) {
-    User.findByIdAndRemove(req.body.user_id, function (err) {
+    var newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
+    //Update de User. Niet het wachtwoord. "Security Reasons".
+    User.findByIdAndUpdate(req.body.user_id, { $set: { username: req.body.username, email: req.body.email, name: newName, naamToevoeging: req.body.naamToevoeging, surname: req.body.surname, phonenumber: req.body.phonenumber, address: req.body.address } }, function (err, updateUser)
+    {
         if (err) {
-            console.log(err)
-        } else {
-            console.log("User Deleted Succesfully")
-        }
-    });
-    User.register(new User({
-        username: req.body.username,
-        email: req.body.email,
-        name: req.body.name,
-        naamToevoeging: req.body.naamToevoeging,
-        surname: req.body.surname,
-        phonenumber: req.body.phonenumber,
-        address: req.body.address
-    }), req.body.password, function (error, user) {
-        if (error) {
-            console.log(error);
-            req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
-            res.redirect("/admin/");
-        }
-        else {
+            console.log(err);
             res.redirect("/admin/")
         }
-    });
-    res.redirect("/admin/");
+        else {
+            console.log("No Error, Updated?");
+            res.redirect("/admin/")
+        }
+        
+    })
 });
 
 router.put("/admin/deleteUser", function (req, res) {
