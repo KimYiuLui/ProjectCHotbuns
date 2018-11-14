@@ -11,6 +11,6 @@
     "\\views\\product",
     "\\views\\purchases"
   ],
-  "SelectedNode": "\\routes\\favorite.js",
+  "SelectedNode": "\\views\\admin\\panel.ejs",
   "PreviewInSolutionExplorer": false
 }

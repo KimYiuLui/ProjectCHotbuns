@@ -24,11 +24,12 @@
                             <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" value="<%=product.price%>" required>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" type="text" id="Category" name="category" placeholder="Categorie" pattern="[a-z A-Z \s]+{1,50}" value="<%=product.category%>" required>
+                            <input class="form-control" type="text" id="Category" name="category" placeholder="brood OF koek OF zoetigheid" pattern="[a-z A-Z \s]+{1,50}" value="<%=product.category%>" required>
                         </div>
-                        <div class="form-group col-md-8">
+
+                        <div class="form-group col-md-6">
                             <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" value="<%=product.image%>" required>
                         </div>
