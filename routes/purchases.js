@@ -167,6 +167,7 @@ router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
     });
 });
 
+
 router.put("/shoppingcart/add", function (req, res) {
     amountString = req.body.amount + " " + req.body.amountLink;
     console.log(amountString);
@@ -181,6 +182,19 @@ router.put("/shoppingcart/add", function (req, res) {
             res.redirect(req.get("referer"));
         }
     })
+});
+
+router.get("/thankyou/:id", isLoggedIn, function (req, res) {
+    User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
+
+        if (error) {
+            console.log(error)
+        }
+        else {
+
+            res.render("purchases/thankyou", { User: foundUser })
+        }
+    });
 });
 
 router.put("/shoppingcart/delete", function (req, res) {
