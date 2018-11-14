@@ -5,6 +5,88 @@ var User = require("../models/user");
 var passport = require("passport");
 var mongoose = require("mongoose");
 
+/////ADMIN TEMP SPOT///// -Vraag ff aan kimyu of hij een route kan maken, Mij lukt het niet-
+router.get("/admin/", isLoggedIn, function (req, res) {
+    Product.find({}, function (error, allProducts) {
+        User.find({}, function (err, allUsers) {
+
+            if (error) {
+                console.log(error)
+            }
+            if (err) {
+                console.log(err)
+            }
+            else {
+
+                res.render("admin/panel", { product: allProducts, user:allUsers })
+            }
+        });});
+});
+
+router.put("/admin/deleteProduct", function (req, res) {
+    Product.findByIdAndRemove(req.body.product_id, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+}
+);
+
+router.put("/admin/deleteUser", function (req, res) {
+    User.findByIdAndRemove(req.body.user_id, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+}
+);
+
+router.post("/admin/newUser", function (req, res) {
+    User.register(new User({
+        username: req.body.username,
+        email: req.body.email,
+        name: req.body.name,
+        naamToevoeging: req.body.naamToevoeging,
+        surname: req.body.surname,
+        phonenumber: req.body.phonenumber,
+        address: req.body.address
+    }), req.body.password, function (error, user) {
+        if (error) {
+            console.log(error);
+            req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
+            res.redirect("/admin/");
+        }
+        else {
+            res.redirect("/admin/")
+        }
+        });
+    
+});
+
+router.post("/admin/newProduct", function (req, res) {
+    Product.create(new Product({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        category: req.body.category,
+        image: req.body.image,
+        ingredients: req.body.ingredients,
+        allergy: req.body.allergy
+    })
+    )});
+
+
+/////ADMIN TEMP SPOT///// -Vraag ff aan kimyu of hij een route kan maken, Mij lukt het niet-
+
+
+
+
 ////TEST//// ZORG ERVOOR DAT HET ALLE ITEMS PAKT DIE IN WINKELWAGEN ZITTEN
 router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
     User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
