@@ -23,6 +23,46 @@ router.get("/admin/", isLoggedIn, function (req, res) {
         });});
 });
 
+router.put("/admin/modifyProduct", isLoggedIn, function (req, res) {
+    Product.findById(req.body.product_id, function (err, givenProduct) {
+        User.find({}, function (err, allUsers) {
+
+            if (err) {
+                console.log(err)
+            }
+            if (err) {
+                console.log(err)
+            }
+            else {
+
+                res.render("admin/modifyProduct", { product: givenProduct, user: allUsers })
+            }
+        });
+    });
+});
+
+
+
+router.post("/admin/finishModifyProduct", isLoggedIn, function (req, res) {
+    Product.findByIdAndRemove(req.body.product_id, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Product Deleted Succesfully")
+        }
+    });
+    Product.create(new Product({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        category: req.body.category,
+        image: req.body.image,
+        ingredients: req.body.ingredients,
+        allergy: req.body.allergy
+    }));
+    res.redirect("/admin/");
+});
+
 router.put("/admin/deleteProduct", function (req, res) {
     Product.findByIdAndRemove(req.body.product_id, function (err) {
         if (err) {
@@ -34,6 +74,48 @@ router.put("/admin/deleteProduct", function (req, res) {
     });
 }
 );
+
+router.put("/admin/modifyUser", isLoggedIn, function (req, res) {
+    User.findById(req.body.user_id, function (err, givenUser) {
+
+        if (err) {
+            console.log(err)
+        }
+        else {
+
+            res.render("admin/modifyUser", { user: givenUser })
+        }
+    });
+});
+
+router.post("/admin/finishModifyUser", isLoggedIn, function (req, res) {
+    User.findByIdAndRemove(req.body.user_id, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("User Deleted Succesfully")
+        }
+    });
+    User.register(new User({
+        username: req.body.username,
+        email: req.body.email,
+        name: req.body.name,
+        naamToevoeging: req.body.naamToevoeging,
+        surname: req.body.surname,
+        phonenumber: req.body.phonenumber,
+        address: req.body.address
+    }), req.body.password, function (error, user) {
+        if (error) {
+            console.log(error);
+            req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
+            res.redirect("/admin/");
+        }
+        else {
+            res.redirect("/admin/")
+        }
+    });
+    res.redirect("/admin/");
+});
 
 router.put("/admin/deleteUser", function (req, res) {
     User.findByIdAndRemove(req.body.user_id, function (err) {
@@ -78,7 +160,9 @@ router.post("/admin/newProduct", function (req, res) {
         image: req.body.image,
         ingredients: req.body.ingredients,
         allergy: req.body.allergy
-    })
+    }),
+        req.flash("Actie voltooid"),
+        res.redirect("/admin/")
     )});
 
 

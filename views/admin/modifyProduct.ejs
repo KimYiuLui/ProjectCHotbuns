@@ -1,0 +1,60 @@
+<% include ../partials/header %>
+
+<div class=" container mt-5">
+    <h1 class="text-center">Bewerken</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div style="width: 80%; margin: 0 auto; ">
+            <div class="container">
+                <form action="/admin/finishModifyProduct" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" value="<%=product.name%>" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" value="<%=product.description%>" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" value="<%=product.price%>" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Category" name="category" placeholder="Categorie" pattern="[a-z A-Z \s]+{1,50}" value="<%=product.category%>" required>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" value="<%=product.image%>" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" value="<%=product.ingredients%>" required>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="Allergy">Allergiëen</label>
+                            <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose" value="<%=product.allergy%>">
+                        </div>
+                        
+                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        
+                        
+                        <input type="hidden" name="product_id" value="<%= product._id %>">
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Voltooien</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

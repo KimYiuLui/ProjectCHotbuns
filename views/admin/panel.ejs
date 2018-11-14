@@ -19,7 +19,7 @@
         </li>
     </ul>
 
-    <!-- Tab panes -->
+    <!-- View Products -->
     <div class="tab-content">
         <div class="tab-pane container active" id="home">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
@@ -29,6 +29,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Naam</th>
                             <th scope="col">Prijs</th>
+                            <th scope="col">Bewerk</th>
                             <th scope="col">Verwijder</th>
                         </tr>
                     <tbody>
@@ -40,6 +41,13 @@
                             <th scope="row"><%=rowAmount%></th>
                             <td><%= product.name %></td>
                             <td><%= product.price %></td>
+                            <td>
+                                <form class="form-inline" action="/admin/modifyProduct?_method=PUT" method="POST">
+                                    <input type="hidden" name="product_id" value="<%= product._id %>">
+                                    <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-secondary">Bewerk</button>
+
+                                </form>
+                            </td>
                             <td>
                                 <form class="form-inline" action="/admin/deleteProduct?_method=PUT" method="POST">
                                     <input type="hidden" name="product_id" value="<%= product._id %>">
@@ -59,6 +67,7 @@
 
             </div>
         </div>
+        <!-- View Users -->
         <div class="tab-pane container fade" id="menu1">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <table class="table">
@@ -66,7 +75,8 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Naam</th>
-                            <th scope="col">email</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Bewerk</th>
                             <th scope="col">Verwijder</th>
                         </tr>
                     <tbody>
@@ -78,6 +88,14 @@
                             <th scope="row"><%=rowAmountUser%></th>
                             <td><%= user.name %></td>
                             <td><%= user.email %></td>
+
+                            <td>
+                                <form class="form-inline" action="/admin/modifyUser?_method=PUT" method="POST">
+                                    <input type="hidden" name="user_id" value="<%= user._id %>">
+                                    <button name="user_id" value="<%= user._id %>" class="btn btn-sm btn-secondary">Bewerk</button>
+
+                                </form>
+                            </td>
                             <td>
                                 <form class="form-inline" action="/admin/deleteUser?_method=PUT" method="POST">
                                     <input type="hidden" name="user_id" value="<%= user._id %>">
@@ -98,49 +116,50 @@
             </div>
         </div>
 
-        <!-- favorite list overview -->
+        <!-- Add Product -->
         <div class="tab-pane container fade" id="menu2">
-            <div class="container">
-                <form action="/admin/newProduct" method="POST">
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" required>
-                        </div>
+           <div class="container">
+               <form action="/admin/newProduct" method="POST">
+                   <div class="form-row">
+                       <div class="form-group col-md-12">
+                           <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" required>
+                       </div>
+                       <div class="form-group col-md-12">
+                           <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" required>
+                       </div>
 
-                        <div class="form-group col-md-2">
-                            <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" required>
-                        </div>
+                       <div class="form-group col-md-2">
+                           <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" required>
+                       </div>
 
-                        <div class="form-group col-md-2">
-                            <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" type="text" id="Category" name="category" placeholder="Categorie" pattern="[a-z A-Z \s]+{1,50}" required>
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" required>
-                        </div>
+                       <div class="form-group col-md-2">
+                           <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" type="text" id="Category" name="category" placeholder="Categorie" pattern="[a-z A-Z \s]+{1,50}" required>
+                       </div>
+                       <div class="form-group col-md-8">
+                           <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" required>
+                       </div>
+                       <div class="form-group col-md-12">
+                           <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
+                           <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" required>
+                       </div>
 
-                        <div class="form-group col-md-12">
-                            <label for="Allergy">Allergiëen</label>
-                            <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose">
-                        </div>
+                       <div class="form-group col-md-12">
+                           <label for="Allergy">Allergiëen</label>
+                           <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose">
+                       </div>
 
-                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
-                        <div class="form-group">
-                            <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
-                        </div>
-                </form>
-            </div>
+                       <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                       <div class="form-group">
+                           <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
+                       </div>
+                    </div>
+               </form>
+           </div>     
 
         </div>
 
@@ -196,11 +215,11 @@
 
                         <div class="form-group col-md-8">
                             <label for="Woonplaats">Woonplaats<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="Woonplaats" type="text" name="adress[city]" placeholder="Woonplaats" pattern="[a-z A-Z \s]+{1,30}" required>
+                            <input class="form-control" id="Woonplaats" type="text" name="address[city]" placeholder="Woonplaats" pattern="[a-z A-Z \s]+{1,30}" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="ZipCode">Postcode<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="ZipCode" type="text" name="adress[zipcode]" placeholder="1234AB" pattern="[0-9]{4}[A-Z]{2}" required>
+                            <input class="form-control" id="ZipCode" type="text" name="address[zipcode]" placeholder="1234AB" pattern="[0-9]{4}[A-Z]{2}" required>
                         </div>
 
                         <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
@@ -210,7 +229,7 @@
                 </form>
             </div>
         </div>
-        <!-- end of favorite list overview -->
+        <!-- Add User -->
 
 
 
