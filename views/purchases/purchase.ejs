@@ -48,16 +48,34 @@
                         <td><%= product.price * amountString.charAt(0)%></td>
                     </tr>
                     <% }) %>
-
-
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 3.50 %>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Belasting</td>
+                        <td>6%</td>
+                        <td></td>
+                        <td><%=totalBTWstep2.toFixed(2)%></td>
+                    </tr>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Versendkosten</td>
+                        <td></td>
+                        <td></td>
+                        <td>3.50</td>
+                    </tr>
                 </tbody>
 
 
 
             </table>
-            <h4>
-                De totale prijs is <%=total.toFixed(2)%> euro
-            </h4>
+            <h5>
+                De totale prijs is € <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
+            </h5>
 
             <a> Kies een van de onderstaande betaalservices om het betaalprocess te beginnen</a>
             <br />

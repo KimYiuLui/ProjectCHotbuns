@@ -46,7 +46,25 @@
                         <td><%= product.price * amountString.charAt(0)%></td>
                     </tr>
                     <% }) %>
-
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 3.50 %>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Belasting</td>
+                        <td>6%</td>
+                        <td></td>
+                        <td><%=totalBTWstep2.toFixed(2)%></td>
+                    </tr>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Versendkosten</td>
+                        <td></td>
+                        <td></td>
+                        <td>3.50</td>
 
                 </tbody>
 
@@ -54,7 +72,7 @@
 
             </table>
             <h4>
-                De totale prijs is <%=total.toFixed(2)%> euro
+
             </h4>
 
             
