@@ -3,14 +3,12 @@ var passportLocalMongoose = require("passport-local-mongoose")
 var uniqueValidator = require('mongoose-unique-validator');
 
 var OrderSchema = new mongoose.Schema({
-    targetUser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
+    targetUser: String,
     orderedProducts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
     }],
+    orderedProductsName: [String],
     amount: [String]
 });
 

@@ -86,22 +86,20 @@ router.get("/purchase/:id", isLoggedIn, function (req, res) {
 });
 
 router.post("/purchase/order", function (req, res) {
-    shoppingcartcontent = req.body.shoppingcart
-    shoppingcartarray = shoppingcartcontent.split(',');
-    console.log(req.body.user_id);
-    console.log(req.body.shoppingcart);
-    console.log(req.body.amount);
-    console.log(shoppingcartarray);
     Order.create(new Order({
-        targetUser: req.body.user_id,
-        amount: req.body.amount
+        targetUser: req.body.username,
+        amount: req.body.amount,
+        orderedProducts: req.body.product_id,
+        orderedProductsName: req.body.name
     }));
     
-    shoppingcartarray.forEach(function (product) { 
-        
-        Order.findByIdAndUpdate(req.body.user_id, { $push: { amount: "TEST" } }, function (err, newfav) { });
-        console.log("test")
-    });
+
+    //User.findByIdAndUpdate(req.body.user_id, { $set: { shoppingcart: [] }, $set: { amount: [] } }, function (err, newProd) {
+    //    if (err) {
+    //        console.log(err)
+    //    }
+    //});
+    
     res.redirect(/thankyou/ + req.body.user_id);
 });
 

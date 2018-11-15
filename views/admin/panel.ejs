@@ -1,6 +1,7 @@
 <% include ../partials/header %>
 <% var rowAmount = 0%>
 <% var rowAmountUser = 0%>
+<% var rowAmountOrder = 0%>
 
 <div class="container mt-4 mb-4">
     <h1>Admin Panel</h1>
@@ -16,6 +17,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu3">Nieuwe gebruiker</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu4">Bestellingen</a>
         </li>
     </ul>
 
@@ -129,48 +133,48 @@
 
         <!-- Add Product -->
         <div class="tab-pane container fade" id="menu2">
-           <div class="container">
-               <form action="/admin/newProduct" method="POST">
-                   <div class="form-row">
-                       <div class="form-group col-md-12">
-                           <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" required>
-                       </div>
-                       <div class="form-group col-md-12">
-                           <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" required>
-                       </div>
+            <div class="container">
+                <form action="/admin/newProduct" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" required>
+                        </div>
 
-                       <div class="form-group col-md-2">
-                           <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" required>
-                       </div>
+                        <div class="form-group col-md-2">
+                            <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" required>
+                        </div>
 
-                       <div class="form-group col-md-4">
-                           <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" type="text" id="Category" name="category" placeholder="brood OF koek OF zoetigheid" pattern="[a-z A-Z \s]+{1,50}" required>
-                       </div>
-                       <div class="form-group col-md-6">
-                           <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" required>
-                       </div>
-                       <div class="form-group col-md-12">
-                           <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
-                           <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" required>
-                       </div>
+                        <div class="form-group col-md-4">
+                            <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Category" name="category" placeholder="brood OF koek OF zoetigheid" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" required>
+                        </div>
 
-                       <div class="form-group col-md-12">
-                           <label for="Allergy">Allergiëen</label>
-                           <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose">
-                       </div>
+                        <div class="form-group col-md-12">
+                            <label for="Allergy">Allergiëen</label>
+                            <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose">
+                        </div>
 
-                       <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
-                       <div class="form-group">
-                           <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
-                       </div>
+                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
+                        </div>
                     </div>
-               </form>
-           </div>     
+                </form>
+            </div>
 
         </div>
 
@@ -237,10 +241,51 @@
                         <div class="form-group">
                             <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
+
         <!-- Add User -->
+        <div class="tab-pane container fade" id="menu4">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Besteller</th>
+                            <th scope="col">Producten</th>
+                            <th scope="col">Verwijder</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% order.forEach(function(order){ %>
+                        <% rowAmountOrder = rowAmountOrder + 1%>
+                        <tr>
+                            <th scope="row"><%=rowAmountOrder%></th>
+                            <% console.log(order.targetUser); %>
+                            <td><%= order.targetUser %></td>
+                            <td><%= order.orderedProductsName%></td>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                                    <input type="hidden" name="order_id" value="<%= order._id %>">
+                                    <button name="product_id" value="<%= user._id %>" class="btn btn-sm btn-danger">Verwijder </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+        </div>
 
 
 

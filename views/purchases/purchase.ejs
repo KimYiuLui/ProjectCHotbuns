@@ -5,6 +5,8 @@
     var count = -1
     var total = 0.00
     var amountString = ""
+    var count2 = -1
+    var amountString2 = ""
 %>
 <div class="container">
 
@@ -60,19 +62,23 @@
             <a> Kies een van de onderstaande betaalservices om het betaalprocess te beginnen</a>
             <br />
             <br />
+            <!-- Maakt order aan. Voor elk product in winkelwagen stuurt hij de product ID op. -->
             <form class="form-inline" action="/purchase/order" method="POST">
-                <input type="hidden" name="user_id" value="<%= currentUser._id %>">
-                <input type="hidden" name="shoppingcart" value="<%= currentUser.shoppingcart %>">
+                <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
+                <input type="hidden" name="username" value="<%= currentUser.name %>">
+
                 <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
-                <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen met ideal</button>
+                <% User.shoppingcart.forEach(function(product){ %>
+                <% count2 = count2 + 1 %>
+                <% amountString2 =  currentUser.amount[count2] %>
+                <input type="hidden" name="product_id" value="<%=product._id%>">
+                <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
+
+                <% }) %>
+                <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen</button>
 
             </form>
-            <form class="form-inline" action="/purchase/order" method="POST">
-                <input type="hidden" name="user_id" value="<%= currentUser._id %>">
-                <input type="hidden" name="shoppingcart" value="<%= currentUser.shoppingcart %>">
-                <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
-                <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen met paypal</button>
-            </form>
+
                 <br />
                 <br />
                 <br />

@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var Order = require("../models/order");
 var Product = require("../models/product");
 var User = require("../models/user");
 var passport = require("passport");
@@ -10,17 +11,21 @@ var mongoose = require("mongoose");
 router.get("/admin/", isLoggedIn, function (req, res) {
     Product.find({}, function (error, allProducts) {
         User.find({}, function (err, allUsers) {
+            Order.find({}, function (broke, allOrders) {
 
-            if (error) {
-                console.log(error)
-            }
-            if (err) {
-                console.log(err)
-            }
-            else {
+                if (error) {
+                    console.log(error)
+                }
+                if (err) {
+                    console.log(err)
+                }
+                if (broke) {
+                    console.log(broke)
+                }
 
-                res.render("admin/panel", { product: allProducts, user: allUsers })
-            }
+                res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders })
+            
+            });
         });
     });
 });
@@ -148,6 +153,18 @@ router.post("/admin/newProduct", function (req, res) {
         res.redirect("/admin/")
     )
 });
+
+router.put("/admin/deleteOrder", function (req, res) {
+    Order.findByIdAndRemove(req.body.order_id, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+}
+);
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

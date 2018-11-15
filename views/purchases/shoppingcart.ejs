@@ -28,7 +28,8 @@
                     <% count = count + 1 %>
                     <% amountString =  currentUser.amount[count] %>
                     <% var productPostMath = product.price * amountString.charAt(0)
-                     total = total + productPostMath %>
+                    total = total + productPostMath %>
+                    <% priceProduct = product.price * amountString.charAt(0)%>
                     <div class="col-lg-2 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
 
@@ -37,7 +38,7 @@
 
                             <p>€ <%=product.price %></p>
                             <p><%= amountString.charAt(0) + " stuks" %></p>
-                            <p><strong>€ <%= product.price * amountString.charAt(0)%></strong></p>
+                            <p><strong>€ <%= priceProduct.toFixed(2)%></strong></p>
 
 
 
