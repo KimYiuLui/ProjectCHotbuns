@@ -1,13 +1,9 @@
 <% include ../partials/header %>
 <%
     var count = -1
-
     var total = 0.00
     var amountString = ""
-
-
-    
-     %>
+ %>
     
 <div class="container">
 
@@ -59,8 +55,9 @@
             <h3>
                 De totale prijs is € <%=total.toFixed(2)%>
             </h3>
+            <% if (count > -1){ %>
             <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>
-
+            <% } %>
         </div>
     </div>
 

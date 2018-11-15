@@ -10,6 +10,6 @@
     "\\views\\purchases",
     "\\views\\user"
   ],
-  "SelectedNode": "\\routes\\index.js",
+  "SelectedNode": "\\views\\partials\\header.ejs",
   "PreviewInSolutionExplorer": false
 }
