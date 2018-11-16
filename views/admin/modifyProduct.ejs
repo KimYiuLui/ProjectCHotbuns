@@ -11,8 +11,8 @@
                 <form action="/admin/finishModifyProduct" method="POST">
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" value="<%=product.name%>" required>
+                            <label for="Name">Product naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product naam" value="<%=product.name%>" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
+                            <label for="imagePath">Afbeeldings pad<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" value="<%=product.image%>" required>
                         </div>
                         <div class="form-group col-md-12">
@@ -43,7 +43,7 @@
                             <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose" value="<%=product.allergy%>">
                         </div>
                         
-                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <small class="form-group col-md-12">Er zijn vereiste velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
                         
                         
                         <input type="hidden" name="product_id" value="<%= product._id %>">
