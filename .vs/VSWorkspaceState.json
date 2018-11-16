@@ -10,6 +10,6 @@
     "\\views\\purchases",
     "\\views\\user"
   ],
-  "SelectedNode": "\\app.js",
+  "SelectedNode": "\\views\\purchases\\shoppingcart.ejs",
   "PreviewInSolutionExplorer": false
 }

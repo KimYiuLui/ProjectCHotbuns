@@ -43,7 +43,7 @@
                         <td><%= product.name %></td>
                         <td><%= amountString.charAt(0)%></td>
                         <td><%= product.price %></td>
-                        <td><%= product.price * amountString.charAt(0)%></td>
+                        <td><%= productPostMath.toFixed(2)%></td>
                     </tr>
                     <% }) %>
                     <% var totalBTWstep1 = total * 1.06 %>

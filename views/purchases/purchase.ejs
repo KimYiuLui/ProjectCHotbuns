@@ -1,6 +1,7 @@
 <% include ../partials/header %>
 
 <%
+
     var rowAmount = 0
     var count = -1
     var total = 0.00
@@ -39,13 +40,15 @@
                     <% rowAmount = rowAmount +1%>
                     <% amountString =  currentUser.amount[count] %>
                     <% var productPostMath = product.price * amountString.charAt(0)
+
+                    
                     total = total + productPostMath %>
                     <tr>
                         <th scope="row"><%=rowAmount%></th>
                         <td><%= product.name %></td>
                         <td><%= amountString.charAt(0)%></td>
-                        <td><%= product.price %></td>
-                        <td><%= product.price * amountString.charAt(0)%></td>
+                        <td><%=product.price%></td>
+                        <td><%=productPostMath.toFixed(2)%></td>
                     </tr>
                     <% }) %>
                     <% var totalBTWstep1 = total * 1.06 %>
@@ -82,26 +85,25 @@
             <br />
             <!-- Maakt order aan. Voor elk product in winkelwagen stuurt hij de product ID op. -->
             <form class="form-inline" action="/purchase/order" method="POST">
-                <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
-                <% console.log(currentUser)
-                   console.log(currentUser.name) %>
-                <input type="hidden" name="username" value="<%= currentUser.name %>">
+                <div class="form-group float-right">
+                    <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
+                    <input type="hidden" name="username" value="<%= currentUser.name %>">
 
-                <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
-                <% User.shoppingcart.forEach(function(product){ %>
-                <% count2 = count2 + 1 %>
-                <% amountString2 =  currentUser.amount[count2] %>
-                <input type="hidden" name="product_id" value="<%=product._id%>">
-                <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
+                    <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
+                    <% User.shoppingcart.forEach(function(product){ %>
+                    <% count2 = count2 + 1 %>
+                    <% amountString2 =  currentUser.amount[count2] %>
+                    <input type="hidden" name="product_id" value="<%=product._id%>">
+                    <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
 
-                <% }) %>
-                <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen</button>
-
+                    <% }) %>
+                    <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen</button>
+                </div>
             </form>
 
-                <br />
-                <br />
-                <br />
+            <br />
+            <br />
+            <br />
 
 
 

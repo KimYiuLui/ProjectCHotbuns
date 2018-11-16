@@ -31,16 +31,48 @@ router.put("/shoppingcart/add", function (req, res) {
     console.log(amountString);
     User.findByIdAndUpdate(req.body.user_id, { $push: { shoppingcart: req.body.product_id, amount: amountString} }, function (err, newfav) {
         if (err) {
-            console.log(req.body.amount);
-            console.log(req.body.product_id);
+
             res.redirect("back");
         } else {
-            console.log(req.body.amount);
-            console.log(req.body.product_id);
+
             res.redirect(req.get("referer"));
         }
     })
 });
+
+router.put("/shoppingcart/modifyAmount", function (req, res) {
+    var oldAmount = ""
+    amountstring= ""
+    oldAmount = req.body.fullamount;
+    amountString = req.body.amount + " " + req.body.product_id;
+
+    oldAmount[parseInt(req.body.count)] = amountString;
+
+    if (req.body.formcount == 0) {
+        User.findByIdAndUpdate(req.body.user_id, { $set: { amount: amountString } }, function (err, updateAmount) {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                res.redirect(/shoppingcart/ + req.body.user_id);
+            }
+
+        });
+    } else {
+
+
+        User.findByIdAndUpdate(req.body.user_id, { $set: { amount: oldAmount } }, function (err, updateAmount) {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                res.redirect(/shoppingcart/ + req.body.user_id);
+            }
+
+        })
+    };    
+});
+
 
 router.get("/thankyou/:id", isLoggedIn, function (req, res) {
     User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {

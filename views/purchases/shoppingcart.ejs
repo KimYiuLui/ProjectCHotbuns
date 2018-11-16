@@ -4,22 +4,24 @@
     var total = 0.00
     var amountString = ""
  %>
-    
+
 <div class="container">
 
     <div class="row">
         <div class="container mx-auto">
             <h4> Winkelwagen </h4>
             <br />
+
             <a> Hieronder staan de producten momenteel in uw winkelwagen.</a>
             <br />
             <br />
-            <a> Druk op de knop 'Afrekenen' om te beginnen met betalen</a>
+
+
             <div class="container">
                 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                     <!-- VERANDER DEZE LIJN ALS JE DINGEN IN WINKELWAGEN KAN ZETTEN -->
                     <% User.shoppingcart.forEach(function(product){ %>
-
+                    <%var formcount = -1%>
 
                     <% count = count + 1 %>
                     <% amountString =  currentUser.amount[count] %>
@@ -33,7 +35,17 @@
                             <a href="/<%=product.category %>/<%= product._id %>"><img class="rounded img-thumbnail" src="/image/<%= product.image %>"></a>
 
                             <p>€ <%=product.price %></p>
-                            <p><%= amountString.charAt(0) + " stuks" %></p>
+                            <form action="/shoppingcart/modifyAmount?_method=PUT" method="POST">
+                                <input type="number" name="amount" value="<%=amountString.charAt(0)%>" min="1" max="9" required>stuks
+                                <input type="hidden" name="product_id" value="<%=product._id.toString()%>" />
+                                <% User.shoppingcart.forEach(function(product){
+                                formcount = formcount + 1%>
+                                <input type="hidden" name="fullamount" value="<%=currentUser.amount[formcount]%>" />
+                                <% }); %>
+                                <input type="hidden" name="count" value="<%=count%>" />
+                                <input type="hidden" name="user_id" value="<%=currentUser._id%>" />
+                                <input type="hidden" name="formcount" value="<%=formcount%>" />
+                            </form>
                             <p><strong>€ <%= priceProduct.toFixed(2)%></strong></p>
 
 
@@ -56,10 +68,14 @@
                     <% total = total + 3.50 %>
                 </div>
             </div>
+            <% if (count == -1){ %>
+            <a> De winkelwagen is leeg!</a>
+            <% } %>
+            <% if (count > -1){ %>
             <h5>
                 De totale prijs is € <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
             </h5>
-            <% if (count > -1){ %>
+
             <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>
             <% } %>
         </div>

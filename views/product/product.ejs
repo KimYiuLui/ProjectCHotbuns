@@ -18,7 +18,7 @@
                 <% if(!currentUser){ %>
                 <form class="form-inline">
                     <div class="form-group float-right">
-                        <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-dark">Toevoegen aan winkelwagen</button>
+                        
 
 
 
@@ -26,12 +26,16 @@
                 </form>
                 <% } else{ %>
                 <% if(currentUser && currentUser.shoppingcart.indexOf(product._id) !== -1){ %>
-                <form class="form-inline" action="/shoppingcart/add?_method=PUT" method="POST">
+                <form class="form-inline" action="/shoppingcart/delete?_method=PUT" method="POST">
                     <div class="form-group float-right">
-                        <button class="btn btn-sm btn-critical">Toegevoegd aan winkelwagen</button>
+                        <input type="hidden" name="user_id" value="<%= currentUser._id %>">
+                        <input type="hidden" name="product_id" value="<%= product._id %>">
+                        <input type="hidden" name="amountValue" value="<%=amountString.charAt(0) %>" />
+                        <input type="hidden" name="amountSearch" value="<%=product._id.toString() %>" />
+                        <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-danger">Verwijder uit winkelwagen</button>
                     </div>
                 </form>
-                
+
 
                 <% } else { %>
                 <form class="form-inline" action="/shoppingcart/add?_method=PUT" method="POST">
@@ -46,11 +50,11 @@
                 <% }} %>
 
                 <% if(!currentUser){ %>
-                <form class="form-inline">
+                <!--<form class="form-inline">
                     <div class="form-group float-right">
                         <button class="btn btn-sm btn-block custom"><i class="far fa-heart fa-3x"></i></button>
                     </div>
-                </form>
+                </form>-->
                 <% } else{ %>
                 <% if(currentUser && currentUser.favorite.indexOf(product._id) !== -1){ %>
                 <form class="form-inline" action="/favorieten/delete?_method=PUT" method="POST">
