@@ -1,0 +1,77 @@
+<% include ../partials/header %>
+
+<div class=" container mt-5">
+    <h1 class="text-center">Bewerken</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div style="width: 80%; margin: 0 auto; ">
+            <div class="container">
+                <form action="/admin/finishModifyUser" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Username">Gebruikersnaam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Username" type="text" name="username" placeholder="Gebruikersnaam" pattern="[a-z A-Z 0-9 \s]+{1,50}" value="<%=user.username%>" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Email">E-mail<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Email" type="email" name="email" placeholder="E-mail" value="<%=user.email%>" required>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label for="Name">Naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Name" name="name" placeholder="Naam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.name%>" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="NaamToevoeging">Toevoeging </label>
+                            <input class="form-control" type="text" id="NaamToevoeging" name="name" placeholder="v/d">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="Surename">Achternaam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Surname" name="surname" placeholder="Achternaam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.surname%>" required>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="Phone">Telefoonnummer</label>
+                            <input class="form-control" id="Phone" type="text" name="phonenumber" placeholder="0612345678" value="<%=user.phonenumber%>" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="Straat">Straat<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Straat" type="text" name="address[street]" placeholder="Straat" value="<%=user.address.street%>" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="Housenumber">Huisnummer<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Housenumber" type="text" name="address[number]" placeholder="Huisnummer" value="<%=user.address.number%>" pattern="[0-9]{1,}" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Toevoeging">Toevoeging</label>
+                            <input class="form-control" id="Toevoeging" type="text" name="address[additional]" placeholder="A" value="<%=user.address.additional%>" pattern="[A-Z]{1}">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="Woonplaats">Woonplaats<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Woonplaats" type="text" name="address[city]" placeholder="Woonplaats" pattern="[a-z A-Z \s]+{1,30}" value="<%=user.address.city%>" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="ZipCode">Postcode<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="ZipCode" type="text" name="address[zipcode]" placeholder="1234AB" pattern="[0-9]{4}[A-Z]{2}" value="<%=user.address.zipcode%>" required>
+                        </div>
+
+
+                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <input type="hidden" name="user_id" value="<%= user._id %>">
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Voltooien</button>
+                        </div>
+                    </div>
+                </form>             
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

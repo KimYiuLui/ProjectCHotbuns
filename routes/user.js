@@ -1,20 +1,26 @@
 var express     = require("express");
 var router      = express.Router();
-var User        = require("../models/user");
+var User = require("../models/user");
+var Order = require("../models/order");
 var Product     = require("../models/product");
 var passport    = require("passport");
 var mongoose        = require("mongoose");
 
 router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
-    User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
+    Order.find({}, function (broke, allOrders) {
+        User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
 
-        if (error) {
-            console.log(error)
-        }
-        else {
-            res.render("user/user", { User: foundUser })
-        }
-    });
+            if (error) {
+                console.log(error)
+            }
+            if (broke) {
+                console.log(error)
+            }
+            else {
+                res.render("user/user", { User: foundUser, Order: allOrders })
+            }
+        });
+    })
 });
 
 

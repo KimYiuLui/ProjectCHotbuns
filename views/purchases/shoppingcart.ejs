@@ -1,11 +1,9 @@
 <% include ../partials/header %>
 <%
-
+    var count = -1
     var total = 0.00
-    User.shoppingcart.forEach(function (product) {
-    total = total + parseFloat(product.price)
-    
-    }); %>
+    var amountString = ""
+ %>
     
 <div class="container">
 
@@ -21,32 +19,49 @@
                 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                     <!-- VERANDER DEZE LIJN ALS JE DINGEN IN WINKELWAGEN KAN ZETTEN -->
                     <% User.shoppingcart.forEach(function(product){ %>
+
+
+                    <% count = count + 1 %>
+                    <% amountString =  currentUser.amount[count] %>
+                    <% var productPostMath = product.price * amountString.charAt(0)
+                    total = total + productPostMath %>
+                    <% priceProduct = product.price * amountString.charAt(0)%>
                     <div class="col-lg-2 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
-                            <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
-                            <div class="caption">
-                                <a href="/<%=product.category %>/<%= product._id %>"><%= product.name %><a /></h4>
-                            </div>
-                            <p><strong>€ <%=product.price %></strong></p>
-                            <p>
-                                <form class="form-inline" action="/shoppingcart/delete?_method=PUT" method="POST">
-                                    
-                                        <input type="hidden" name="user_id" value="<%= currentUser._id %>">
-                                        <input type="hidden" name="product_id" value="<%= product._id %>">
-                                        <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-danger">Verwijder</button>
-                                    
-                                </form>
+
+
+                            <a href="/<%=product.category %>/<%= product._id %>"><img class="rounded img-thumbnail" src="/image/<%= product.image %>"></a>
+
+                            <p>€ <%=product.price %></p>
+                            <p><%= amountString.charAt(0) + " stuks" %></p>
+                            <p><strong>€ <%= priceProduct.toFixed(2)%></strong></p>
+
+
+
+                            <form class="form-inline" action="/shoppingcart/delete?_method=PUT" method="POST">
+                                <input type="hidden" name="user_id" value="<%= currentUser._id %>">
+                                <input type="hidden" name="product_id" value="<%= product._id %>">
+                                <input type="hidden" name="amountValue" value="<%=amountString.charAt(0) %>" />
+                                <input type="hidden" name="amountSearch" value="<%=product._id.toString() %>" />
+                                <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-danger">Verwijder</button>
+
+                            </form>
                             </p>
                         </div>
                     </div>
                     <% }); %>
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 3.50 %>
                 </div>
             </div>
-            <h3>
-                De totale prijs is € <%=total%>
-            </h3>
-            <a href="/purchase" class="btn btn-primary">Nu afrekenen</a>
-
+            <h5>
+                De totale prijs is € <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
+            </h5>
+            <% if (count > -1){ %>
+            <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>
+            <% } %>
         </div>
     </div>
 
