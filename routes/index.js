@@ -33,7 +33,7 @@ router.post("/signup", function (req, res) {
             if (error) {
                 console.log(error);
                 req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
-                res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: req.body.name, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
+                res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
             }
             passport.authenticate("local")(req, res, function () {
                 res.redirect("/");
@@ -41,7 +41,7 @@ router.post("/signup", function (req, res) {
         });
     } else {
         req.flash("error", "De wachtwoorden zijn niet gelijk");
-        res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: req.body.name, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
+        res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
     }
 });
 
