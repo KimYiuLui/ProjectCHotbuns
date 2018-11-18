@@ -59,7 +59,9 @@
         <% product.forEach(function(product){ %>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                 <div class="img-thumbnail">
-                   <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
+                    <a href="/<%=product.category %>/<%= product._id %>"> 
+                        <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                        
                    <div class="caption">
                        <p><%= product.name %></h4>
                    </div>
