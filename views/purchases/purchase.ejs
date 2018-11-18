@@ -13,12 +13,12 @@
     <div class="row">
         <div class="container mx-auto">
             <h4> Afrekenen </h4>
-            <a> Kijk nog even uw gegevens na: </a>
+            <a> <strong>Kijk nog even uw gegevens na: </strong></a>
             <address>
-                <%=currentUser.name%> <%=currentUser.surname%><br />
-                <%=currentUser.email%><br />
-                <%=currentUser.phonenumber%><br />
-                <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
+                Naam: <%=currentUser.name%> <%=currentUser.surname%><br />
+                Email: <%=currentUser.email%><br />
+                Telefoon: <%=currentUser.phonenumber%><br />
+                Adres: <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
 
             </address>
 
@@ -27,9 +27,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Naam</th>
-                        <th scope="col">Hoeveelheid</th>
+                        <th scope="col">Aantal</th>
                         <th scope="col">Prijs</th>
-                        <th scope="col">Totale Prijs</th>
+                        <th scope="col">Subtotaal</th>
                     </tr>
                 <tbody>
 
@@ -63,7 +63,7 @@
                     <% rowAmount = rowAmount +1%>
                     <tr>
                         <th scope="row"><%=rowAmount%></th>
-                        <td>Versendkosten</td>
+                        <td>Verzendkosten</td>
                         <td></td>
                         <td></td>
                         <td>3.50</td>
@@ -74,10 +74,10 @@
 
             </table>
             <h5>
-                De totale prijs is � <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
+                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 3.50 verzendkosten.
             </h5>
 
-            <a> Kies een van de onderstaande betaalservices om het betaalprocess te beginnen</a>
+            <a> Kies een van de onderstaande betaalservices om het betaalproces te beginnen</a>
             <br />
             <br />
             <!-- Maakt order aan. Voor elk product in winkelwagen stuurt hij de product ID op. -->

@@ -10,13 +10,13 @@
 
     <div class="row">
         <div class="container mx-auto">
-            <h4> Bedankt voor het bestellen. </h4>
-            <a> Bestellinggegevens: </a>
+            <h4> Bedankt en tot ziens! </h4>
+            <a> Bestellingsgegevens: </a>
             <address>
-                <%=currentUser.name%> <%=currentUser.surname%><br />
-                <%=currentUser.email%><br />
-                <%=currentUser.phonenumber%><br />
-                <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
+                Naam: <%=currentUser.name%> <%=currentUser.surname%><br />
+                Email: <%=currentUser.email%><br />
+                Telefoon: <%=currentUser.phonenumber%><br />
+                Adres: <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
 
             </address>
 
@@ -25,9 +25,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Naam</th>
-                        <th scope="col">Hoeveelheid</th>
+                        <th scope="col">Aantal</th>
                         <th scope="col">Prijs</th>
-                        <th scope="col">Totale Prijs</th>
+                        <th scope="col">Subtotaal</th>
                     </tr>
                 <tbody>
 
@@ -61,7 +61,7 @@
                     <% rowAmount = rowAmount +1%>
                     <tr>
                         <th scope="row"><%=rowAmount%></th>
-                        <td>Versendkosten</td>
+                        <td>Verzendkosten</td>
                         <td></td>
                         <td></td>
                         <td>3.50</td>
