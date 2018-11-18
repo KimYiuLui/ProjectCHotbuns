@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-
+<% var rowAmountOrder = 0 %>
 <div class="container mt-4 mb-4">
     <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -15,8 +15,63 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane container active" id="home">...</div>
-        <div class="tab-pane container fade" id="menu1">...</div>
+        <div class="tab-pane container active" id="home">
+
+        <strong>Gebruikersnaam:</strong>    <%= currentUser.username%>             <br />
+        <strong>Voornaam:</strong>          <%= currentUser.name%>                 <br />
+        <strong>Toevoeging:</strong>        <%= currentUser.naamToevoeging%>       <br />
+        <strong>Achternaam:</strong>        <%= currentUser.surname%>              <br />
+        <strong>Email:</strong>             <%= currentUser.email%>                <br />
+        <strong>Telefoonnummer:</strong>    <%= currentUser.phonenumber%>          <br />
+        <strong>Straat:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%>                 <br />
+        <strong>Stad:</strong>              <%= currentUser.address.city%>         <br />
+        <strong>Postcode:</strong>          <%= currentUser.address.zipcode%>      <br />
+        </div>
+
+        <div class="tab-pane container fade" id="menu1">
+                <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Besteller</th>
+                                <th scope="col">Producten</th>
+                                <th scope="col">Verwijder</th>
+                            </tr>
+                        <tbody>
+
+
+                            <% Order.forEach(function(order){ %>
+                            <% //console.log(currentUser.username);
+                               //console.log(order.targetUser);%>
+                            <%if (order.targetUser == currentUser.name){ %>
+                            <% rowAmountOrder = rowAmountOrder + 1%>
+                            <tr>
+                                <th scope="row"><%=rowAmountOrder%></th>
+
+                                <td><%= order.targetUser %></td>
+                                <td><%= order.orderedProductsName%></td>
+                                <td>
+                                    <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                                        <input type="hidden" name="order_id" value="<%= order._id %>">
+                                        <button name="product_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Verwijder </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }}) %>
+
+
+                        </tbody>
+
+
+
+                    </table>
+
+                </div>
+            
+
+        </div>
         
         <!-- favorite list overview --> 
         <div class="tab-pane container fade" id="menu2">

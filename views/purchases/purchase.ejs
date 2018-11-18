@@ -5,6 +5,8 @@
     var count = -1
     var total = 0.00
     var amountString = ""
+    var count2 = -1
+    var amountString2 = ""
 %>
 <div class="container">
 
@@ -46,26 +48,60 @@
                         <td><%= product.price * amountString.charAt(0)%></td>
                     </tr>
                     <% }) %>
-
-
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 3.50 %>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Belasting</td>
+                        <td>6%</td>
+                        <td></td>
+                        <td><%=totalBTWstep2.toFixed(2)%></td>
+                    </tr>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Versendkosten</td>
+                        <td></td>
+                        <td></td>
+                        <td>3.50</td>
+                    </tr>
                 </tbody>
-               
+
 
 
             </table>
-            <h4>
-                De totale prijs is <%=total.toFixed(2)%> euro
-            </h4>
+            <h5>
+                De totale prijs is € <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
+            </h5>
 
             <a> Kies een van de onderstaande betaalservices om het betaalprocess te beginnen</a>
             <br />
             <br />
-            <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Betaal met Paypal</a>
+            <!-- Maakt order aan. Voor elk product in winkelwagen stuurt hij de product ID op. -->
+            <form class="form-inline" action="/purchase/order" method="POST">
+                <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
+                <% console.log(currentUser)
+                   console.log(currentUser.name) %>
+                <input type="hidden" name="username" value="<%= currentUser.name %>">
 
-            <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Betaal met Ideal</a>
-            <br />
-            <br />
-            <br />
+                <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
+                <% User.shoppingcart.forEach(function(product){ %>
+                <% count2 = count2 + 1 %>
+                <% amountString2 =  currentUser.amount[count2] %>
+                <input type="hidden" name="product_id" value="<%=product._id%>">
+                <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
+
+                <% }) %>
+                <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen</button>
+
+            </form>
+
+                <br />
+                <br />
+                <br />
 
 
 

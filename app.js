@@ -13,6 +13,7 @@ var flash           = require("connect-flash");
 //require Models 
 var User            = require("./models/user")
 var Products        = require("./models/product")
+var Order           = require("./models/order")
 
 //require Routes
 var indexRoutes     = require("./routes/index");
@@ -21,6 +22,7 @@ var overigeRoutes = require("./routes/overige");
 var purchasesRoutes = require("./routes/purchases");
 var UserRoutes     = require("./routes/user");
 var FavoriteRoutes = require("./routes/favorite");
+var AdminRoutes = require("./routes/admin");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -56,12 +58,14 @@ app.use(function(req, res, next){
 });
 
 // Routes
+app.use(AdminRoutes);
 app.use(indexRoutes);
 app.use(productsRoutes);
 app.use(overigeRoutes);
 app.use(purchasesRoutes);
 app.use(UserRoutes);
 app.use(FavoriteRoutes);
+
 
 // Products.create({
 //     name: " Hazelnootschuimtaart",

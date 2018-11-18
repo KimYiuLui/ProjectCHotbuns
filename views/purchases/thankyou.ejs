@@ -1,0 +1,88 @@
+<% include ../partials/header %>
+
+<%
+    var rowAmount = 0
+    var count = -1
+    var total = 0.00
+    var amountString = ""
+%>
+<div class="container">
+
+    <div class="row">
+        <div class="container mx-auto">
+            <h4> Bedankt voor het bestellen. </h4>
+            <a> Bestellinggegevens: </a>
+            <address>
+                <%=currentUser.name%> <%=currentUser.surname%><br />
+                <%=currentUser.email%><br />
+                <%=currentUser.phonenumber%><br />
+                <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
+
+            </address>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col">Hoeveelheid</th>
+                        <th scope="col">Prijs</th>
+                        <th scope="col">Totale Prijs</th>
+                    </tr>
+                <tbody>
+
+
+                    <% User.shoppingcart.forEach(function(product){ %>
+                    <% count = count + 1 %>
+                    <% rowAmount = rowAmount +1%>
+                    <% amountString =  currentUser.amount[count] %>
+                    <% var productPostMath = product.price * amountString.charAt(0)
+                    total = total + productPostMath %>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td><%= product.name %></td>
+                        <td><%= amountString.charAt(0)%></td>
+                        <td><%= product.price %></td>
+                        <td><%= product.price * amountString.charAt(0)%></td>
+                    </tr>
+                    <% }) %>
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 3.50 %>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Belasting</td>
+                        <td>6%</td>
+                        <td></td>
+                        <td><%=totalBTWstep2.toFixed(2)%></td>
+                    </tr>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Versendkosten</td>
+                        <td></td>
+                        <td></td>
+                        <td>3.50</td>
+
+                </tbody>
+
+
+
+            </table>
+            <h4>
+
+            </h4>
+
+            
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+<% include ../partials/footer %>

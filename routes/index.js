@@ -17,10 +17,12 @@ router.get("/signup", function(req, res){
     res.render("signup");
 });
 
-router.post("/signup", function(req, res){
+router.post("/signup", function (req, res) {
+    var newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
     User.register(new User({username: req.body.username,
+                            role: "Admin",
                             email: req.body.email,
-                            name: req.body.name,
+                            name: newName,
                             naamToevoeging: req.body.naamToevoeging,
                             surname: req.body.surname,
                             phonenumber: req.body.phonenumber,

@@ -1,3 +1,301 @@
-<h1>Admin Panel</h1>
+<% include ../partials/header %>
+<% var rowAmount = 0%>
+<% var rowAmountUser = 0%>
+<% var rowAmountOrder = 0%>
 
-<a href="/">Back to Hotbuns</a>
+<div class="container mt-4 mb-4">
+    <h1>Admin Panel</h1>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Producten</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Gebruikers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">Nieuw Product</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu3">Nieuwe gebruiker</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu4">Bestellingen</a>
+        </li>
+    </ul>
+
+    <!-- View Products -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="home">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Naam</th>
+                            <th scope="col">Prijs</th>
+                            <th scope="col">Bewerk</th>
+                            <th scope="col">Verwijder</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% product.forEach(function(product){ %>
+                        <% rowAmount = rowAmount +1%>
+                        <tr>
+                            <th scope="row"><%=rowAmount%></th>
+                            <td><%= product.name %></td>
+                            <td><%= product.price %></td>
+                            <td>
+                                <form class="form-inline" action="/admin/modifyProduct?_method=PUT" method="POST">
+                                    <input type="hidden" name="product_id" value="<%= product._id %>">
+                                    <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-secondary">Bewerk</button>
+
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteProduct?_method=PUT" method="POST">
+                                    <input type="hidden" name="product_id" value="<%= product._id %>">
+                                    <button name="product_id" value="<%= product._id %>" class="btn btn-sm btn-danger">Verwijder</button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+        </div>
+        <!-- View Users -->
+        <div class="tab-pane container fade" id="menu1">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Naam</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Bewerk</th>
+                            <th scope="col">Verwijder</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% user.forEach(function(user){ %>
+                        <% rowAmountUser = rowAmountUser +1%>
+                        <tr>
+                            <th scope="row"><%=rowAmountUser%></th>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <% if(currentUser.id != user.id) {  %>
+                            <td>
+                                <form class="form-inline" action="/admin/modifyUser?_method=PUT" method="POST">
+                                    <input type="hidden" name="user_id" value="<%= user._id %>">
+                                    <button name="user_id" value="<%= user._id %>" class="btn btn-sm btn-secondary">Bewerk</button>
+
+                                </form>
+                            </td>
+                            <% } else { %>
+                            <td>
+                                Dit bent U.
+                            </td>
+                            <% } %>
+                            <% if(currentUser.id != user.id) {  %>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteUser?_method=PUT" method="POST">
+                                    <input type="hidden" name="user_id" value="<%= user._id %>">
+                                    <button name="product_id" value="<%= user._id %>" class="btn btn-sm btn-danger">Verwijder </button>
+
+                                </form>
+                            </td>
+                            <% } else { %>
+                            <td>
+                                Dit bent U.
+                            </td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+        </div>
+
+        <!-- Add Product -->
+        <div class="tab-pane container fade" id="menu2">
+            <div class="container">
+                <form action="/admin/newProduct" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Name">Product Naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Name" type="text" name="name" placeholder="Product Naam" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Desc">Descriptie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Desc" type="text" name="description" placeholder="Descriptie" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="Price">Prijs<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Price" type="text" name="price" placeholder="Prijs" required>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Category">Categorie<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Category" name="category" placeholder="brood OF koek OF zoetigheid" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="imagePath">Afbeeldings Pad<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="imagePath" name="image" placeholder="/public/image/brood/brood.jpeg" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Ingredients">Ingrediëenten<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Ingredients" name="ingredients" placeholder="Melk" required>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="Allergy">Allergiëen</label>
+                            <input class="form-control" id="Allergy" type="text" name="allergy" placeholder="Lactose">
+                        </div>
+
+                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="tab-pane container fade" id="menu3">
+            <div class="container">
+                <form action="/admin/newUser" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Username">Gebruikersnaam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Username" type="text" name="username" placeholder="Gebruikersnaam" pattern="[a-z A-Z 0-9 \s]+{1,50}" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Email">E-mail<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Email" type="email" name="email" placeholder="  E-mail" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="Password">Wachtwoord<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Password" type="password" name="password" placeholder="Wachtwoord" required>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label for="Name">Naam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Name" name="name" placeholder="Naam" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="NaamToevoeging">Toevoeging </label>
+                            <input class="form-control" type="text" id="NaamToevoeging" name="name" placeholder="v/d">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="Surename">Achternaam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Surname" name="surname" placeholder="Achternaam" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="Phone">Telefoonnummer</label>
+                            <input class="form-control" id="Phone" type="text" name="phonenumber" placeholder="0612345678" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="Straat">Straat<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Straat" type="text" name="address[street]" placeholder="Straat" pattern="[a-z A-Z \s]+{1,50}" required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="Housenumber">Huisnummer<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Housenumber" type="text" name="address[number]" placeholder="Huisnummer" pattern="[0-9]{1,}" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Toevoeging">Toevoeging</label>
+                            <input class="form-control" id="Toevoeging" type="text" name="address[additional]" placeholder="A" pattern="[A-Z]{1}">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label for="Woonplaats">Woonplaats<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Woonplaats" type="text" name="address[city]" placeholder="Woonplaats" pattern="[a-z A-Z \s]+{1,30}" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="ZipCode">Postcode<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="ZipCode" type="text" name="address[zipcode]" placeholder="1234AB" pattern="[0-9]{4}[A-Z]{2}" required>
+                        </div>
+
+                        <small class="form-group col-md-12">Er zijn veresite velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add User -->
+        <div class="tab-pane container fade" id="menu4">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Besteller</th>
+                            <th scope="col">Producten</th>
+                            <th scope="col">Verwijder</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% order.forEach(function(order){ %>
+                        <% rowAmountOrder = rowAmountOrder + 1%>
+                        <tr>
+                            <th scope="row"><%=rowAmountOrder%></th>
+                            <% console.log(order.targetUser); %>
+                            <td><%= order.targetUser %></td>
+                            <td><%= order.orderedProductsName%></td>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                                    <input type="hidden" name="order_id" value="<%= order._id %>">
+                                    <button name="product_id" value="<%= user._id %>" class="btn btn-sm btn-danger">Verwijder </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+<% include ../partials/footer %>
