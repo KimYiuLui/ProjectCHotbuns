@@ -22,6 +22,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu4">Bestellingen</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu5">Coupon codes</a>
+        </li>
     </ul>
 
     <!-- View Products -->
@@ -287,14 +290,27 @@
 
             </div>
         </div>
+        <div class="tab-pane container fade" id="menu5">
+            <div class="container">
+                <form action="/admin/makeACoupon" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="Couponcode">Coupon code<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Couponcode" type="text" name="couponCode" placeholder="Coupon code" required>
+                        </div>
 
-
-
-
-
-
-
-
+                        <div class="form-group col-md-12">
+                            <label for="Pricemodifier">Korting hoeveelheid<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" id="Pricemodifier" type="number" name="priceModifier" min="1" max="100" placeholder="Korting hoeveelheid in procenten" required>
+                        </div>
+                        <small class="form-group col-md-12">Vereiste velden in dit formulier zijn gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">Aanmaken</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

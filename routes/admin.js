@@ -3,6 +3,7 @@ var router = express.Router();
 var Order = require("../models/order");
 var Product = require("../models/product");
 var User = require("../models/user");
+var Coupon = require("../models/coupon");
 var passport = require("passport");
 var mongoose = require("mongoose");
 
@@ -165,6 +166,16 @@ router.put("/admin/deleteOrder", function (req, res) {
     });
 }
 );
+
+router.post("/admin/makeACoupon", function (req, res) {
+    Coupon.create(new Coupon({
+        couponCode: req.body.couponCode,
+        priceModifier: req.body.priceModifier
+    }),
+        req.flash("Actie voltooid"),
+        res.redirect("/admin/")
+    )
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
