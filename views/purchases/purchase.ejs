@@ -87,7 +87,7 @@
             <form class="form-inline" action="/purchase/order" method="POST">
                 <div class="form-group float-right">
                     <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
-                    <input type="hidden" name="username" value="<%= currentUser.name %>">
+                    <input type="hidden" name="username" value="<%= currentUser.username %>">
 
                     <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
                     <% User.shoppingcart.forEach(function(product){ %>

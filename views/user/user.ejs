@@ -15,80 +15,88 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
+        <!-- gebruikergegevens-->
         <div class="tab-pane container active" id="home">
 
-        <strong>Gebruikersnaam:</strong>    <%= currentUser.username%>             <br />
-        <strong>Voornaam:</strong>          <%= currentUser.name%>                 <br />
-        <strong>Toevoeging:</strong>        <%= currentUser.naamToevoeging%>       <br />
-        <strong>Achternaam:</strong>        <%= currentUser.surname%>              <br />
-        <strong>Email:</strong>             <%= currentUser.email%>                <br />
-        <strong>Telefoonnummer:</strong>    <%= currentUser.phonenumber%>          <br />
-        <strong>Adres:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%>                 <br />
-        <strong>Stad:</strong>              <%= currentUser.address.city%>         <br />
-        <strong>Postcode:</strong>          <%= currentUser.address.zipcode%>      <br />
-        </div>
-
-        <div class="tab-pane container fade" id="menu1">
-                <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Gebruikersnaam</th>
-                                <th scope="col">Producten</th>
-                                <th scope="col">Verwijder</th>
-                            </tr>
-                        <tbody>
-
-
-                            <% Order.forEach(function(order){ %>
-                            <% //console.log(currentUser.username);
-                               //console.log(order.targetUser);%>
-                            <%if (order.targetUser == currentUser.name){ %>
-                            <% rowAmountOrder = rowAmountOrder + 1%>
-                            <tr>
-                                <th scope="row"><%=rowAmountOrder%></th>
-
-                                <td><%= order.targetUser %></td>
-                                <td><%= order.orderedProductsName%></td>
-                                <td>
-                                    <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
-                                        <input type="hidden" name="order_id" value="<%= order._id %>">
-                                        <button name="product_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Verwijder </button>
-
-                                    </form>
-                                </td>
-                            </tr>
-                            <% }}) %>
-
-
-                        </tbody>
-
-
-
-                    </table>
-
+            <strong>Gebruikersnaam:</strong>    <%= currentUser.username%>             <br />
+            <strong>Voornaam:</strong>          <%= currentUser.name%>                 <br />
+            <strong>Toevoeging:</strong>        <%= currentUser.naamToevoeging%>       <br />
+            <strong>Achternaam:</strong>        <%= currentUser.surname%>              <br />
+            <strong>Email:</strong>             <%= currentUser.email%>                <br />
+            <strong>Telefoonnummer:</strong>    <%= currentUser.phonenumber%>          <br />
+            <strong>Adres:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%>                 <br />
+            <strong>Stad:</strong>              <%= currentUser.address.city%>         <br />
+            <strong>Postcode:</strong>          <%= currentUser.address.zipcode%>      <br />
+            <form  action="/user/modifyUser?_method=PUT" method="POST">
+                <div class="form-group float-left">
+                <input type="hidden" name="user_id" value="<%= currentUser._id %>">
+                <button name="user_id" value="<%= currentUser._id %>" class="btn btn-sm btn-secondary">Bewerk</button>
                 </div>
-            
+            </form>
+        </div>
+
+        <!-- Bestellingen-->
+        <div class="tab-pane container fade" id="menu1">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Gebruikersnaam</th>
+                            <th scope="col">Producten</th>
+                            <th scope="col">Verwijder</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% Order.forEach(function(order){ %>
+                        <% //console.log(currentUser.username);
+                        //console.log(order.targetUser);%>
+                        <%if (order.targetUser == currentUser.username){ %>
+                        <% rowAmountOrder = rowAmountOrder + 1%>
+                        <tr>
+                            <th scope="row"><%=rowAmountOrder%></th>
+
+                            <td><%= order.targetUser %></td>
+                            <td><%= order.orderedProductsName%></td>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                                    <input type="hidden" name="order_id" value="<%= order._id %>">
+                                    <button name="product_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Verwijder </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <% }}) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+
 
         </div>
-        
-        <!-- favorite list overview --> 
+
+        <!-- favorite list overview -->
         <div class="tab-pane container fade" id="menu2">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-                <% User.favorite.forEach(function(product){ %>    
-                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-block">
-                        <div class="img-thumbnail">
-                            <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
-                            <div class="caption">
-                                <p><%= product.name %></h4>
-                            </div>
-                            <p><strong>€ <%=product.price %></strong></p>
-                            <p>
-                                <a href="/<%=product.category %>/<%= product._id %>" class="btn btn-info">Meer info</a>
-                            </p>
+                <% User.favorite.forEach(function(product){ %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-block">
+                    <div class="img-thumbnail">
+                        <img class="rounded img-thumbnail" src="/image/<%= product.image %>">
+                        <div class="caption">
+                            <p><%= product.name %></h4>
                         </div>
-                    </div>               
+                        <p><strong>€ <%=product.price %></strong></p>
+                        <p>
+                            <a href="/<%=product.category %>/<%= product._id %>" class="btn btn-info">Meer info</a>
+                        </p>
+                    </div>
+                </div>
                 <% }); %>
             </div>
         </div>

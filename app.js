@@ -13,7 +13,8 @@ var flash           = require("connect-flash");
 //require Models 
 var User            = require("./models/user")
 var Products        = require("./models/product")
-var Order           = require("./models/order")
+var Order =         require("./models/order")
+var Coupon =        require("./models/coupon")
 
 //require Routes
 var indexRoutes     = require("./routes/index");
