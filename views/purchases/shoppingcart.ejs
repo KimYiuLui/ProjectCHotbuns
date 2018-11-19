@@ -12,7 +12,7 @@
             <h4> Winkelwagen </h4>
             <br />
 
-            <a> Hieronder staan de producten momenteel in uw winkelwagen.</a>
+            <a> De winkelwagen bevat alle geselecteerde items.</a>
             <br />
             <br />
 
@@ -46,7 +46,7 @@
                                 <input type="hidden" name="user_id" value="<%=currentUser._id%>" />
                                 <input type="hidden" name="formcount" value="<%=formcount%>" />
                             </form>
-                            <p><strong>€ <%= priceProduct.toFixed(2)%></strong></p>
+                            <p><strong>Totaal: € <%= priceProduct.toFixed(2)%></strong></p>
 
 
 
@@ -73,7 +73,7 @@
             <% } %>
             <% if (count > -1){ %>
             <h5>
-                De totale prijs is € <%=total.toFixed(2)%> inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en 3.50 euro versendkosten.
+                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 3.50 verzendkosten.
             </h5>
 
             <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>
