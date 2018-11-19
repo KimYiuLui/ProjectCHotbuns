@@ -171,10 +171,10 @@ router.post("/admin/makeACoupon", function (req, res) {
     Coupon.create(new Coupon({
         couponCode: req.body.couponCode,
         priceModifier: req.body.priceModifier
-    }),
-        req.flash("Actie voltooid"),
+    }));
+
+    req.flash("Actie voltooid"),
         res.redirect("/admin/")
-    )
 });
 
 function isLoggedIn(req, res, next) {
