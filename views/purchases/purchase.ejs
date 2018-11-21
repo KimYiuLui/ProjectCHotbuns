@@ -8,6 +8,13 @@
     var amountString = ""
     var count2 = -1
     var amountString2 = ""
+    var couponStatusValue = couponStatus
+    console.log("Coupon Status is " + couponStatus)
+    var couponpriceModifierValue = 0
+    if (couponStatus == "Yes"){
+    couponpriceModifierValue = couponpriceModifier.priceModifier
+    }
+
 %>
 <div class="container">
 
@@ -41,8 +48,9 @@
                     <% amountString =  currentUser.amount[count] %>
                     <% var productPostMath = product.price * amountString.charAt(0)
 
-                    
+
                     total = total + productPostMath %>
+
                     <tr>
                         <th scope="row"><%=rowAmount%></th>
                         <td><%= product.name %></td>
@@ -51,10 +59,25 @@
                         <td><%=productPostMath.toFixed(2)%></td>
                     </tr>
                     <% }) %>
+                    <% if (couponStatus == "Yes"){ %>
+                    <% var saleAmount1 = total * (1 - ("0." + couponpriceModifierValue)) %>
+                    <% var saleAmount2 = total - saleAmount1 %>
+                    <% total = total - saleAmount2 %>
+                    <% rowAmount = rowAmount +1%>
+
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Coupon korting</td>
+                        <td>-<%=couponpriceModifierValue%>%</td>
+                        <td></td>
+                        <td>-<%=saleAmount2.toFixed(2)%></td>
+
+                    </tr>
+                    <% } %>
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
                     <% total = total * 1.06 %>
-                    <% total = total + 3.50 %>
+                    <% total = total + 2.00 %>
                     <% rowAmount = rowAmount +1%>
                     <tr>
                         <th scope="row"><%=rowAmount%></th>
@@ -71,15 +94,32 @@
                         <td></td>
                         <td>3.50</td>
                     </tr>
+
                 </tbody>
 
 
 
             </table>
             <h5>
-                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 3.50 verzendkosten.
+                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
             </h5>
 
+            <% if (couponStatus == "noInsert" || couponStatus == "No"){ %>
+            <% console.log(couponStatus) %>
+            <% if (couponStatus == "No"){ %>
+            <a> Uw gegeven couponcode was fout! Probeer opnieuw.</a>
+            <% } %>
+            <a> Voer hier uw coupon in:</a>
+            <form class="form-inline" action="/purchase/checkCoupon" method="POST">
+                <div class="form-group float-right">
+                    <input type="text" name="givenCoupon" required />
+                    <input type="hidden" name="user_id" value="<%=currentUser._id%>" />
+                    <button name="Button" value="" class="btn btn-sm btn-primary">Invoeren</button>
+                </div>
+            </form>
+            <% } else { %>
+            <h5> Door uw code heeft u <strong><%=couponpriceModifierValue%>%</strong> korting gekregen!</h5> <br />
+            <% } %>
             <a> Kies een van de onderstaande betaalservices om het betaalproces te beginnen</a>
             <br />
             <br />
@@ -89,6 +129,11 @@
                     <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
                     <input type="hidden" name="username" value="<%= currentUser.username %>">
 
+                    <input type="hidden" name="couponStatus" value="<%= couponStatus%>" />
+                    <%if (couponStatus == "Yes"){%>
+                    <input type="hidden" name="couponpriceModifierValue" value="<%= couponpriceModifierValue%>" />
+                    <% } %>
+
                     <input type="hidden" name="amount" value="<%=currentUser.amount%>" />
                     <% User.shoppingcart.forEach(function(product){ %>
                     <% count2 = count2 + 1 %>
@@ -97,7 +142,7 @@
                     <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
 
                     <% }) %>
-                    <button name="currentUser_id" value="<%= currentUser._id %>" class="btn btn-sm btn-danger">Betalen</button>
+                    <button name="coupon_id" value="coupon._id" class="btn btn-sm btn-danger">Betalen</button>
                 </div>
             </form>
 

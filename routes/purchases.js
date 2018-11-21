@@ -3,6 +3,7 @@ var router = express.Router();
 var Product = require("../models/product");
 var User = require("../models/user");
 var Order = require("../models/order");
+var Coupon = require("../models/coupon");
 var passport = require("passport");
 var mongoose = require("mongoose");
 
@@ -74,18 +75,18 @@ router.put("/shoppingcart/modifyAmount", function (req, res) {
 });
 
 
-router.get("/thankyou/:id", isLoggedIn, function (req, res) {
-    User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
+//router.get("/thankyou/:id", isLoggedIn, function (req, res) {
+//    User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
 
-        if (error) {
-            console.log(error)
-        }
-        else {
+//        if (error) {
+//            console.log(error)
+//        }
+//        else {
 
-            res.render("purchases/thankyou", { User: foundUser })
-        }
-    });
-});
+//            res.render("purchases/thankyou", { User: foundUser })
+//        }
+//    });
+//});
 
 router.put("/shoppingcart/delete", function (req, res) {
     console.log("Test 1 " + req.body.amountValue);
@@ -105,17 +106,34 @@ router.put("/shoppingcart/delete", function (req, res) {
 
 router.get("/purchase/:id", isLoggedIn, function (req, res) {
     User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
+        Coupon.find({}, function (broke, allCoupons) {
+            if (error) {
+                console.log(error)
+            }
+            else {
 
-        if (error) {
-            console.log(error)
-        }
-        else {
-
-            res.render("purchases/purchase", { User: foundUser })
-        }
+                res.render("purchases/purchase", { User: foundUser, coupon: allCoupons, couponStatus: "noInsert" })
+            }
+        });
     });
     
 });
+
+router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
+    User.findById(req.body.user_id).populate("shoppingcart").exec(function (error, foundUser) {
+        Coupon.find({}, function (broke, allCoupons) {
+            Coupon.findOne({ 'couponCode': req.body.givenCoupon }, function (err, priceModifier) {
+                if (priceModifier == null) {
+                    res.render("purchases/purchase", { User: foundUser, coupon: allCoupons, couponStatus: "No" })
+                } else {
+                    res.render("purchases/purchase", { User: foundUser, coupon: allCoupons, couponStatus: "Yes", couponpriceModifier: priceModifier })
+                }
+                console.log(priceModifier)
+            });
+    });
+    });
+});
+
 
 router.post("/purchase/order", function (req, res) {
     Order.create(new Order({
@@ -126,13 +144,13 @@ router.post("/purchase/order", function (req, res) {
     }));
     
 
-    //User.findByIdAndUpdate(req.body.user_id, { $set: { shoppingcart: [] }, $set: { amount: [] } }, function (err, newProd) {
-    //    if (err) {
-    //        console.log(err)
-    //    }
-    //});
-    
-    res.redirect(/thankyou/ + req.body.user_id);
+
+    User.findById(req.body.user_id).populate("shoppingcart").exec(function (error, foundUser) {
+        console.log(req.body.couponStatus)
+        console.log(req.body.couponpriceModifierValue)
+        res.render("purchases/thankyou", { User: foundUser, couponStatus: req.body.couponStatus, couponpriceModifierValue: req.body.couponpriceModifierValue })
+
+    });
 });
 
 function isLoggedIn(req, res, next) {

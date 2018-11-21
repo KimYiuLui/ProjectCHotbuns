@@ -2,7 +2,7 @@
 <% var rowAmount = 0%>
 <% var rowAmountUser = 0%>
 <% var rowAmountOrder = 0%>
-
+<% var rowAmountCoupon = 0%>
 
 <div class="container mt-4 mb-4">
     <h1>Admin Panel</h1>
@@ -14,16 +14,19 @@
             <a class="nav-link" data-toggle="tab" href="#menu1">Gebruikers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu2">Nieuw product</a>
+            <a class="nav-link" data-toggle="tab" href="#menu4">Bestellingen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu6">Coupon codes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">Nieuw Product</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu3">Nieuwe gebruiker</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu4">Bestellingen</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu5">Coupon codes</a>
+            <a class="nav-link" data-toggle="tab" href="#menu5">Nieuwe coupon code</a>
         </li>
     </ul>
 
@@ -181,7 +184,7 @@
             </div>
 
         </div>
-
+        <!-- Add User -->
         <div class="tab-pane container fade" id="menu3">
             <div class="container">
                 <form action="/admin/newUser" method="POST">
@@ -250,7 +253,7 @@
             </div>
         </div>
 
-        <!-- Add User -->
+
         <div class="tab-pane container fade" id="menu4">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <table class="table">
@@ -309,6 +312,44 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="menu6">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Korting</th>
+                            <th scope="col">Annuleer</th>
+                        </tr>
+                    <tbody>
+
+
+                        <% coupon.forEach(function(coupon){ %>
+                        <% rowAmountCoupon = rowAmountCoupon + 1%>
+                        <tr>
+                            <th scope="row"><%=rowAmountCoupon%></th>
+                            <td><%= coupon.couponCode %></td>
+                            <td><%= coupon.priceModifier%>%</td>
+                            <td>
+                                <form class="form-inline" action="/admin/deleteCoupon?_method=PUT" method="POST">
+                                    <input type="hidden" name="coupon_id" value="<%= coupon._id %>">
+                                    <button name="product_id" value="<%= user._id %>" class="btn btn-sm btn-danger">Annuleer </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                    </tbody>
+
+
+
+                </table>
+
             </div>
         </div>
     </div>

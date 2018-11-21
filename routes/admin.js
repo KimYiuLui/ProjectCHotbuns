@@ -13,19 +13,19 @@ router.get("/admin/", isLoggedIn, function (req, res) {
     Product.find({}, function (error, allProducts) {
         User.find({}, function (err, allUsers) {
             Order.find({}, function (broke, allOrders) {
+                Coupon.find({}, function (broke, allCoupons) {
+                        if (error) {
+                        console.log(error)
+                    }
+                    if (err) {
+                        console.log(err)
+                    }
+                    if (broke) {
+                        console.log(broke)
+                    }
 
-                if (error) {
-                    console.log(error)
-                }
-                if (err) {
-                    console.log(err)
-                }
-                if (broke) {
-                    console.log(broke)
-                }
-
-                res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders })
-            
+                res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders, coupon: allCoupons })
+            });
             });
         });
     });
@@ -157,6 +157,18 @@ router.post("/admin/newProduct", function (req, res) {
 
 router.put("/admin/deleteOrder", function (req, res) {
     Order.findByIdAndRemove(req.body.order_id, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+}
+);
+
+router.put("/admin/deleteCoupon", function (req, res) {
+    Coupon.findByIdAndRemove(req.body.coupon_id, function (err) {
         if (err) {
             console.log(err);
             res.redirect(req.get("back"));

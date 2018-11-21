@@ -46,6 +46,22 @@
                         <td><%= productPostMath.toFixed(2)%></td>
                     </tr>
                     <% }) %>
+
+                    <% if (couponStatus == "Yes"){ %>
+                    <% var saleAmount1 = total * (1 - ("0." + couponpriceModifierValue)) %>
+                    <% var saleAmount2 = total - saleAmount1 %>
+                    <% total = total - saleAmount2 %>
+                    <% rowAmount = rowAmount +1%>
+
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Coupon korting</td>
+                        <td>-<%=couponpriceModifierValue%>%</td>
+                        <td></td>
+                        <td>-<%=saleAmount2.toFixed(2)%></td>
+
+                    </tr>
+                    <% } %>
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
                     <% total = total * 1.06 %>
