@@ -8,7 +8,7 @@ var passport        = require("passport");
 var Localstrategy   = require("passport-local");
 var methodOverride  = require("method-override");
 var flash           = require("connect-flash");
-
+var nodemailer      = require("nodemailer")
 
 //require Models 
 var User            = require("./models/user")
