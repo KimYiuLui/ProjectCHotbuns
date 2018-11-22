@@ -2,14 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\models",
+    "\\public",
     "\\routes",
     "\\views",
     "\\views\\admin",
     "\\views\\partials",
     "\\views\\product",
-    "\\views\\purchases",
-    "\\views\\user"
+    "\\views\\purchases"
   ],
-  "SelectedNode": "\\views\\purchases\\purchase.ejs",
+  "SelectedNode": "\\views\\admin\\panel.ejs",
   "PreviewInSolutionExplorer": false
 }

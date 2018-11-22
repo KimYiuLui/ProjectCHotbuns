@@ -6,7 +6,7 @@ var Order = require("../models/order");
 var Coupon = require("../models/coupon");
 var passport = require("passport");
 var mongoose = require("mongoose");
-
+var nodemailer = require('nodemailer');
 
 
 
@@ -143,7 +143,29 @@ router.post("/purchase/order", function (req, res) {
         orderedProductsName: req.body.name
     }));
     
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'hotbunsemail@gmail.com',
+            pass: 'Hotbuns123'
+        }
+    });
 
+    var emailHtml = "<a> Dank u voor het bestellen bij hotbuns. <a> <br /> <a> Uw bestelling is: " + req.body.name + "<br /> <a> Wij hopen voor een volgende bestelling! <a>"
+    var mailOptions = {
+        from: 'hotbunsemail@gmail.com',
+        to: req.body.email,
+        subject: 'Uw bestelling bij Hotbuns',
+        html: emailHtml
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 
     User.findById(req.body.user_id).populate("shoppingcart").exec(function (error, foundUser) {
         console.log(req.body.couponStatus)

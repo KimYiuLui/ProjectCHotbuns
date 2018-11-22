@@ -128,7 +128,7 @@
                 <div class="form-group float-right">
                     <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
                     <input type="hidden" name="username" value="<%= currentUser.username %>">
-
+                    <input type="hidden" name="email" value="<%= currentUser.email %>">
                     <input type="hidden" name="couponStatus" value="<%= couponStatus%>" />
                     <%if (couponStatus == "Yes"){%>
                     <input type="hidden" name="couponpriceModifierValue" value="<%= couponpriceModifierValue%>" />
