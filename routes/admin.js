@@ -150,7 +150,7 @@ router.post("/admin/newProduct", function (req, res) {
         ingredients: req.body.ingredients,
         allergy: req.body.allergy
     }),
-        req.flash("Actie voltooid"),
+        req.flash('success', "Actie voltooid"),
         res.redirect("/admin/")
     )
 });
@@ -185,7 +185,7 @@ router.post("/admin/makeACoupon", function (req, res) {
         priceModifier: req.body.priceModifier
     }));
 
-    req.flash("Actie voltooid"),
+    req.flash('success', "Actie voltooid"),
         res.redirect("/admin/")
 });
 

@@ -86,6 +86,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Naam</th>
+                            <th scope="col">Rol</th>
                             <th scope="col">Email</th>
                             <th scope="col">Bewerk</th>
                             <th scope="col">Verwijder</th>
@@ -98,6 +99,7 @@
                         <tr>
                             <th scope="row"><%=rowAmountUser%></th>
                             <td><%= user.name %></td>
+                            <td><%= user.role %></td>
                             <td><%= user.email %></td>
                             <% if(currentUser.id != user.id) {  %>
                             <td>
