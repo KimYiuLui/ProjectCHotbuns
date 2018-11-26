@@ -3,13 +3,14 @@
 <div class=" container mt-5">
     <h1 class="text-center">Bewerken</h1>
 </div>
-
+<!-- Het veranderen van een gebruiker vereist een aparte pagina, dit is deze pagina.-->
 <div class="container">
     <div class="row">
         <div style="width: 80%; margin: 0 auto; ">
             <div class="container">
                 <form action="/admin/finishModifyUser" method="POST">
                     <div class="form-row">
+                        <!-- Alles velden om in te vullen-->
                         <div class="form-group col-md-12">
                             <label for="Username">Gebruikersnaam<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" id="Username" type="text" name="username" placeholder="Gebruikersnaam" pattern="[a-z A-Z 0-9 \s]+{1,50}" value="<%=user.username%>" required>
@@ -67,7 +68,7 @@
                             <button class="btn btn-lg btn-primary btn-block">Voltooien</button>
                         </div>
                     </div>
-                </form>             
+                </form>
             </div>
         </div>
     </div>
