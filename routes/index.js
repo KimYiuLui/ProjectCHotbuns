@@ -23,7 +23,7 @@ router.post("/signup", function (req, res) {
     if (req.body.password == req.body.confirm_password) {
         User.register(new User({
             username: req.body.username,
-            role: "Admin",
+            role: "User",
             email: req.body.email,
             name: newName,
             naamToevoeging: req.body.naamToevoeging,
