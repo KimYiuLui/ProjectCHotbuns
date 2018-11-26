@@ -53,7 +53,7 @@ router.post("/signup", function (req, res) {
                     fullaname = newName + " " + req.body.surname;
                 }
 
-                var emailHtml = "<a> Beste " +  fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt.<br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBunsJs<a>"
+                var emailHtml = "<a> Beste " +  fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt.<br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBuns<a>"
                 var mailOptions = {
                     from: 'hotbunsemail@gmail.com',
                     to: req.body.email,
