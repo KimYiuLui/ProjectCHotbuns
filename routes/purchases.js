@@ -26,7 +26,7 @@ router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
     });
 });
 
-
+//Voeg iets toe aan de shoppingcart. Het push de productID en hoeveelheid naar de shoppingcart stuk in de USER.
 router.put("/shoppingcart/add", function (req, res) {
     amountString = req.body.amount + " " + req.body.amountLink;
     console.log(amountString);
@@ -41,14 +41,17 @@ router.put("/shoppingcart/add", function (req, res) {
     })
 });
 
+//Verander hoeveelheid van een product in de shoppingcart.
 router.put("/shoppingcart/modifyAmount", function (req, res) {
+//Maak variabelen aan om te veranderen. Vult deze variabelen met gegeven data uit website.
     var oldAmount = ""
     amountstring= ""
     oldAmount = req.body.fullamount;
+// 1 van de producten + hoeveelheid word in amountString gestopt.
     amountString = req.body.amount + " " + req.body.product_id;
-
+// In de array OldAmount word nu deze informatie gezet.
     oldAmount[parseInt(req.body.count)] = amountString;
-
+// In database zetten, als er maar 1 product in de winkellijst zit. Hoeft hij niet te zoeken naar de goede array plek, hierdoor update hij het direct via een andere variabel..
     if (req.body.formcount == 0) {
         User.findByIdAndUpdate(req.body.user_id, { $set: { amount: amountString } }, function (err, updateAmount) {
             if (err) {
@@ -61,7 +64,7 @@ router.put("/shoppingcart/modifyAmount", function (req, res) {
         });
     } else {
 
-
+// In database zetten.
         User.findByIdAndUpdate(req.body.user_id, { $set: { amount: oldAmount } }, function (err, updateAmount) {
             if (err) {
                 console.log(err)
@@ -88,11 +91,14 @@ router.put("/shoppingcart/modifyAmount", function (req, res) {
 //    });
 //});
 
+//Verwijderen uit shopppingcart.
 router.put("/shoppingcart/delete", function (req, res) {
     console.log("Test 1 " + req.body.amountValue);
     console.log("Test 1 " + req.body.amountSearch);
+//Zorgen dat hij ook de hoeveelheid-data verwijderd.
     amountDeleteString = req.body.amountValue + " " + req.body.amountSearch;
     console.log("Test 2 " + amountDeleteString);
+//Verwijderen van data in shoppingcart + hoeveelheid.
     User.findByIdAndUpdate(req.body.user_id, { $pull: { shoppingcart: { $in: req.body.product_id }, amount: { $in: amountDeleteString } } }, function (err, removefav) {
         if (err) {
             console.log(amountDeleteString);
@@ -103,7 +109,7 @@ router.put("/shoppingcart/delete", function (req, res) {
         }
     })
 });
-
+//Pagina van purchase. Dit komt na de shoppingacart, het pakt alles wat in je shoppingcart zit om nog te laten zien.
 router.get("/purchase/:id", isLoggedIn, function (req, res) {
     User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
         Coupon.find({}, function (broke, allCoupons) {
@@ -118,7 +124,7 @@ router.get("/purchase/:id", isLoggedIn, function (req, res) {
     });
     
 });
-
+// Checkt of de coupon geldig is. Als het niet zo is stuurt het No, anders stuurt het Ja + de hoeveelheid korting.
 router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
     User.findById(req.body.user_id).populate("shoppingcart").exec(function (error, foundUser) {
         Coupon.find({}, function (broke, allCoupons) {
@@ -134,7 +140,7 @@ router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
     });
 });
 
-
+// Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
     Order.create(new Order({
         targetUser: req.body.username,
@@ -142,7 +148,7 @@ router.post("/purchase/order", function (req, res) {
         orderedProducts: req.body.product_id,
         orderedProductsName: req.body.name
     }));
-    
+ // Email gebeuren. Het emailaccount.   
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -150,15 +156,23 @@ router.post("/purchase/order", function (req, res) {
             pass: 'Hotbuns123'
         }
     });
+// Voor de email opmaak. Zet alles onder elkaar.
+    var noLayout = req.body.name;
+    var withLayout = ""
+    console.log(noLayout)
+    noLayout.forEach(function (element) {
+    withLayout =  withLayout + "-   " + element + " <br />"
 
-    var emailHtml = "<a> Dank u voor het bestellen bij hotbuns. <a> <br /> <a> Uw bestelling is: " + req.body.name + "<br /> <a> Wij hopen voor een volgende bestelling! <a>"
+    });
+// De email zelf.
+    var emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> Bedankt dat u gekozen heeft voor Hotbuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
     var mailOptions = {
         from: 'hotbunsemail@gmail.com',
         to: req.body.email,
         subject: 'Uw bestelling bij Hotbuns',
         html: emailHtml
     };
-
+// Stuurt de email + laat zien of het gelukt is.
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -166,7 +180,7 @@ router.post("/purchase/order", function (req, res) {
             console.log('Email sent: ' + info.response);
         }
     });
-
+// Laat de thankyou pagina zien + alle benodigde gegevens.
     User.findById(req.body.user_id).populate("shoppingcart").exec(function (error, foundUser) {
         console.log(req.body.couponStatus)
         console.log(req.body.couponpriceModifierValue)

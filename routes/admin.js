@@ -8,7 +8,7 @@ var passport = require("passport");
 var mongoose = require("mongoose");
 
 
-/////ADMIN TEMP SPOT///// -Vraag ff aan kimyu of hij een route kan maken, Mij lukt het niet-
+// De admin panel zelf. Heeft elke schema nodig omdat het alles gebruikt .
 router.get("/admin/", isLoggedIn, function (req, res) {
     Product.find({}, function (error, allProducts) {
         User.find({}, function (err, allUsers) {
@@ -105,7 +105,7 @@ router.post("/admin/finishModifyUser", isLoggedIn, function (req, res) {
 
     })
 });
-
+//Verwijder gebruiker.
 router.put("/admin/deleteUser", function (req, res) {
     User.findByIdAndRemove(req.body.user_id, function (err) {
         if (err) {
@@ -117,7 +117,7 @@ router.put("/admin/deleteUser", function (req, res) {
     });
 }
 );
-
+//Maak een nieuwe user aan.
 router.post("/admin/newUser", function (req, res) {
     User.register(new User({
         username: req.body.username,
@@ -139,7 +139,7 @@ router.post("/admin/newUser", function (req, res) {
     });
 
 });
-
+//Maak een nieuw product aan.
 router.post("/admin/newProduct", function (req, res) {
     Product.create(new Product({
         name: req.body.name,
@@ -154,7 +154,7 @@ router.post("/admin/newProduct", function (req, res) {
         res.redirect("/admin/")
     )
 });
-
+// Verwijder een bestelling.
 router.put("/admin/deleteOrder", function (req, res) {
     Order.findByIdAndRemove(req.body.order_id, function (err) {
         if (err) {
@@ -166,7 +166,7 @@ router.put("/admin/deleteOrder", function (req, res) {
     });
 }
 );
-
+//Verwijder een coupon.
 router.put("/admin/deleteCoupon", function (req, res) {
     Coupon.findByIdAndRemove(req.body.coupon_id, function (err) {
         if (err) {
@@ -178,7 +178,7 @@ router.put("/admin/deleteCoupon", function (req, res) {
     });
 }
 );
-
+//Maak een coupon aan.
 router.post("/admin/makeACoupon", function (req, res) {
     Coupon.create(new Coupon({
         couponCode: req.body.couponCode,

@@ -8,8 +8,9 @@
     "\\views\\admin",
     "\\views\\partials",
     "\\views\\product",
-    "\\views\\purchases"
+    "\\views\\purchases",
+    "\\views\\user"
   ],
-  "SelectedNode": "\\views\\admin\\panel.ejs",
+  "SelectedNode": "\\views\\user\\modifyUser.ejs",
   "PreviewInSolutionExplorer": false
 }

@@ -3,13 +3,14 @@
 <div class=" container mt-5">
     <h1 class="text-center">Bewerken</h1>
 </div>
-
+<!-- Het veranderen van een product vereist een aparte pagina, dit is deze pagina.-->
 <div class="container">
     <div class="row">
         <div style="width: 80%; margin: 0 auto; ">
             <div class="container">
                 <form action="/admin/finishModifyProduct" method="POST">
                     <div class="form-row">
+                        <!-- Alle velden waar je de data moet invullen.-->
                         <div class="form-group col-md-12">
                             <label for="Name">Product naam<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" id="Name" type="text" name="name" placeholder="Product naam" value="<%=product.name%>" required>
