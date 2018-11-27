@@ -68,12 +68,14 @@ router.post("/signup", function (req, res) {
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
+                        req.flash("error", "Er is iets misgegaan probeer nog een keer");
+                        res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
                     } else {
                         console.log('Email sent: ' + info.response);
+                        req.flash('success', 'Uw account is succesvol aangemaakt!');
+                        res.redirect("/login");
                     }
                 });
-                req.flash('success', 'Uw account is succesvol aangemaakt!');
-                res.redirect("/login");
             }
         });
     } else {
@@ -128,7 +130,7 @@ router.post("/login", passport.authenticate("local",
         }
         if(req.user.active === false){
             req.logout();
-            req.flash('error', 'Uw account is nog niet geactiveerd. Controleer uw email om je account te activeren.');
+            req.flash('error', 'Uw account is nog niet geactiveerd. Controleer uw email om uw account te activeren.');
             res.redirect("/login");
         }
         req.logout();

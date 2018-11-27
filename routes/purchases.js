@@ -27,7 +27,6 @@ router.get("/shoppingcart/:id", isLoggedIn, function (req, res) {
             console.log(error)
         }
         else {
-
             res.render("purchases/shoppingcart", { User: foundUser })
         }
     });
@@ -41,8 +40,8 @@ router.put("/shoppingcart/add", function (req, res) {
         if (err) {
 
             res.redirect("back");
-        } else {
-
+        } 
+        else {
             res.redirect(req.get("referer"));
         }
     })
@@ -69,9 +68,8 @@ router.put("/shoppingcart/modifyAmount", function (req, res) {
             }
 
         });
-    } else {
-
-// In database zetten.
+    } 
+    else {    // In database zetten.
         User.findByIdAndUpdate(req.body.user_id, { $set: { amount: oldAmount } }, function (err, updateAmount) {
             if (err) {
                 console.log(err)
@@ -79,24 +77,9 @@ router.put("/shoppingcart/modifyAmount", function (req, res) {
             else {
                 res.redirect(/shoppingcart/ + req.body.user_id);
             }
-
         })
     };    
 });
-
-
-//router.get("/thankyou/:id", isLoggedIn, function (req, res) {
-//    User.findById(req.params.id).populate("shoppingcart").exec(function (error, foundUser) {
-
-//        if (error) {
-//            console.log(error)
-//        }
-//        else {
-
-//            res.render("purchases/thankyou", { User: foundUser })
-//        }
-//    });
-//});
 
 //Verwijderen uit shopppingcart.
 router.put("/shoppingcart/delete", function (req, res) {

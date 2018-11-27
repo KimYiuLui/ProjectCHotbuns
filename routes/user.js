@@ -9,10 +9,7 @@ var mongoose        = require("mongoose");
 router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
     Order.find({}, function (broke, allOrders) {
         User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
-            if (error) {
-                console.log(error)
-            }
-            if (broke) {
+            if (error || broke) {
                 console.log(error)
             }
             else {
