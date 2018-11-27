@@ -8,8 +8,15 @@ var passport = require("passport");
 var mongoose = require("mongoose");
 var nodemailer = require('nodemailer');
 
-
-
+var oldAmount, noLayout, withLayout, emailHtml, mailOptions 
+ // Email gebeuren. Het emailaccount.   
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'hotbunsemail@gmail.com',
+        pass: 'Hotbuns123'
+    }
+});
 
 
 ////TEST//// ZORG ERVOOR DAT HET ALLE ITEMS PAKT DIE IN WINKELWAGEN ZITTEN
@@ -44,7 +51,7 @@ router.put("/shoppingcart/add", function (req, res) {
 //Verander hoeveelheid van een product in de shoppingcart.
 router.put("/shoppingcart/modifyAmount", function (req, res) {
 //Maak variabelen aan om te veranderen. Vult deze variabelen met gegeven data uit website.
-    var oldAmount = ""
+    oldAmount = ""
     amountstring= ""
     oldAmount = req.body.fullamount;
 // 1 van de producten + hoeveelheid word in amountString gestopt.
@@ -136,7 +143,7 @@ router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
                 }
                 console.log(priceModifier)
             });
-    });
+        });
     });
 });
 
@@ -148,30 +155,35 @@ router.post("/purchase/order", function (req, res) {
         orderedProducts: req.body.product_id,
         orderedProductsName: req.body.name
     }));
- // Email gebeuren. Het emailaccount.   
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'hotbunsemail@gmail.com',
-            pass: 'Hotbuns123'
-        }
-    });
-// Voor de email opmaak. Zet alles onder elkaar.
-    var noLayout = req.body.name;
-    var withLayout = ""
-    console.log(noLayout)
-    noLayout.forEach(function (element) {
-    withLayout =  withLayout + "-   " + element + " <br />"
 
-    });
+// Voor de email opmaak. Zet alles onder elkaar.
+    var notArray = []
+    noLayout = req.body.name
+    withLayout = ""
+    console.log(Array.isArray(req.body.name))
+    
+    if(Array.isArray(req.body.name) == false){
+        notArray.push(req.body.name)
+        notArray.forEach(function (element) {
+            withLayout =  withLayout + "-   " + element + " <br />"
+        })
+    }
+    if(Array.isArray(req.body.name) == true){
+        noLayout.forEach(function (element) {
+            withLayout =  withLayout + "-   " + element + " <br />"
+        })
+    } 
+    console.log(noLayout)
+
 // De email zelf.
-    var emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> Bedankt dat u gekozen heeft voor Hotbuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
-    var mailOptions = {
+    emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> Bedankt dat u gekozen heeft voor Hotbuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
+    mailOptions = {
         from: 'hotbunsemail@gmail.com',
         to: req.body.email,
         subject: 'Uw bestelling bij Hotbuns',
         html: emailHtml
     };
+
 // Stuurt de email + laat zien of het gelukt is.
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {

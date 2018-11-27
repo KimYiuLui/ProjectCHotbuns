@@ -1,9 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var Product = require("../models/product");
-var passport = require("passport");
-var mongoose = require("mongoose");
-var User = require("../models/user");
 
 //-------------------------------------------------------------------
 //-------------------------------BROOD
@@ -31,8 +28,6 @@ router.get("/brood/:id", function(req, res){
     });
 });
 
-
-
 //-------------------------------------------------------------------
 //-------------------------------KOEK
 //-------------------------------------------------------------------
@@ -59,8 +54,6 @@ router.get("/koek/:id", function(req, res){
     });
 });
 
-
-
 //-------------------------------------------------------------------
 //-------------------------------Zoetigheid
 //-------------------------------------------------------------------
@@ -86,8 +79,5 @@ router.get("/zoetigheid/:id", function(req, res){
         }
     });
 });
-
-
-
 
 module.exports = router;

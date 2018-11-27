@@ -3,7 +3,15 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var nodemailer = require('nodemailer');
-var host, rand, link, emailHtml, mailOptions;
+
+var host, rand, link, emailHtml, mailOptions, fullaname, newName;
+var transporter = nodemailer.createTransport({ //setting up email account
+    service: 'gmail',
+    auth: {
+        user: 'hotbunsemail@gmail.com',
+        pass: 'Hotbuns123'
+    }
+});
 
 //-------------------------------------
 //Home and other informative pages 
@@ -20,7 +28,7 @@ router.get("/signup", function (req, res) {
 });
 
 router.post("/signup", function (req, res) {
-    var newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
+    newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
     if (req.body.password == req.body.confirm_password) {
         User.register(new User({
             active: false,
@@ -39,27 +47,17 @@ router.post("/signup", function (req, res) {
                 res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
             }
             else {
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: 'hotbunsemail@gmail.com',
-                        pass: 'Hotbuns123'
-                    }
-                });
-
-                var fullaname;
                 if (req.body.naamToevoeging != null) {
                     fullaname = newName + " " + req.body.naamToevoeging + " " + req.body.surname;
                 }
                 else {
                     fullaname = newName + " " + req.body.surname;
                 }
-
                 rand = Math.floor((Math.random() * 100 + 54));
                 host = req.get('host')
                 link = "http://" + host + "/verify?id=" + rand;
-
                 emailHtml = "<a> Beste " + fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt. <br/><a href=" + link + ">Klik deze link om je email te bevestigen<a/><br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBunsJs<a>"
+                
                 mailOptions = {
                     from: 'hotbunsemail@gmail.com',
                     to: req.body.email,
