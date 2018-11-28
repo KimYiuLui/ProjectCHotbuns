@@ -11,6 +11,6 @@
     "\\views\\purchases",
     "\\views\\user"
   ],
-  "SelectedNode": "\\views\\user\\modifyUser.ejs",
+  "SelectedNode": "\\views\\product\\category.ejs",
   "PreviewInSolutionExplorer": false
 }
