@@ -13,16 +13,12 @@ router.get("/admin/", isLoggedIn, function (req, res) {
         User.find({}, function (err, allUsers) {
             Order.find({}, function (broke, allOrders) {
                 Coupon.find({}, function (broke, allCoupons) {
-                        if (error) {
+                    if (error || err || broke) {
                         console.log(error)
-                    }
-                    if (err) {
                         console.log(err)
-                    }
-                    if (broke) {
                         console.log(broke)
                     }
-                res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders, coupon: allCoupons })
+                    res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders, coupon: allCoupons })
                 });
             });
         });
@@ -33,9 +29,6 @@ router.get("/admin/", isLoggedIn, function (req, res) {
 router.put("/admin/modifyProduct", isLoggedIn, function (req, res) {
     Product.findById(req.body.product_id, function (err, givenProduct) {
         User.find({}, function (err, allUsers) {
-            if (err) {
-                console.log(err)
-            }
             if (err) {
                 console.log(err)
             }
