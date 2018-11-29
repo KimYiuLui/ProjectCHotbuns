@@ -12,7 +12,7 @@ router.get("/brood", function(req, res){
             res.redirect("/")
         }
         else {
-            res.render("product/category", { product: allBrood });
+            res.render("product/brood", { product: allBrood });
         }
     });
 });
@@ -38,7 +38,7 @@ router.get("/koek", function(req, res){
             res.redirect("/")
         }
         else{
-            res.render("product/category", {product: allKoek});
+            res.render("product/koek", {product: allKoek});
         }
     });
 });
@@ -64,7 +64,7 @@ router.get("/zoetigheid", function(req, res){
             res.redirect("/")
         }
         else{
-            res.render("product/category", {product: allZoetigheid});
+            res.render("product/zoetigheid", {product: allZoetigheid});
         }
     });
 });
@@ -115,7 +115,7 @@ router.post("/productfilter", function (req, res) {
             console.log(error)
         }
         else {
-            res.render("product/category", { product: filteredProduct })
+            res.render("product/brood", { product: filteredProduct })
         }
     });
 });
