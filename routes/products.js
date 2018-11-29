@@ -88,25 +88,29 @@ router.post("/productfilter", function (req, res) {
     var korstfilter = req.body.korstoptie;
     var overigefilter = req.body.overigeoptie;
 
+    console.log(broodfilter)
+    console.log(zadenfilter)
+    console.log(korstfilter)
+    console.log(overigefilter)
 
-    if (req.body.broodsoort == "all") {
-    broodfilter = /^ /
+    if (broodfilter == "all") {
+        broodfilter = /^/
     };
 
-    if (req.body.zadenoptie == "allz") {
-        zadenfilter = /^ /
+    if (zadenfilter == "allz") {
+        zadenfilter = /^/
     };
 
-    if (req.body.korstoptie == "allk") {
-        korstfilter = /^ /
+    if (korstfilter == "allk") {
+        korstfilter = /^/
     };
 
-    if (req.body.overigeoptie == "allo") {
-        overigefilter = /^ /
+    if (overigefilter == "allo") {
+        overigefilter = /^/
     };
 
-
-    Product.find({ category: "brood", allergy: overigefilter  }, function (error, filteredProduct) {
+    Product.find({
+        category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }] }, function (error, filteredProduct) {
         if (error) {
             console.log(error)
         }
