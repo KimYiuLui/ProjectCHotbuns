@@ -129,11 +129,11 @@ router.post("/login", passport.authenticate("local",
             res.redirect("/");
         }
         if(req.user.active === false){
-            req.logout();
+            req.logout(); // temporary fix 
             req.flash('error', 'Uw account is nog niet geactiveerd. Controleer uw email om uw account te activeren.');
             res.redirect("/login");
         }
-        req.logout();
+        req.logout();// temporary fix
         req.flash('error', 'Er is iets misgegaan probeer het nog een keer.');
         res.redirect("/login");  
 })
