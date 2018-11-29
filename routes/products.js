@@ -80,4 +80,39 @@ router.get("/zoetigheid/:id", function(req, res){
     });
 });
 
+// Filteren
+router.post("/productfilter", function (req, res) {
+
+    var broodfilter = req.body.broodsoort;
+    var zadenfilter = req.body.zadenoptie;
+    var korstfilter = req.body.korstoptie;
+    var overigefilter = req.body.overigeoptie;
+
+
+    if (req.body.broodsoort == "all") {
+    broodfilter = /^ /
+    };
+
+    if (req.body.zadenoptie == "allz") {
+        zadenfilter = /^ /
+    };
+
+    if (req.body.korstoptie == "allk") {
+        korstfilter = /^ /
+    };
+
+    if (req.body.overigeoptie == "allo") {
+        overigefilter = /^ /
+    };
+
+
+    Product.find({ category: "brood", allergy: overigefilter  }, function (error, filteredProduct) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            res.render("product/category", { product: filteredProduct })
+        }
+    });
+});
 module.exports = router;

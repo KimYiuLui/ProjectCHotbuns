@@ -3,75 +3,93 @@
 
 <div class="bg-light filter-bar">
     <div class="container mx-auto">
+
         <div>
             <h4 class="text-center">Filter</h4>
         </div>
-        <div class="row">
-            <div class="col">
-                <a>Soort brood</a>
-                <br />
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Wit
-                </label> <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Bruin
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Volkoren
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Mais
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Spelt
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="broodsoort" value=""> Meergranen
-                </label>  <!-- form-check.// -->
-            </div>
-            <div class="col">
-                <a>Zaden?</a>
-                <br />
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Zadenoptie" value=""> Met Zaden
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Zadenoptie" value=""> Zonder Zaden
-                </label>  <!-- form-check.// -->
-            </div>
-            <div class="col">
-                <a>Geliefde korst</a>
-                <br />
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Korstoptie" value=""> Harde Korst
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Korstoptie" value=""> Zachte Korst
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
+        <form action="/productfilter" method="POST">
+            <div class="row">
 
-                </label>  <!-- form-check.// -->
-            </div>
-            <div class="col">
-                <a>Overige opties</a>
-                <br />
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Overigeoptie" value=""> Koolhydraat arm
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Overigeoptie" value=""> Zoutarm
-                </label>  <!-- form-check.// -->
-                <label class="form-check-label col-md">
-                    <input class="form-check-input" type="radio" name="Overigeoptie" value=""> Glutenvrij
-                </label>  <!-- form-check.// -->
-                <br />
-                <br />
-                <a href="" class="btn btn-primary">Filter!</a>
-            </div>
+                <div class="col">
 
-        </div>
+                    <a>Soort brood</a>
+                    <br />
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="all" checked> Elke soort
+                    </label> <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="wit"> Wit
+                    </label> <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="bruin"> Bruin
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="volk"> Volkoren
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="mais"> Mais
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="spelt" /> Spelt 
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="broodsoort" value="mg"> Meergranen
+                    </label>  <!-- form-check.// -->
+                </div>
+                <div class="col">
+                    <a>Zaden?</a>
+                    <br />
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zadenoptie" value="allz" checked > Elke soort
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zadenoptie" value="mz"> Met Zaden
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zadenoptie" value="zz"> Zonder Zaden
+                    </label>  <!-- form-check.// -->
+                </div>
+                <div class="col">
+                    <a>Geliefde korst</a>
+                    <br />
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="korstoptie" value="allk" checked > Beide
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="korstoptie" value="hk"> Harde Korst
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="korstoptie" value="zk"> Zachte Korst
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+
+                    </label>  <!-- form-check.// -->
+                </div>
+                <div class="col">
+                    <a>Overige opties</a>
+                    <br />
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="overigeoptie" value="allo" checked> alle overige
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="overigeoptie" value="karm"> Koolhydraat arm
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="overigeoptie" value="za"> Zoutarm
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="overigeoptie" value="gv"> Glutenvrij
+                    </label>  <!-- form-check.// -->
+                    <br />
+                    <br />
+                    <button class="btn btn-sm btn-dark">Filter</button>
+                </div>
+            </div>
+        </form>
     </div>
+
 </div>
+
 <div class="container">
  <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% product.forEach(function(product){ %>
