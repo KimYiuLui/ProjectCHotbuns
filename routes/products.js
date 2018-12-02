@@ -1,26 +1,37 @@
 var express = require("express");
 var router = express.Router();
 var Product = require("../models/product");
-var passport = require("passport");
-var mongoose = require("mongoose");
-var User = require("../models/user");
-
 //-------------------------------------------------------------------
 //-------------------------------BROOD
 //-------------------------------------------------------------------
-router.get("/brood", function(req, res){
-    Product.find({ category: "brood" }, function (error, allBrood) {
-        if (error) {
-            console.log(error)
-            res.redirect("/")
-        }
-        else {
-            res.render("product/category", { product: allBrood });
-        }
-    });
-});
+function getCategory(category){
+    var query = Product.find({category: category});
+    return query;
+};
 
-router.get("/brood/:id", function(req, res){
+router.get("/brood/:page", function(req, res, next){
+    var perPage = 24
+    var page = req.params.page ||  1 
+    Product
+        .find({category: "brood"})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(error,products){
+            Product.find({category: "brood"})
+                   .count()
+                   .exec(function(error, count){
+                       if(error) return next(error)
+                       res.render("product/brood",{
+                        product: products, 
+                        current:page, 
+                        pages: Math.ceil(count / perPage)
+                    })
+            })
+    })
+})
+
+
+router.get("/brood/detail/:id", function(req, res){
     Product.findById(req.params.id, function(error, foundProduct){
         if(error){
             console.log(error)
@@ -30,25 +41,32 @@ router.get("/brood/:id", function(req, res){
         }
     });
 });
-
-
 
 //-------------------------------------------------------------------
 //-------------------------------KOEK
 //-------------------------------------------------------------------
-router.get("/koek", function(req, res){
-    Product.find({category: "koek"}, function(error, allKoek){
-        if(error){
-            console.log(error)
-            res.redirect("/")
-        }
-        else{
-            res.render("product/category", {product: allKoek});
-        }
-    });
+router.get("/koek/:page", function(req, res, next){
+    var perPage = 24
+    var page = req.params.page ||  1 
+    Product
+        .find({category: "koek"})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(error,products){
+            Product.find({category: "koek"})
+                   .count()
+                   .exec(function(error, count){
+                       if(error) return next(error)
+                       res.render("product/koek",{
+                        product: products, 
+                        current:page, 
+                        pages: Math.ceil(count / perPage)
+                       })
+                   })
+        })
 });
 
-router.get("/koek/:id", function(req, res){
+router.get("/koek/detail/:id", function(req, res){
     Product.findById(req.params.id, function(error, foundProduct){
         if(error){
             console.log(error)
@@ -58,25 +76,32 @@ router.get("/koek/:id", function(req, res){
         }
     });
 });
-
-
 
 //-------------------------------------------------------------------
 //-------------------------------Zoetigheid
 //-------------------------------------------------------------------
-router.get("/zoetigheid", function(req, res){
-    Product.find({category: "zoetigheid"}, function(error, allZoetigheid){
-        if(error){
-            console.log(error)
-            res.redirect("/")
-        }
-        else{
-            res.render("product/category", {product: allZoetigheid});
-        }
-    });
+router.get("/zoetigheid/:page", function(req, res){
+    var perPage = 24
+    var page = req.params.page ||  1 
+    Product
+        .find({category: "zoetigheid"})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(error,products){
+            Product.find({category: "zoetigheid"})
+                   .count()
+                   .exec(function(error, count){
+                       if(error) return next(error)
+                       res.render("product/zoetigheid",{
+                        product: products, 
+                        current:page, 
+                        pages: Math.ceil(count / perPage)
+                       })
+                   })
+        })
 });
 
-router.get("/zoetigheid/:id", function(req, res){
+router.get("/zoetigheid/detail/:id", function(req, res){
     Product.findById(req.params.id, function(error, foundProduct){
         if(error){
             console.log(error)
@@ -87,7 +112,45 @@ router.get("/zoetigheid/:id", function(req, res){
     });
 });
 
+// Filteren
+router.post("/brood/:page", function (req, res) {
 
+    var broodfilter = req.body.broodsoort;
+    var zadenfilter = req.body.zadenoptie;
+    var korstfilter = req.body.korstoptie;
+    var overigefilter = req.body.overigeoptie;
+
+    console.log(broodfilter)
+    console.log(zadenfilter)
+    console.log(korstfilter)
+    console.log(overigefilter)
+
+    if (broodfilter == "all") {
+        broodfilter = /^/
+    };
+
+    if (zadenfilter == "allz") {
+        zadenfilter = /^/
+    };
+
+    if (korstfilter == "allk") {
+        korstfilter = /^/
+    };
+
+    if (overigefilter == "allo") {
+        overigefilter = /^/
+    };
+
+    Product.find({
+        category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }] }, function (error, filteredProduct) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            res.render("product/brood", { product: filteredProduct })
+        }
+    });
+});
 
 
 module.exports = router;

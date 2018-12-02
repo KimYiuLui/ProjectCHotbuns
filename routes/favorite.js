@@ -6,7 +6,6 @@ var passport    = require("passport");
 var mongoose    = require("mongoose");
 
 router.put("/favorieten", function(req, res){
-
     User.findByIdAndUpdate(req.body.user_id, {$push: {favorite: req.body.product_id}} , function(err, newfav){
         if(err){
             res.redirect("back");

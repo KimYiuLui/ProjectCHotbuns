@@ -12,7 +12,5 @@ var OrderSchema = new mongoose.Schema({
     amount: [String]
 });
 
-
-
 module.exports = mongoose.model("Order", OrderSchema);
 

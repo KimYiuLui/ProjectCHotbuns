@@ -9,11 +9,7 @@ var mongoose        = require("mongoose");
 router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
     Order.find({}, function (broke, allOrders) {
         User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
-
-            if (error) {
-                console.log(error)
-            }
-            if (broke) {
+            if (error || broke) {
                 console.log(error)
             }
             else {
@@ -22,8 +18,6 @@ router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
         });
     })
 });
-
-
 
 router.post("/brood/:id", function(req, res){
     User.findByIdAndUpdate(req.params.id,  )
@@ -38,7 +32,6 @@ function isLoggedIn(req, res, next){
 
 router.put("/user/modifyUser", isLoggedIn, function (req, res) {
     User.findById(req.body.user_id, function (err, givenUser) {
-
         if (err) {
             console.log(err)
         }
@@ -61,7 +54,6 @@ router.post("/user/finishModifyUser", isLoggedIn, function (req, res) {
             console.log("No Error, Updated?");
             res.redirect("/gebruiker/" + req.body.user_id)
         }
-
     })
 });
 module.exports = router;

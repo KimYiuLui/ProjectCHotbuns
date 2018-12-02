@@ -68,24 +68,6 @@ app.use(purchasesRoutes);
 app.use(UserRoutes);
 app.use(FavoriteRoutes);
 
-
-// Products.create({
-//     name: " Hazelnootschuimtaart",
-//     image: "zoetigheid/Hazelnootschuimtaart.jpg",
-//     description: "Luchtige, krokante hazelnoot meringue plakken gevuld met hazelnootcrème op basis van praline en afgewerkt met gekarameliseerde en geroosterde stukjes hazelnoot. Voor gebruik even op kamertemperatuur laten komen en genieten maar! Perfecte combinatie van krokant en luchtig. 6-8 porties. Koffie of thee, daar hoort iets lekkers bij! Ook heerlijk als dessert.",
-//     ingredients:["suiker", " roomboter", " 12% hazelnoot", " scharreleigeel", " scharrelei", " gekaramelliseerde suiker", " natuurlijk aroma", " water", " voedingszuur (citroenzuur)", " verdikkingsmiddel (johannesbroodpitmeel", " E466)", " zuurteregelaar (E500)", " cacaomassa", " mageremelkpoeder", " scharrelei-eiwitpoeder", " magereyoghurtpoeder", " cacaoboter", " magerekwarkpoeder", " vollemelkpoeder", " vanille", " boterolie", " lactose", " emulgator (sojalecithine", " lecithine)", " natuurlijk vanillearoma", " glansmiddel (arabische gom", " schellak)", " plantaardig vet (kokos", " palm)", " koffie", " aroma"],
-//     allergy: ["eieren", " lactose", " melk", " hazelnoot", " soja", " noten", " glutenbevattende granen", " amandel", " cashewnoot", " pecannoot", " pistache-noot", " walnoot", " tarwe"],
-//     price: "7.99",
-//     category: "zoetigheid"
-// }),
-// function(error, brood){
-//     if(error){
-//         console.log(error);
-//     }else{
-//         console.log(brood)
-//     }
-// }
-
 // // for online version 
 // app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Server is running ");

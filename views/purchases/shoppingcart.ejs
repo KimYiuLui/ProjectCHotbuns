@@ -19,10 +19,10 @@
 
             <div class="container">
                 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-                    <!-- VERANDER DEZE LIJN ALS JE DINGEN IN WINKELWAGEN KAN ZETTEN -->
+                    <!-- Voor alles in winkelwagen-->
                     <% User.shoppingcart.forEach(function(product){ %>
                     <%var formcount = -1%>
-
+                    <!-- Tel de counts bij, bereken de hoeveelheid + kosten, bereken het totaal-->
                     <% count = count + 1 %>
                     <% amountString =  currentUser.amount[count] %>
                     <% var productPostMath = product.price * amountString.charAt(0)
@@ -31,7 +31,7 @@
                     <div class="col-lg-2 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
 
-
+                            <!-- Voor elk product maakt hij zo'n leuk plaatje en text aan-->
                             <a href="/<%=product.category %>/<%= product._id %>"><img class="rounded img-thumbnail" src="/image/<%= product.image %>"></a>
 
                             <p>€ <%=product.price %></p>
@@ -62,12 +62,14 @@
                         </div>
                     </div>
                     <% }); %>
+                    <!-- BTW en verzendkosten-->
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
                     <% total = total * 1.06 %>
                     <% total = total + 3.50 %>
                 </div>
             </div>
+            <!-- Als het leeg is, dan zeg je dat hij leeg is, anders geef je het totaalbedrag.-->
             <% if (count == -1){ %>
             <a> De winkelwagen is leeg!</a>
             <% } %>

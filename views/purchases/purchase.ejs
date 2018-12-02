@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-
+<!-- Variabelen aanmaken voor gebruik-->
 <%
 
     var rowAmount = 0
@@ -22,6 +22,7 @@
         <div class="container mx-auto">
             <h4> Afrekenen </h4>
             <a> <strong>Kijk nog even uw gegevens na: </strong></a>
+            <!-- Ingelogde gebruiker zijn gegevens-->
             <address>
                 Naam: <%=currentUser.name%> <%=currentUser.surname%><br />
                 Email: <%=currentUser.email%><br />
@@ -29,7 +30,7 @@
                 Adres: <%=currentUser.address.street%> <%=currentUser.address.number%> <%=currentUser.address.additionals%> <br />
 
             </address>
-
+            <!-- Tabel met alle producten en informatie-->
             <table class="table">
                 <thead>
                     <tr>
@@ -41,7 +42,7 @@
                     </tr>
                 <tbody>
 
-
+                    <!-- Voor elk product in de shoppingcart tel de counts op, en zet de hoeveelheden op.-->
                     <% User.shoppingcart.forEach(function(product){ %>
                     <% count = count + 1 %>
                     <% rowAmount = rowAmount +1%>
@@ -59,6 +60,7 @@
                         <td><%=productPostMath.toFixed(2)%></td>
                     </tr>
                     <% }) %>
+                    <!-- Als een coupon gebruikt is, verander het totaalbedrag, en laat de korting zien-->
                     <% if (couponStatus == "Yes"){ %>
                     <% var saleAmount1 = total * (1 - ("0." + couponpriceModifierValue)) %>
                     <% var saleAmount2 = total - saleAmount1 %>
@@ -74,6 +76,7 @@
 
                     </tr>
                     <% } %>
+                    <!-- BTW en verzendkosten bijrekenen-->
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
                     <% total = total * 1.06 %>
@@ -103,7 +106,7 @@
             <h5>
                 Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
             </h5>
-
+            <!-- Als er geen coupon gegeven was (Net naar pagina gegaan) of een verkeerde coupon, geef een melding-->
             <% if (couponStatus == "noInsert" || couponStatus == "No"){ %>
             <% console.log(couponStatus) %>
             <% if (couponStatus == "No"){ %>
