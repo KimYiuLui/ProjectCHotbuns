@@ -1,17 +1,14 @@
 var express = require("express");
 var router = express.Router();
 var Product = require("../models/product");
+
+var perPage, page
 //-------------------------------------------------------------------
 //-------------------------------BROOD
 //-------------------------------------------------------------------
-function getCategory(category){
-    var query = Product.find({category: category});
-    return query;
-};
-
 router.get("/brood/:page", function(req, res, next){
-    var perPage = 24
-    var page = req.params.page ||  1 
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
     Product
         .find({category: "brood"})
         .skip((perPage * page) - perPage)
@@ -30,24 +27,12 @@ router.get("/brood/:page", function(req, res, next){
     })
 })
 
-
-router.get("/brood/detail/:id", function(req, res){
-    Product.findById(req.params.id, function(error, foundProduct){
-        if(error){
-            console.log(error)
-        }
-        else{
-            res.render("product/product", {product: foundProduct})
-        }
-    });
-});
-
 //-------------------------------------------------------------------
 //-------------------------------KOEK
 //-------------------------------------------------------------------
 router.get("/koek/:page", function(req, res, next){
-    var perPage = 24
-    var page = req.params.page ||  1 
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
     Product
         .find({category: "koek"})
         .skip((perPage * page) - perPage)
@@ -66,23 +51,12 @@ router.get("/koek/:page", function(req, res, next){
         })
 });
 
-router.get("/koek/detail/:id", function(req, res){
-    Product.findById(req.params.id, function(error, foundProduct){
-        if(error){
-            console.log(error)
-        }
-        else{
-            res.render("product/product", {product: foundProduct})
-        }
-    });
-});
-
 //-------------------------------------------------------------------
 //-------------------------------Zoetigheid
 //-------------------------------------------------------------------
 router.get("/zoetigheid/:page", function(req, res){
-    var perPage = 24
-    var page = req.params.page ||  1 
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
     Product
         .find({category: "zoetigheid"})
         .skip((perPage * page) - perPage)
@@ -101,7 +75,11 @@ router.get("/zoetigheid/:page", function(req, res){
         })
 });
 
-router.get("/zoetigheid/detail/:id", function(req, res){
+//-------------------------------------------------------------------
+//------------------------------Detail Page
+//-------------------------------------------------------------------
+
+router.get("/:category/detail/:id", function(req, res){
     Product.findById(req.params.id, function(error, foundProduct){
         if(error){
             console.log(error)
@@ -112,34 +90,21 @@ router.get("/zoetigheid/detail/:id", function(req, res){
     });
 });
 
-// Filteren
+//-------------------------------------------------------------------
+//------------------------------Filter
+//-------------------------------------------------------------------
 router.post("/brood/:page", function (req, res) {
 
     var broodfilter = req.body.broodsoort;
     var zadenfilter = req.body.zadenoptie;
     var korstfilter = req.body.korstoptie;
     var overigefilter = req.body.overigeoptie;
+    console.log(broodfilter, zadenfilter, korstfilter, overigefilter)
 
-    console.log(broodfilter)
-    console.log(zadenfilter)
-    console.log(korstfilter)
-    console.log(overigefilter)
-
-    if (broodfilter == "all") {
-        broodfilter = /^/
-    };
-
-    if (zadenfilter == "allz") {
-        zadenfilter = /^/
-    };
-
-    if (korstfilter == "allk") {
-        korstfilter = /^/
-    };
-
-    if (overigefilter == "allo") {
-        overigefilter = /^/
-    };
+    if (broodfilter == "all") {broodfilter = /^/};
+    if (zadenfilter == "allz") {zadenfilter = /^/};
+    if (korstfilter == "allk") {korstfilter = /^/};
+    if (overigefilter == "allo") {overigefilter = /^/};
 
     Product.find({
         category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }] }, function (error, filteredProduct) {
@@ -147,10 +112,9 @@ router.post("/brood/:page", function (req, res) {
             console.log(error)
         }
         else {
-            res.render("product/brood", { product: filteredProduct })
+            res.render("product/broodFilter", { product: filteredProduct })
         }
     });
 });
-
 
 module.exports = router;
