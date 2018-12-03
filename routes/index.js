@@ -56,7 +56,7 @@ router.post("/signup", function (req, res) {
                 rand = Math.floor((Math.random() * 100 + 54));
                 host = req.get('host')
                 link = "http://" + host + "/verify?id=" + rand;
-                emailHtml = "<a> Beste " + fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt. <br/><a href=" + link + ">Klik deze link om je email te bevestigen<a/><br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBunsJs<a>"
+                emailHtml = "<a> Beste " + fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt. <br/><a href=" + link + ">Klik deze link om je email te bevestigen<a/><br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBuns<a>"
                 
                 mailOptions = {
                     from: 'hotbunsemail@gmail.com',
