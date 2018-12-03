@@ -11,6 +11,6 @@
     "\\views\\purchases",
     "\\views\\user"
   ],
-  "SelectedNode": "\\views\\product\\zoetigheid.ejs",
+  "SelectedNode": "\\views\\user\\user.ejs",
   "PreviewInSolutionExplorer": false
 }

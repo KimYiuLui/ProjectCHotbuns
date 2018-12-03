@@ -117,4 +117,41 @@ router.post("/brood/:page", function (req, res) {
     });
 });
 
+router.post("/koek/:page", function (req, res) {
+
+    var koekfilter = req.body.koeksoort;
+    console.log(koekfilter)
+
+    if (koekfilter == "all") { koekfilter = /^/ };
+
+    Product.find({
+        category: "koek", filters: koekfilter
+    }, function (error, filteredProduct) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            res.render("product/koekFilter", { product: filteredProduct })
+        }
+    });
+});
+
+router.post("/zoetigheid/:page", function (req, res) {
+
+    var zoetigheidfilter = req.body.zoetigsoort;
+    console.log(zoetigheidfilter)
+
+    if (zoetigheidfilter == "all") { zoetigheidfilter = /^/ };
+
+    Product.find({
+        category: "zoetigheid", filters: zoetigheidfilter
+    }, function (error, filteredProduct) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            res.render("product/zoetigheidFilter", { product: filteredProduct })
+        }
+    });
+});
 module.exports = router;
