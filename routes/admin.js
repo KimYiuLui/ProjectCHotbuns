@@ -4,8 +4,16 @@ var Order = require("../models/order");
 var Product = require("../models/product");
 var User = require("../models/user");
 var Coupon = require("../models/coupon");
-
+var nodemailer = require('nodemailer');
 var newName;
+//Email gebeuren
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'hotbunsemail@gmail.com',
+        pass: 'Hotbuns123'
+    }
+});
 
 // De admin panel zelf. Heeft elke schema nodig omdat het alles gebruikt .
 router.get("/admin/", isLoggedIn, function (req, res) {
@@ -173,6 +181,25 @@ router.post("/admin/makeACoupon", function (req, res) {
         couponCode: req.body.couponCode,
         priceModifier: req.body.priceModifier
     }));
+
+    // De email zelf.
+    emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> U heeft een gratis couponcode ontvangen! <br /> Wanneer u gaat betalen, vul '" + req.body.couponCode + "' in voor een korting van " + req.body.priceModifier +"%! <br /> <a> Wij hopen u snel te zien voor een  bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
+    mailOptions = {
+        from: 'hotbunsemail@gmail.com',
+        to: req.body.emailsend,
+        subject: 'U krijgt een gratis couponcode!',
+        html: emailHtml
+    };
+
+    // Stuurt de email + laat zien of het gelukt is.
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
 
     req.flash('success', "Actie voltooid"),
         res.redirect("/admin/")
