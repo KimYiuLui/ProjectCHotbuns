@@ -93,12 +93,41 @@ router.get("/:category/detail/:id", function(req, res){
 //-------------------------------------------------------------------
 //------------------------------Filter
 //-------------------------------------------------------------------
-router.post("/brood/:page", function (req, res) {
+router.get("/brood/filter/:page", function (req, res) {
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
 
-    var broodfilter = req.body.broodsoort;
-    var zadenfilter = req.body.zadenoptie;
-    var korstfilter = req.body.korstoptie;
-    var overigefilter = req.body.overigeoptie;
+    if (broodfilter == "all") {broodfilter = /^/};
+    if (zadenfilter == "allz") {zadenfilter = /^/};
+    if (korstfilter == "allk") {korstfilter = /^/};
+    if (overigefilter == "allo") {overigefilter = /^/};
+
+    Product
+    .find({category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }]})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(error,products){
+        Product.find({category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }]})
+               .count()
+               .exec(function(error, count){
+                   if(error) return next(error)
+                   res.render("product/broodFilter",{
+                    product: products, 
+                    current:page, 
+                    pages: Math.ceil(count / perPage)
+                })
+        })
+    })
+});
+
+router.post("/brood/filter/:page", function (req, res) {
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
+
+    broodfilter = req.body.broodsoort;
+    zadenfilter = req.body.zadenoptie;
+    korstfilter = req.body.korstoptie;
+    overigefilter = req.body.overigeoptie; 
     console.log(broodfilter, zadenfilter, korstfilter, overigefilter)
 
     if (broodfilter == "all") {broodfilter = /^/};
@@ -106,15 +135,22 @@ router.post("/brood/:page", function (req, res) {
     if (korstfilter == "allk") {korstfilter = /^/};
     if (overigefilter == "allo") {overigefilter = /^/};
 
-    Product.find({
-        category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }] }, function (error, filteredProduct) {
-        if (error) {
-            console.log(error)
-        }
-        else {
-            res.render("product/broodFilter", { product: filteredProduct })
-        }
-    });
+    Product
+    .find({category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }]})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(error,products){
+        Product.find({category: "brood", $and: [{ filters: overigefilter }, { filters: zadenfilter }, { filters: korstfilter }, { filters: broodfilter }]})
+               .count()
+               .exec(function(error, count){
+                   if(error) return next(error)
+                   res.render("product/broodFilter",{
+                    product: products, 
+                    current:page, 
+                    pages: Math.ceil(count / perPage)
+                })
+        })
+    })
 });
 
 module.exports = router;
