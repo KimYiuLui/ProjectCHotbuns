@@ -43,7 +43,7 @@ router.post("/signup", function (req, res) {
         }), req.body.password, function (error, user) {
             if (error) {
                 console.log(error);
-                req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
+                req.flash("error", "Gebruikersnaam en/of e-mailadres bestaat al. Gebruik een andere gebruikersnaam of e-mailadres.");
                 res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
             }
             else {
@@ -56,30 +56,30 @@ router.post("/signup", function (req, res) {
                 rand = Math.floor((Math.random() * 100 + 54));
                 host = req.get('host')
                 link = "http://" + host + "/verify?id=" + rand;
-                emailHtml = "<a> Beste " + fullaname + ",<a> <br /><br /> <a> Welkom bij Hotbuns. Hierbij bevestigen wij dat uw account succesvol is aangemaakt. <br/><a href=" + link + ">Klik deze link om je email te bevestigen<a/><br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBuns<a>"
+                emailHtml = "<a> Beste " + fullaname + ",<a> <br /><br /> <a> Welkom bij HotBuns! Middels deze e-mail bevestigen wij dat uw account succesvol is aangemaakt. <br/><a href=" + link + ">Klik op deze link om uw account te activeren<a/><br /><br /><a>Met vriendelijke groet,<a/><br/><br/> <a>HotBuns<a>"
                 
                 mailOptions = {
                     from: 'hotbunsemail@gmail.com',
                     to: req.body.email,
-                    subject: 'Account bevestiging',
+                    subject: 'Activeer uw account',
                     html: emailHtml
                 };
 
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
-                        req.flash("error", "Er is iets misgegaan probeer nog een keer");
+                        req.flash("error", "Er is iets misgegaan. Probeer het later nog eens");
                         res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
                     } else {
                         console.log('Email sent: ' + info.response);
-                        req.flash('success', 'Uw account is succesvol aangemaakt!');
+                        req.flash('success', 'Uw account is succesvol aangemaakt! Wij hebben u een e-mail gestuurd met een activatielink.');
                         res.redirect("/login");
                     }
                 });
             }
         });
     } else {
-        req.flash("error", "De opgegeven wachtwoorden zijn niet gelijk");
+        req.flash("error", "De door u opgegeven wachtwoorden komen niet overeen.");
         res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
     }
 });
@@ -105,12 +105,12 @@ router.get('/verify', function (req, res) {
         }
         else {
             console.log("email is not verified");
-            req.flash("error", "Er is iets misgegaan tijdens het activeringsproces. Neem contact op met hotbunsemail@gmail.com");
+            req.flash("error", "Er is iets misgegaan tijdens het activeringsproces. Neem contact met ons op via onze Contact-pagina of probeer het later nog eens.");
             res.redirect("/login")
         }
     }
     else {
-        req.flash("error", "Er is iets misgegaan tijdens het activeringsproces. Neem contact op met hotbunsemail@gmail.com");
+        req.flash("error", "Er is iets misgegaan tijdens het activeringsproces. Neem contact met ons op via onze Contact-pagina of probeer het later nog eens.");
         res.redirect("/login")
     }
 })
@@ -123,18 +123,18 @@ router.get("/login", function (req, res) {
 router.post("/login", passport.authenticate("local",
     {
         failureRedirect: "/login",
-        failureFlash: "Uw inlog gegevens zijn incorrect. Probeer het nog een keer."
+        failureFlash: "Uw inloggegevens zijn incorrect."
     }), (req, res) => {
         if(req.user.active === true){
             res.redirect("/");
         }
         if(req.user.active === false){
             req.logout(); // temporary fix 
-            req.flash('error', 'Uw account is nog niet geactiveerd. Controleer uw email om uw account te activeren.');
+            req.flash('error', 'Uw account is nog niet geactiveerd. Controleer uw e-mail om uw account via onze bevestigingsmail te activeren.');
             res.redirect("/login");
         }
         req.logout();// temporary fix
-        req.flash('error', 'Er is iets misgegaan probeer het nog een keer.');
+        req.flash('error', 'Er is iets misgegaan. Probeer het later nog eens');
         res.redirect("/login");  
 })
 

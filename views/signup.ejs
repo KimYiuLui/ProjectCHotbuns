@@ -57,7 +57,7 @@ zipcodevalue = zipcode
                             <input class="form-control" type="text" id="Name" name="name" placeholder="Naam" value="<%=namevalue%>" pattern="[a-z A-Z \s]+{1,50}" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="NaamToevoeging">Toevoeging </label>
+                            <label for="NaamToevoeging">Tussenvoegsel</label>
                             <input class="form-control" type="text" id="NaamToevoeging" name="name" value="<%=Toevoegingvalue%>" placeholder="v/d">
                         </div>
                         <div class="form-group col-md-5">
@@ -92,7 +92,7 @@ zipcodevalue = zipcode
                             <label for="ZipCode">Postcode<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" id="ZipCode" type="text" name="address[zipcode]" placeholder="1234AB" value="<%=zipcodevalue%>"pattern="[0-9]{4}[A-Z]{2}" required>
                         </div>
-                        <small class="form-group col-md-12">Vereiste velden in dit formulier zijn gemarkeerd met een  <p style="color: red" class="d-inline">*</p></small>
+                        <small class="form-group col-md-12"><p style="color: red" class="d-inline">*</p> Verplicht veld</small>
                         <div class="form-group">
                             <button class="btn btn-lg btn-primary btn-block">Registreren</button>
                         </div>

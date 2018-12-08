@@ -159,11 +159,11 @@ router.post("/purchase/order", function (req, res) {
     console.log(noLayout)
 
 // De email zelf.
-    emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> Bedankt dat u gekozen heeft voor Hotbuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
+    emailHtml = "<a> Beste " + res.locals.currentUser.name + " " + res.locals.currentUser.surname + ", <br /> <br /> <a> <a> Bedankt dat u heeft gekozen voor HotBuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> HotBuns <a>"
     mailOptions = {
         from: 'hotbunsemail@gmail.com',
         to: req.body.email,
-        subject: 'Uw bestelling bij Hotbuns',
+        subject: 'Uw bestelling bij HotBuns',
         html: emailHtml
     };
 

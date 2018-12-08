@@ -3,14 +3,14 @@
     "",
     "\\models",
     "\\public",
+    "\\public\\stylesheet",
     "\\routes",
     "\\views",
     "\\views\\admin",
+    "\\views\\overige",
     "\\views\\partials",
-    "\\views\\product",
-    "\\views\\purchases",
-    "\\views\\user"
+    "\\views\\product"
   ],
-  "SelectedNode": "\\views\\product\\zoetigheid.ejs",
+  "SelectedNode": "\\routes\\index.js",
   "PreviewInSolutionExplorer": false
 }

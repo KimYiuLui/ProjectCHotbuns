@@ -117,7 +117,7 @@ router.post("/admin/newUser", function (req, res) {
     }), req.body.password, function (error, user) {
         if (error) {
             console.log(error);
-            req.flash("error", "Gebruikersnaam en/of e-mail adres bestaat al. Gebruik een andere gebruikersnaam of e-mail adres.");
+            req.flash("error", "Gebruikersnaam en/of e-mailadres bestaat al. Gebruik een andere gebruikersnaam of e-mailadres.");
             res.redirect("/admin/");
         }
         else {
