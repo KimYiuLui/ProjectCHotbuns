@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Product = require("../models/product");
 
-var perPage, page
+var perPage, page, koekfilter, zoetigheidfilter, broodfilter, zadenfilter, korstfilter, overigefilter
 //-------------------------------------------------------------------
 //-------------------------------BROOD
 //-------------------------------------------------------------------
@@ -91,7 +91,7 @@ router.get("/:category/detail/:id", function(req, res){
 });
 
 //-------------------------------------------------------------------
-//------------------------------Filter
+//------------------------------Filter Brood
 //-------------------------------------------------------------------
 router.get("/brood/filter/:page", function (req, res) {
     perPage = req.params.perPage || 24
@@ -153,28 +153,66 @@ router.post("/brood/filter/:page", function (req, res) {
     })
 });
 
-router.post("/koek/:page", function (req, res) {
+//-------------------------------------------------------------------
+//------------------------------Filter Koek
+//-------------------------------------------------------------------
+router.get("/koek/filter/:page", function(req, res){
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
 
-    var koekfilter = req.body.koeksoort;
+    if (koekfilter == "all") { koekfilter = /^/ };
+
+    Product
+    .find({category: "koek", filters: koekfilter})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(error,products){
+        Product.find({category: "koek", filters: koekfilter})
+            .count()
+            .exec(function(error, count){
+                if(error) return next(error)
+                res.render("product/koekFilter",{
+                    product: products, 
+                    current:page, 
+                    pages: Math.ceil(count / perPage)
+                })
+        })
+    })
+})
+
+
+router.post("/koek/filter/:page", function (req, res) {
+
+    koekfilter = req.body.koeksoort;
     console.log(koekfilter)
 
     if (koekfilter == "all") { koekfilter = /^/ };
 
-    Product.find({
-        category: "koek", filters: koekfilter
-    }, function (error, filteredProduct) {
-        if (error) {
-            console.log(error)
-        }
-        else {
-            res.render("product/koekFilter", { product: filteredProduct })
-        }
-    });
+    Product
+    .find({category: "koek", filters: koekfilter})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(error,products){
+        Product.find({category: "koek", filters: koekfilter})
+               .count()
+               .exec(function(error, count){
+                   if(error) return next(error)
+                   res.render("product/koekFilter",{
+                    product: products, 
+                    current:page, 
+                    pages: Math.ceil(count / perPage)
+                })
+        })
+    })
 });
 
-router.post("/zoetigheid/:page", function (req, res) {
 
-    var zoetigheidfilter = req.body.zoetigsoort;
+//-------------------------------------------------------------------
+//------------------------------Filter Zoetigheid
+//-------------------------------------------------------------------
+router.get("/zoetigheid/filter/:page", function (req, res) {
+
+    zoetigheidfilter = req.body.zoetigsoort;
     console.log(zoetigheidfilter)
 
     if (zoetigheidfilter == "all") { zoetigheidfilter = /^/ };
@@ -190,4 +228,24 @@ router.post("/zoetigheid/:page", function (req, res) {
         }
     });
 });
+
+router.post("/zoetigheid/filter/:page", function (req, res) {
+
+    zoetigheidfilter = req.body.zoetigsoort;
+    console.log(zoetigheidfilter)
+
+    if (zoetigheidfilter == "all") { zoetigheidfilter = /^/ };
+
+    Product.find({
+        category: "zoetigheid", filters: zoetigheidfilter
+    }, function (error, filteredProduct) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            res.render("product/zoetigheidFilter", { product: filteredProduct })
+        }
+    });
+});
+
 module.exports = router;
