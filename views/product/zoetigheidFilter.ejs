@@ -1,0 +1,73 @@
+<% include ../partials/header %>
+<% var count = 0 %>
+
+<div class="bg-light filter-bar">
+    <div class="container mx-auto">
+
+        <div>
+            <h4 class="text-center">Filter</h4>
+        </div>
+        <form action="/zoetigheid/filter" method="POST">
+            <div class="row">
+
+                <div class="col">
+
+                    <a>Soort zoetigheid</a>
+                    <br />
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zoetigsoort" value="all" checked> Elke soort
+                    </label> <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zoetigsoort" value="choco"> Chocola
+                    </label> <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zoetigsoort" value="fruit"> Fruit
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zoetigsoort" value="slag"> Slagroom
+                    </label>  <!-- form-check.// -->
+                    <label class="form-check-label col-md">
+                        <input class="form-check-input" type="radio" name="zoetigsoort" value="spec"> Speculaas
+                    </label>  <!-- form-check.// -->
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                    <button class="btn btn-sm btn-dark">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<div class="container">
+ <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% product.forEach(function(product){ %>
+            <% count = count + 1 %>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                <div class="img-thumbnail">
+                    <a href="/<%=product.category %>/detail/<%= product._id %>"> 
+                        <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                        
+                   <div class="caption">
+                       <p><%= product.name %></h4>
+                   </div>
+                  <p><strong>€ <%=product.price %></strong></p>
+                   <p>
+                       <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                   </p>
+                </div>
+            </div>
+        <% } ); %>
+        <% if(count == 0){%>
+        <h3> Er zijn geen producten gevonden!</h3>
+        <% } %>
+    </div>
+    
+</div>
+    
+    <% include ../partials/footer %>

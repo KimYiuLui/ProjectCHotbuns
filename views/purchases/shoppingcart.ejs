@@ -66,7 +66,7 @@
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
                     <% total = total * 1.06 %>
-                    <% total = total + 3.50 %>
+                    <% total = total + 2.00 %>
                 </div>
             </div>
             <!-- Als het leeg is, dan zeg je dat hij leeg is, anders geef je het totaalbedrag.-->
@@ -75,7 +75,7 @@
             <% } %>
             <% if (count > -1){ %>
             <h5>
-                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 3.50 verzendkosten.
+                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
             </h5>
 
             <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>
