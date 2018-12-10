@@ -139,6 +139,7 @@ router.post("/purchase/order", function (req, res) {
         orderedProductsName: req.body.name
     }));
 
+
 // Voor de email opmaak. Zet alles onder elkaar.
     var notArray = []
     noLayout = req.body.name
