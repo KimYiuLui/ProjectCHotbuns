@@ -132,6 +132,10 @@ router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
 
 // Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
+    var ArrayCounter = -1;
+    var amountArray = res.locals.currentUser.amount;
+    var allProductIds = req.body.product_id
+
     Order.create(new Order({
         targetUser: req.body.username,
         amount: req.body.amount,
@@ -139,7 +143,27 @@ router.post("/purchase/order", function (req, res) {
         orderedProductsName: req.body.name
     }));
 
-// Voor de email opmaak. Zet alles onder elkaar.
+    allProductIds.forEach(function (element) {
+        ArrayCounter = ArrayCounter + 1
+        addedamountbought1 = amountArray[ArrayCounter]
+        console.log(addedamountbought1)
+        
+        Product.findById(req.body.product_id, function (err, product) {
+            var newAmount = parseInt(product.amountbought)
+
+            newAmount = parseInt(newAmount) + addedamountbought1.charAt(0)
+            console.log("NewAmount " + newAmount)
+            Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount } }, function (err, updateAmount) {
+                if (err) {
+                    console.log(err)
+                }
+
+            })
+           // console.log(product.amountbought)
+                
+        })
+    });
+    // Voor de email opmaak. Zet alles onder elkaar.
     var notArray = []
     noLayout = req.body.name
     withLayout = ""
