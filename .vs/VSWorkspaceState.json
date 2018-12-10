@@ -2,14 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\models",
+    "\\public",
+    "\\public\\stylesheet",
     "\\routes",
     "\\views",
     "\\views\\admin",
-    "\\views\\admin\\overige",
     "\\views\\overige",
     "\\views\\partials",
     "\\views\\product"
   ],
-  "SelectedNode": "\\views\\admin\\overige",
+  "SelectedNode": "\\routes\\index.js",
   "PreviewInSolutionExplorer": false
 }

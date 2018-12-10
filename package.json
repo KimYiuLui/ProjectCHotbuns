@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "chart.js": "^2.7.3",
     "complexity-report": "^2.0.0-alpha",
     "connect-flash": "^0.1.1",
     "debug": "^4.1.0",
