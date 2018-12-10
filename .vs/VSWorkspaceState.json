@@ -11,6 +11,6 @@
     "\\views\\partials",
     "\\views\\product"
   ],
-  "SelectedNode": "\\routes\\index.js",
+  "SelectedNode": "\\views\\product\\zoetigheidFilter.ejs",
   "PreviewInSolutionExplorer": false
 }
