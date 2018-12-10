@@ -129,12 +129,43 @@ router.post("/purchase/checkCoupon", isLoggedIn, function (req, res) {
         });
     });
 });
+// x = allProductIds, i = de for loop teller. y = amount DIT VERANDERD DE HOEVEELHEDEN IN DE DATABASE BIJ product.amountbought.
+// DIT WERKT DOOR MIDDEL VAN GOED GELUK DUS AUB NIET AANRAKEN.
+function modifyAmountbought(i, x, y) {
+
+    var productArray = x[i - 1]
+    var newAmount = 0
+
+    Product.findById(productArray, function (err, product) {
+        console.log("Number 2 " + productArray)
+        amountSearch = y[i - 1]
+
+        newAmount = parseInt(product.amountbought) + parseInt(amountSearch.charAt(0))
+        console.log(product.amountbought + " " + newAmount)
+        AddinDatabase = newAmount.toString
+        Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount.toString() } }, function (err, updateAmount) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("Number 3 " + updateAmount.amountbought)
+            }
+        })
+
+
+
+
+    })
+}
 
 // Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
-    var ArrayCounter = -1;
-    var amountArray = res.locals.currentUser.amount;
+
     var allProductIds = req.body.product_id
+    for (i = allProductIds.length; i > 0; i--) {
+
+        modifyAmountbought(i, allProductIds, res.locals.currentUser.amount)
+    }
+ 
 
     Order.create(new Order({
         targetUser: req.body.username,
@@ -143,26 +174,6 @@ router.post("/purchase/order", function (req, res) {
         orderedProductsName: req.body.name
     }));
 
-    allProductIds.forEach(function (element) {
-        ArrayCounter = ArrayCounter + 1
-        addedamountbought1 = amountArray[ArrayCounter]
-        console.log(addedamountbought1)
-        
-        Product.findById(req.body.product_id, function (err, product) {
-            var newAmount = parseInt(product.amountbought)
-
-            newAmount = parseInt(newAmount) + addedamountbought1.charAt(0)
-            console.log("NewAmount " + newAmount)
-            Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount } }, function (err, updateAmount) {
-                if (err) {
-                    console.log(err)
-                }
-
-            })
-           // console.log(product.amountbought)
-                
-        })
-    });
     // Voor de email opmaak. Zet alles onder elkaar.
     var notArray = []
     noLayout = req.body.name
