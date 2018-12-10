@@ -9,7 +9,9 @@ var OrderSchema = new mongoose.Schema({
         ref: "Product"
     }],
     orderedProductsName: [String],
-    amount: [String]
+    amount: [String],
+    date:  { type: Date, default: Date.now },
+    price: String
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

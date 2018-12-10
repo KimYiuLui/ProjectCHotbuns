@@ -68,17 +68,18 @@ app.use(purchasesRoutes);
 app.use(UserRoutes);
 app.use(FavoriteRoutes);
 
+
+
 // // for online version 
 // app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Server is running ");
 // });
-
-
 
 //setting for local debug at local host 3000
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
+    console.log("Server is running ");
 });
 
