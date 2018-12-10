@@ -3,6 +3,7 @@
 <% var rowAmountUser = 0%>
 <% var rowAmountOrder = 0%>
 <% var rowAmountCoupon = 0%>
+<% var rowAmountStats = 0%>
 
 <div class="container mt-4 mb-4">
     <h1>Admin Panel</h1>
@@ -27,6 +28,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu5">Nieuwe coupon code</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu7">Statistieken</a>
         </li>
     </ul>
 
@@ -311,7 +315,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="email">Email address<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" id="email" type="text" name="emailsend"placeholder="Email voor naar te sturen" required>
+                            <input class="form-control" id="email" type="text" name="emailsend" placeholder="Email voor naar te sturen" required>
                         </div>
                         <small class="form-group col-md-12">Vereiste velden in dit formulier zijn gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
                         <div class="form-group">
@@ -352,6 +356,36 @@
                         <% }) %>
 
 
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="menu7">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Naam</th>
+                            <th scope="col">Gekocht</th>
+                        </tr>
+                    <tbody>
+
+                        <% product.forEach(function(product){ %>
+                        <% rowAmountStats = rowAmountStats + 1%>
+
+                        <tr>
+                            <th scope="row"><%=rowAmountStats%></th>
+                            <td><%= product.name%></td>
+                            <td><%= product.amountbought%></td>
+
+                        </tr>
+
+                        <% }) %>
                     </tbody>
 
 

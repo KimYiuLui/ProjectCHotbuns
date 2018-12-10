@@ -3,7 +3,6 @@
     "",
     "\\models",
     "\\public",
-    "\\public\\stylesheet",
     "\\routes",
     "\\views",
     "\\views\\admin",
@@ -11,6 +10,6 @@
     "\\views\\partials",
     "\\views\\product"
   ],
-  "SelectedNode": "\\views\\product\\zoetigheidFilter.ejs",
+
   "PreviewInSolutionExplorer": false
 }
