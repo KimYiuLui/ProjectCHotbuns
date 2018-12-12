@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose")
 var uniqueValidator = require('mongoose-unique-validator');
 
+
 var OrderSchema = new mongoose.Schema({
     targetUser: String,
     orderedProducts: [{

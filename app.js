@@ -24,6 +24,7 @@ var purchasesRoutes = require("./routes/purchases");
 var UserRoutes     = require("./routes/user");
 var FavoriteRoutes = require("./routes/favorite");
 var AdminRoutes = require("./routes/admin");
+var paymentRoutes = require("./routes/payment");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -67,8 +68,7 @@ app.use(overigeRoutes);
 app.use(purchasesRoutes);
 app.use(UserRoutes);
 app.use(FavoriteRoutes);
-
-
+app.use(paymentRoutes);
 
 // // for online version 
 // app.listen(process.env.PORT, process.env.IP, function(){
