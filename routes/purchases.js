@@ -10,13 +10,7 @@ var nodemailer = require('nodemailer');
 
 var oldAmount, noLayout, withLayout, emailHtml, mailOptions 
  // Email gebeuren. Het emailaccount.   
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'hotbunsemail@gmail.com',
-        pass: 'Hotbuns123'
-    }
-});
+
 
 
 ////TEST//// ZORG ERVOOR DAT HET ALLE ITEMS PAKT DIE IN WINKELWAGEN ZITTEN

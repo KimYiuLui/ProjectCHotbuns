@@ -141,7 +141,6 @@
                     <% User.shoppingcart.forEach(function(product){ %>
                     <% count2 = count2 + 1 %>
                     <% amountString2 =  currentUser.amount[count2] %>
-                    total.toFixed(2)
                     <input type="hidden" name="product_id" value="<%=product._id%>">
                     
                     <input type="hidden" name="price" value="<%=total.toFixed(2)%>">
