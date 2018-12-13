@@ -163,6 +163,17 @@ router.put("/admin/deleteOrder", function (req, res) {
     });
 });
 
+router.put("/admin/resetStats", function (req, res) {
+    Product.findByIdAndUpdate(req.body.product_id, { $set: { amountbought: "0" } }, function (err, updateAmount) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+});
+
 //Verwijder een coupon.
 router.put("/admin/deleteCoupon", function (req, res) {
     Coupon.findByIdAndRemove(req.body.coupon_id, function (err) {
@@ -174,6 +185,45 @@ router.put("/admin/deleteCoupon", function (req, res) {
         }
     });
 });
+
+//Website doodende opties
+router.get("/admin/deleteAllorders", function (req, res) {
+    Order.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+});
+
+router.get("/admin/deleteAllcoupons", function (req, res) {
+    Coupon.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+});
+
+router.get("/admin/deleteAllstats", function (req, res) {
+    Product.updateMany({}, { $set: { amountbought: "0" } }, function (err, updateAmount) {
+        if (err) {
+            console.log(err);
+            res.redirect(req.get("back"));
+        } else {
+            res.redirect(req.get("referer"));
+        }
+    });
+});
+
+
+
+
+
 
 //Maak een coupon aan.
 router.post("/admin/makeACoupon", function (req, res) {
