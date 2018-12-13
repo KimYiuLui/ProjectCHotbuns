@@ -37,22 +37,16 @@ function modifyAmountbought(i, x, y) {
     console.log(noLayout)
     
     var newAmount = 0
-
     Product.findById(productArray, function (err, product) {
         console.log("Number 2 " + productArray)
-        if(Array.isArray(y) == false){
-            amountSearch = y[i - 1]
-            newAmount = parseInt(product.amountbought) + parseInt(amountSearch.charAt(0))
+        if(Array.isArray(x) == false){
+            amountSearch = y
+            newAmount = parseInt(product.amountbought) + parseInt(JSON.stringify(amountSearch).charAt(2))
         }
-        if(Array.isArray(y) == true){
+        if(Array.isArray(x) == true){
             amountSearch = y[i - 1]
-            newAmount = parseInt(product.amountbought) + parseInt(amountSearch.charAt(0))
-            console.log(product.amountbought + " " + newAmount)
+            newAmount = parseInt(product.amountbought) + parseInt(JSON.stringify(amountSearch).charAt(2))
         } 
-        
-var stringArray = test.split(",");
-return stringArray[0]
-        
         AddinDatabase = newAmount.toString
         Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount.toString() } }, function (err, updateAmount) {
             if (err) {
