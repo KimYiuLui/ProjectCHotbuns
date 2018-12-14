@@ -21,12 +21,14 @@ router.get("/admin/", isLoggedIn, function (req, res) {
         User.find({}, function (err, allUsers) {
             Order.find({}, function (broke, allOrders) {
                 Coupon.find({}, function (broke, allCoupons) {
-                    if (error || err || broke) {
-                        console.log(error)
-                        console.log(err)
-                        console.log(broke)
-                    }
-                    res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders, coupon: allCoupons })
+                    Product.find({}).sort({ amountbought: 'descending' }).exec(function (err, productFilt) {
+                        if (error || err || broke) {
+                            console.log(error)
+                            console.log(err)
+                            console.log(broke)
+                        }
+                        res.render("admin/panel", { product: allProducts, user: allUsers, order: allOrders, coupon: allCoupons, amountbought: productFilt })
+                    });
                 });
             });
         });
