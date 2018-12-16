@@ -41,14 +41,14 @@ function modifyAmountbought(i, x, y) {
         console.log("Number 2 " + productArray)
         if(Array.isArray(x) == false){
             amountSearch = y
-            newAmount = parseInt(product.amountbought) + parseInt(JSON.stringify(amountSearch).charAt(2))
+            newAmount = product.amountbought + parseInt(JSON.stringify(amountSearch).charAt(2))
         }
         if(Array.isArray(x) == true){
             amountSearch = y[i - 1]
-            newAmount = parseInt(product.amountbought) + parseInt(JSON.stringify(amountSearch).charAt(1))
+            newAmount = product.amountbought + parseInt(JSON.stringify(amountSearch).charAt(1))
         } 
-        AddinDatabase = newAmount.toString
-        Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount.toString() } }, function (err, updateAmount) {
+        
+        Product.findByIdAndUpdate(product._id, { $set: { amountbought: newAmount } }, function (err, updateAmount) {
             if (err) {
                 console.log(err)
             } else {
@@ -147,8 +147,6 @@ router.get('/betaling/succes', (req, res) => {
 
     if(allProductIds.length > 1){
         for (i = allProductIds.length; i > 0; i--) {
-            console.log("length == > 1 ")
-            console.log(i)
             modifyAmountbought(i, allProductIds, userAmount)
         }
     }

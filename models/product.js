@@ -10,7 +10,7 @@ var ProductSchema = new mongoose.Schema({
     allergy: [String],
     price: String,
     category: String,
-    amountbought: String,
+    amountbought: Number,
     filters: [String] 
 });
 
