@@ -61,7 +61,7 @@ function modifyAmountbought(i, x, y) {
 // Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
 
-    UserId = res.locals.currentUser._id;
+    UserId = res.locals.currentUser._id
     Username = req.body.username
     userFirstname = res.locals.currentUser.name
     userAdditionals = res.locals.currentUser.naamToevoeging
@@ -98,7 +98,7 @@ router.post("/purchase/order", function (req, res) {
         },
         "redirect_urls": {
             "return_url": "http://localhost:3000/betaling/succes",
-            "cancel_url": "http://localhost:3000/bataling/mislukt"
+            "cancel_url": "http://localhost:3000/betaling/mislukt"
         },
         "transactions": [{
             "item_list": {
@@ -114,7 +114,7 @@ router.post("/purchase/order", function (req, res) {
                 "currency": "EUR",
                 "total": intPrice
             },
-            "description": "Beste Brood van Nederland voor meer dan 2500 jaar"
+            "description": "Beste Bakkerij van Nederland voor meer dan 2500 jaar"
         }]
     }
     
@@ -131,7 +131,6 @@ router.post("/purchase/order", function (req, res) {
     });
 });
 
-
 router.get('/betaling/succes', (req, res) => {
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
@@ -146,49 +145,6 @@ router.get('/betaling/succes', (req, res) => {
       }]
     };
 
-    // Voor de email opmaak. Zet alles onder elkaar.
-    var notArray = []
-    noLayout =  orderedProducts
-    withLayout = ""
-    console.log(Array.isArray(orderedProducts))
-    
-    if(Array.isArray(orderedProducts) == false){
-        notArray.push( orderedProducts)
-        notArray.forEach(function (element) {
-            withLayout =  withLayout + "-   " + element + " <br />"
-        })
-    }
-    if(Array.isArray( orderedProducts) == true){
-        noLayout.forEach(function (element) {
-            withLayout =  withLayout + "-   " + element + " <br />"
-        })
-    } 
-    console.log(noLayout)
-
-    if (req.body.naamToevoeging != null) {
-        fullaname = userFirstname + " " + userAdditionals + " " + userSurname;
-    }
-    else {
-        fullaname = userFirstname + " " + userSurname;
-    }
-// De email zelf.
-    emailHtml = "<a> Beste " + fullaname + ", <br /> <br /> <a> <a> Bedankt dat u heeft gekozen voor HotBuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> HotBuns <a>"
-    mailOptions = {
-        from: 'hotbunsemail@gmail.com',
-        to: req.body.email,
-        subject: 'Uw bestelling bij HotBuns',
-        html: emailHtml
-    };
-
-// Stuurt de email + laat zien of het gelukt is.
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
     if(allProductIds.length > 1){
         for (i = allProductIds.length; i > 0; i--) {
             console.log("length == > 1 ")
@@ -201,7 +157,6 @@ router.get('/betaling/succes', (req, res) => {
         modifyAmountbought(allProductIds.length, allProductIds, userAmount)
     }
     
-
     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
         if (error) {
             console.log(error.response);
@@ -209,17 +164,74 @@ router.get('/betaling/succes', (req, res) => {
         } 
         else {
             console.log(JSON.stringify(payment));
-            User.findById(UserId).populate("shoppingcart").exec(function (error, foundUser) {
-                if(error){throw error}
-                console.log(couponStatus)
-                console.log(couponpriceModifierValue)
-                res.render("purchases/thankyou", { User: foundUser, couponStatus: couponStatus, couponpriceModifierValue: couponpriceModifierValue })
-            })
+            res.redirect('/betaling/afgerond')
         }
     })  
 })
 
-router.get('/bataling/mislukt', (req, res) => res.send('Cancelled'));
+router.get('/betaling/afgerond', (req, res) => {
+    User.findById(UserId).populate("shoppingcart").exec(function (error, foundUser) {
+        if(error){throw error}
+        console.log(couponStatus)
+        console.log(couponpriceModifierValue)
+        res.render("purchases/thankyou", { User: foundUser, couponStatus: couponStatus, couponpriceModifierValue: couponpriceModifierValue })
+    })
+})
+
+
+noLayout, withLayout, emailHtml, mailOptions, allProductIds, userAmount, Username, userFirstname,userAdditionals,userSurname,userEmail,productAmount,orderedProducts,orderedProductsName, price, status, couponStatus, couponpriceModifierValue, UserId, intPrice, productArray,amountSearch
+
+router.post('/betaling/afgerond', (req, res) => {
+      // Voor de email opmaak. Zet alles onder elkaar.
+      var notArray = []
+      noLayout =  orderedProductsName
+      withLayout = ""
+      console.log(Array.isArray(orderedProductsName))
+      
+      if(Array.isArray(orderedProductsName) == false){
+          notArray.push( orderedProductsName)
+          notArray.forEach(function (element) {
+              withLayout =  withLayout + "-   " + element + " <br />"
+          })
+      }
+      if(Array.isArray( orderedProductsName) == true){
+          noLayout.forEach(function (element) {
+              withLayout =  withLayout + "-   " + element + " <br />"
+          })
+      } 
+      console.log(noLayout)
+  
+      if (userAdditionals != null) {
+          fullaname = userFirstname + " " + userAdditionals + " " + userSurname;
+      }
+      else {
+          fullaname = userFirstname + " " + userSurname;
+      }
+  // De email zelf.
+      emailHtml = "<a> Beste " + fullaname + ", <br /> <br /> <a> <a> Bedankt dat u heeft gekozen voor HotBuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> HotBuns <a>"
+      mailOptions = {
+          from: 'hotbunsemail@gmail.com',
+          to: userEmail,
+          subject: 'Uw bestelling bij HotBuns',
+          html: emailHtml
+      };
+  
+  // Stuurt de email + laat zien of het gelukt is.
+      transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+              console.log(error);
+          } else {
+              console.log('Email sent: ' + info.response);
+          }
+      });
+
+      res.redirect(req.get("referer"))
+})
+
+router.get('/betaling/mislukt', (req, res) => {
+    req.flash("error", "Betaling afgebroken.");
+    res.redirect('/shoppingcart/'+ UserId)
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

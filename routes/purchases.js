@@ -1,12 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var Product = require("../models/product");
 var User = require("../models/user");
-var Order = require("../models/order");
 var Coupon = require("../models/coupon");
-var passport = require("passport");
-var mongoose = require("mongoose");
-var nodemailer = require('nodemailer');
+
 
 var oldAmount, noLayout, withLayout, emailHtml, mailOptions 
  // Email gebeuren. Het emailaccount.   

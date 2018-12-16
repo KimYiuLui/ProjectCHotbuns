@@ -386,7 +386,7 @@
                         <tr>
                             <th scope="row"><%=rowAmountStats%></th>
                             <td><%= product.name%></td>
-                            <td><%= product.amountbought%></td>
+                            <td><%= product.amountbought %></td>
                             <td>
                                 <form class="form-inline" action="/admin/resetStats?_method=PUT" method="POST">
                                     <input type="hidden" name="product_id" value="<%= product._id %>">
