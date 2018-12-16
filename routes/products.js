@@ -182,7 +182,9 @@ router.get("/koek/filter/:page", function(req, res){
 
 
 router.post("/koek/filter/:page", function (req, res) {
-
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
+    
     koekfilter = req.body.koeksoort;
     console.log(koekfilter)
 

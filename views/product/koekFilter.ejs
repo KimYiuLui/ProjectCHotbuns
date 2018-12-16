@@ -38,6 +38,7 @@
                 <div class="col">
                 </div>
                 <div class="col">
+                <input type="hidden" name="pages" value="1">
                     <button class="btn btn-sm btn-dark">Filter</button>
                 </div>
             </div>
@@ -69,6 +70,7 @@
         <h3> Er zijn geen producten gevonden!</h3>
         <% } %>
     </div>
+    <% if(product.length >= 24 || pages > 1){ %>
     <div class="text-center container">
         <% if (pages > 0){ %>
             <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -99,6 +101,7 @@
             </ul>
         <% } %>    
     </div>
+    <% } %>
 </div>
     
     <% include ../partials/footer %>
