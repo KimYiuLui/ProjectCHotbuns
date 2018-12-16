@@ -20,11 +20,11 @@
 
             <strong>Gebruikersnaam:</strong>    <%= currentUser.username%>             <br />
             <strong>Voornaam:</strong>          <%= currentUser.name%>                 <br />
-            <strong>Toevoeging:</strong>        <%= currentUser.naamToevoeging%>       <br />
+            <strong>Tussenvoegsel:</strong>        <%= currentUser.naamToevoeging%>       <br />
             <strong>Achternaam:</strong>        <%= currentUser.surname%>              <br />
             <strong>Email:</strong>             <%= currentUser.email%>                <br />
             <strong>Telefoonnummer:</strong>    <%= currentUser.phonenumber%>          <br />
-            <strong>Adres:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%>                 <br />
+            <strong>Adres:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%> <%= currentUser.address.additional %>                <br />
             <strong>Stad:</strong>              <%= currentUser.address.city%>         <br />
             <strong>Postcode:</strong>          <%= currentUser.address.zipcode%>      <br />
             <form  action="/user/modifyUser?_method=PUT" method="POST">
