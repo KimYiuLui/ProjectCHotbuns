@@ -40,7 +40,7 @@ router.put("/user/modifyUser", isLoggedIn, function (req, res) {
 });
 
 router.post("/user/finishModifyUser", isLoggedIn, function (req, res) {
-    var newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
+    var newName = req.body.name.slice(0); // Ducktape voor een bug.
     //Update de User. Niet het wachtwoord. "Security Reasons".
     User.findByIdAndUpdate(req.body.user_id, { $set: { email: req.body.email, name: newName, naamToevoeging: req.body.naamToevoeging, surname: req.body.surname, phonenumber: req.body.phonenumber, address: req.body.address } }, function (err, updateUser) {
         if (err) {

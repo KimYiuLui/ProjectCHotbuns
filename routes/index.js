@@ -28,7 +28,7 @@ router.get("/signup", function (req, res) {
 });
 
 router.post("/signup", function (req, res) {
-    newName = req.body.name.slice(0, -1); // Ducktape voor een bug.
+    newName = req.body.name.slice(0); // Ducktape voor een bug.
     if (req.body.password == req.body.confirm_password) {
         User.register(new User({
             active: false,
@@ -85,9 +85,9 @@ router.post("/signup", function (req, res) {
 });
 
 router.get('/verify', function (req, res) {
-    console.log(req.protocol + ":/" + req.get('host'));
+    console.log(req.protocol + "://" + req.get('host'));
     // if((req.protocol+"://"+req.get('host'))==("http://"+host))
-    if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
+    if ((req.protocol + "://" + req.get('host')) == (req.protocol + "://" + host)) {
         console.log("Domain is matched. Information is from Authentic email");
         if (req.query.id == rand) {
             User.findOne({ email: mailOptions.to }, function (error, foundUser) {

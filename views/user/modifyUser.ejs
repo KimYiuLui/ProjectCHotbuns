@@ -19,10 +19,18 @@
                             <label for="Name">Naam<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" type="text" id="Name" name="name" placeholder="Naam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.name%>" required>
                         </div>
-                        <div class="form-group col-md-2">
-                            <label for="NaamToevoeging">Toevoeging </label>
-                            <input class="form-control" type="text" id="NaamToevoeging" name="name" placeholder="v/d">
-                        </div>
+
+                        <% if(user.naamToevoeging == null){ %>
+                            <div class="form-group col-md-2">
+                                <label for="NaamToevoeging">Toevoeging </label>
+                                <input class="form-control" type="text" id="NaamToevoeging" name="naamToevoeging" placeholder="v/d">
+                            </div>
+                        <% } else { %>
+                            <div class="form-group col-md-2">
+                                <label for="NaamToevoeging">Toevoeging </label>
+                                <input class="form-control" type="text" id="NaamToevoeging" name="naamToevoeging" value="<%= user.naamToevoeging %>">
+                            </div>
+                        <% } %>
                         <div class="form-group col-md-5">
                             <label for="Surename">Achternaam<p style="color: red" class="d-inline">*</p></label>
                             <input class="form-control" type="text" id="Surname" name="surname" placeholder="Achternaam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.surname%>" required>
