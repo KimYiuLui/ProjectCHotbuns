@@ -10,6 +10,6 @@
     "\\views\\product",
     "\\views\\purchases"
   ],
-  "SelectedNode": "\\routes\\payment.js",
+  "SelectedNode": "\\views\\overige\\about.ejs",
   "PreviewInSolutionExplorer": false
 }

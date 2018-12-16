@@ -72,7 +72,7 @@ router.post("/purchase/order", function (req, res) {
     orderedProducts =  req.body.product_id
     orderedProductsName = req.body.name
     price = req.body.price
-    status = "Afwachting van betaling"
+    status = "Uw betaling wordt momenteel verwerkt"
     
     intPrice = parseInt(price).toFixed(2)
 
@@ -114,7 +114,7 @@ router.post("/purchase/order", function (req, res) {
                 "currency": "EUR",
                 "total": intPrice
             },
-            "description": "Beste Bakkerij van Nederland voor meer dan 2500 jaar"
+            "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
         }]
     }
     
