@@ -2,14 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\models",
+    "\\public",
+    "\\public\\stylesheet",
     "\\routes",
     "\\views",
     "\\views\\admin",
     "\\views\\overige",
     "\\views\\partials",
-    "\\views\\product",
-    "\\views\\purchases"
+    "\\views\\product"
   ],
-  "SelectedNode": "\\routes\\payment.js",
+  "SelectedNode": "\\public\\stylesheet\\main.css",
   "PreviewInSolutionExplorer": false
 }

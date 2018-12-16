@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var nodemailer = require('nodemailer');
+var Product = require("../models/product");
 
 var host, rand, link, emailHtml, mailOptions, fullaname, newName;
 var transporter = nodemailer.createTransport({ //setting up email account
@@ -16,9 +17,59 @@ var transporter = nodemailer.createTransport({ //setting up email account
 //-------------------------------------
 //Home and other informative pages 
 //-------------------------------------
-router.get("/", function (req, res) {
+/*router.get("/", function (req, res) {
     res.render("home");
+});*/
+
+//-------------------------------------
+//Homepagina met productcarrousel
+//-------------------------------------
+router.get("/", function (req, res, next) {
+    Product
+        .find({ category: "brood" })
+        .exec(function (error, products) {
+            Product.find({ category: "brood" })
+                .count()
+                .exec(function (error, count) {
+                    if (error) return next(error)
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
 });
+
+//TEST
+/*
+router.get("/", function (req, res, next) {
+    Product
+        .count().exec(function (err, count) {
+            var random = Math.floor(Math.random() * count)
+            Product.findOne().skip(random)
+                .exec(function (err, result) {
+                    console.log(result)
+                    res.render("home", {
+                        product: result,
+                    })
+                })
+        })
+});*/
+/*
+router.get("/", function (req, res, next) {
+    Product
+        .find({ category: "brood" })
+        .count()
+        .exec(function (error, count) {
+            var random = Math.floor(Math.random() * count)
+            Product.findOne({ category: "brood" }).skip(random)
+                .exec(function (error, count) {
+                    if (error) return next(error)
+                    res.render("home", {
+                        product: count,
+                    })
+                })
+        })
+});*/
 
 //-------------------------------------
 // Register and login
