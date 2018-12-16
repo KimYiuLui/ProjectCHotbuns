@@ -47,7 +47,7 @@ router.post("/signup", function (req, res) {
                 res.render("signup", { AttemptedRegister: 1, email: req.body.email, name: newName, surname: req.body.surname, Toevoeging: req.body.naamtoevoeging, phonenumber: req.body.phonenumber, city: req.body.address.city, street: req.body.address.street, zipcode: req.body.address.zipcode, housenumber: req.body.address.number, username: req.body.username })
             }
             else {
-                if (req.body.naamToevoeging != null) {
+                if (req.body.naamToevoeging.length > 0) {
                     fullaname = newName + " " + req.body.naamToevoeging + " " + req.body.surname;
                 }
                 else {
