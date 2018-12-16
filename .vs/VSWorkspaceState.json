@@ -10,6 +10,6 @@
     "\\views\\product",
     "\\views\\purchases"
   ],
-  "SelectedNode": "\\views\\admin\\panel.ejs",
+  "SelectedNode": "\\routes\\payment.js",
   "PreviewInSolutionExplorer": false
 }

@@ -166,7 +166,7 @@ router.put("/admin/deleteOrder", function (req, res) {
 });
 
 router.put("/admin/resetStats", function (req, res) {
-    Product.findByIdAndUpdate(req.body.product_id, { $set: { amountbought: "0" } }, function (err, updateAmount) {
+    Product.findByIdAndUpdate(req.body.product_id, { $set: { amountbought: 0 } }, function (err, updateAmount) {
         if (err) {
             console.log(err);
             res.redirect(req.get("back"));
@@ -212,7 +212,7 @@ router.get("/admin/deleteAllcoupons", function (req, res) {
 });
 
 router.get("/admin/deleteAllstats", function (req, res) {
-    Product.updateMany({}, { $set: { amountbought: "0" } }, function (err, updateAmount) {
+    Product.updateMany({}, { $set: { amountbought: 0 } }, function (err, updateAmount) {
         if (err) {
             console.log(err);
             res.redirect(req.get("back"));
@@ -221,7 +221,6 @@ router.get("/admin/deleteAllstats", function (req, res) {
         }
     });
 });
-
 
 
 
