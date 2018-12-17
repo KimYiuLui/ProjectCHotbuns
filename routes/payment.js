@@ -97,13 +97,8 @@ router.post("/purchase/order", function (req, res) {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            // voor development
-            // "return_url": "http://localhost:3000/betaling/succes",
-            // "cancel_url": "http://localhost:3000/betaling/mislukt"
-
-            //voor online version
-            "return_url": "https://hotbunsjs.herokuapp.com/betaling/succes",
-            "cancel_url": "https://hotbunsjs.herokuapp.com/betaling/mislukt"
+            "return_url": "http://localhost:3000/betaling/succes",
+            "cancel_url": "http://localhost:3000/betaling/mislukt"
         },
         "transactions": [{
             "item_list": {
