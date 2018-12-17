@@ -33,7 +33,7 @@ router.post("/signup", function (req, res) {
         User.register(new User({
             active: false,
             username: req.body.username,
-            role: "User",
+            role: "Admin",
             email: req.body.email,
             name: newName,
             naamToevoeging: req.body.naamToevoeging,
