@@ -10,6 +10,7 @@
                     <div class="col">
                         <label class="form-check-label col-md">
                             <input type="hidden" name="Option" value="All">
+                            <input type="hidden" name="Category" value="">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">Alle producten</button>
                     </div>
@@ -23,6 +24,7 @@
                     <div class="col">
                         <label class="form-check-label col-md">
                             <input type="hidden" name="Option" value="Brood">
+                            <input type="hidden" name="Category" value="brood">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">Broden</button>
                     </div>
@@ -36,6 +38,7 @@
                     <div class="col">
                         <label class="form-check-label col-md">
                             <input type="hidden" name="Option" value="Koek">
+                            <input type="hidden" name="Category" value="koek">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">Koeken</button>
                     </div>
@@ -49,6 +52,7 @@
                     <div class="col">
                         <label class="form-check-label col-md">
                             <input type="hidden" name="Option" value="Zoetigheid">
+                            <input type="hidden" name="Category" value="zoetigheid">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">Zoetigheden</button>
                     </div>
@@ -63,8 +67,9 @@
 
                     <div class="col">
                         <label class="form-check-label col-md">
-                            <input type="hidden" name="Option" value="All">
+
                             <input type="hidden" name="Category" value="<%=currentCategory%>">
+                            <input type="hidden" name="Filter" value="0">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">Niks van verkocht</button>
                     </div>
@@ -77,8 +82,9 @@
 
                     <div class="col">
                         <label class="form-check-label col-md">
-                            <input type="hidden" name="Option" value="Brood">
+
                             <input type="hidden" name="Category" value="<%=currentCategory%>">
+                            <input type="hidden" name="Filter" value="1+">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">1 of meer verkocht</button>
                     </div>
@@ -91,8 +97,9 @@
 
                     <div class="col">
                         <label class="form-check-label col-md">
-                            <input type="hidden" name="Option" value="Koek">
+
                             <input type="hidden" name="Category" value="<%=currentCategory%>">
+                            <input type="hidden" name="Filter" value="50+">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">50 of meer verkocht</button>
                     </div>
@@ -105,8 +112,9 @@
 
                     <div class="col">
                         <label class="form-check-label col-md">
-                            <input type="hidden" name="Option" value="Zoetigheid">
+
                             <input type="hidden" name="Category" value="<%=currentCategory%>">
+                            <input type="hidden" name="Filter" value="100+">
                         </label>  <!-- form-check.// -->
                         <button class="btn btn-sm btn-dark">100 of meer verkocht</button>
                     </div>
@@ -123,6 +131,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Naam</th>
                             <th scope="col">Gekocht</th>
+                            <th scope="col">Naar bestellingen</th>
                             <th scope="col">Reset statistiek?</th>
                         </tr>
                     <tbody>
@@ -135,11 +144,18 @@
                             <td><%= product.name%></td>
                             <td><%= product.amountbought %></td>
                             <td>
+                                <form class="form-inline" action="/stats/orderFind" method="POST">
+                                    <input type="hidden" name="productName" value="<%= product.name%>">
+                                    <button name="Goto" class="btn btn-sm btn-Primary">Naar bestellingen </button>
+                                </form>
+                            </td>
+                            <td>
                                 <form class="form-inline" action="/stats/resetProduct?_method=PUT" method="POST">
                                     <input type="hidden" name="product_id" value="<%= product._id %>">
                                     <button name="Reset"  class="btn btn-sm btn-danger">Reset </button>
 
                                 </form>
+                            </td>
                         </tr>
 
                         <% }) %>

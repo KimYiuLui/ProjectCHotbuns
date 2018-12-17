@@ -30,9 +30,6 @@
             <a class="nav-link" data-toggle="tab" href="#menu5">Nieuwe coupon code</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu7">Statistieken</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu8">Gevaarlijke opties</a>
         </li>
     </ul>
@@ -367,43 +364,7 @@
 
             </div>
         </div>
-        <!-- Statistieken-->
-        <div class="tab-pane container fade" id="menu7">
-            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Naam</th>
-                            <th scope="col">Gekocht</th>
-                            <th scope="col">Reset statistiek?</th>
-                        </tr>
-                    <tbody>
-
-                        <% amountbought.forEach(function(product){ %>
-                        <% rowAmountStats = rowAmountStats + 1%>
-
-                        <tr>
-                            <th scope="row"><%=rowAmountStats%></th>
-                            <td><%= product.name%></td>
-                            <td><%= product.amountbought %></td>
-                            <td>
-                                <form class="form-inline" action="/admin/resetStats?_method=PUT" method="POST">
-                                    <input type="hidden" name="product_id" value="<%= product._id %>">
-                                    <button name="Reset" value="<%= user._id %>" class="btn btn-sm btn-danger">Reset </button>
-
-                                </form>
-                        </tr>
-
-                        <% }) %>
-                    </tbody>
-
-
-
-                </table>
-
-            </div>
-        </div>
+        
         <div class="tab-pane container fade" id="menu8">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <table class="table">
