@@ -58,6 +58,13 @@ function modifyAmountbought(i, x, y) {
     })
 }
 
+function AddOrdersToUser(){
+    User.findByIdAndUpdate(UserId, {$push: {orders: OrderNumber}}, function(error, newOrderList){
+        if(error){throw error}
+        console.log(newOrderList)
+    })
+}
+
 
 // Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
@@ -91,14 +98,20 @@ router.post("/purchase/order", function (req, res) {
             console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
             Order.create(new Order({
                 _id: OrderNumber,
-                targetUser: Username,
+                userId: UserId,
                 amount: productAmount,
                 orderedProducts: orderedProducts,
                 orderedProductsName: orderedProductsName,
                 price: price,
-                status: status
+                status: status,
+                couponStatus: couponStatus,
+                couponpriceModifier: couponpriceModifier
             }));
+            
         }
+
+        AddOrdersToUser()
+        
         const create_payment_json = {
             "intent": "sale",
             "payer": {

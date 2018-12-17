@@ -4,28 +4,22 @@ var User = require("../models/user");
 var Order = require("../models/order");
 
 router.get("/gebruiker/:id", isLoggedIn, function (req, res) {
-    Order.find({}, function (broke, allOrders) {
-        User.findById(req.params.id).populate("favorite").exec(function (error, foundUser) {
+    User.findById(req.params.id).populate("favorite").exec(function (error, foundUser){
+        Order.find({userId: foundUser._id})
+            .sort({date: 'descending'})
+            .exec(function (broke, allOrders){
             if (error || broke) {
                 console.log(error)
             }
             else {
+                // console.log(allOrders)
+                console.log(foundUser._id)  
+                console.log(allOrders.userId)
                 res.render("user/user", { User: foundUser, Order: allOrders })
             }
         });
-    })
-});
-
-router.post("/brood/:id", function(req, res){
-    User.findByIdAndUpdate(req.params.id,  )
- });
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login")
-};
+    });
+})
 
 router.put("/user/modifyUser", isLoggedIn, function (req, res) {
     User.findById(req.body.user_id, function (err, givenUser) {
@@ -54,7 +48,17 @@ router.post("/user/finishModifyUser", isLoggedIn, function (req, res) {
     })
 });
 
-router.get("/user/order/:id", (req, res) => {
-    
+router.get("/gebruiker/:id/order/:id", isLoggedIn, (req, res) => {
+    Order.findById(req.params.id).populate("userId orderedProducts").exec(function(error, foundOrder){
+        if(error){throw error}
+        res.render("orderdetail", {Order: foundOrder})
+    })
 })
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login")
+};
 module.exports = router;

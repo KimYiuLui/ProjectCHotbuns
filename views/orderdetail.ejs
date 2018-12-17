@@ -1,0 +1,110 @@
+<% include ./partials/header %>
+
+<%
+    var rowAmount = 0
+    var count = -1
+    var total = 0.00
+    var amountString = ""
+%>
+<div class="container">
+    <!-- Werkt hetzelfde als de purchase pagina. grotendeels.-->
+    <div class="row">
+        <div class="container mx-auto">
+            <h4> Order: <%= Order._id %> </h4>
+            <a> Bestellingsgegevens: </a>
+            <address>
+                <% if(Order.userId.naamToevoeging.length > 0){ %>
+                    Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%> <%=Order.userId.surname%><br />
+                <% } else{ %>
+                    Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%>    
+                <% } %>
+                Email: <%=Order.userId.email%><br />
+                Telefoon: <%=Order.userId.phonenumber%><br />
+                Adres: <%=Order.userId.address.street%> <%=Order.userId.address.number%> <%=Order.userId.address.additionals%> <br />
+
+            </address>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col">Aantal</th>
+                        <th scope="col">Prijs</th>
+                        <th scope="col">Subtotaal</th>
+                    </tr>
+                <tbody>
+
+
+                    <% Order.orderedProducts.forEach(function(product){ %>
+                    <% count = count + 1 %>
+                    <% rowAmount = rowAmount +1%>
+                    <% amountString =  Order.amount[count] %>
+                    <% var productPostMath = product.price * amountString
+                    total = total + productPostMath %>
+                    <% console.log(amountString)%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td><%= product.name %></td>
+                        <td><%= amountString%></td>
+                        <td><%= product.price %></td>
+                        <td><%= productPostMath.toFixed(2)%></td>
+                    </tr>
+                    <% }) %>
+
+                    <% if (Order.couponStatus == "Yes"){ %>
+                    <% var saleAmount1 = total * (1 - ("0." + Order.couponpriceModifierValue)) %>
+                    <% var saleAmount2 = total - saleAmount1 %>
+                    <% total = total - saleAmount2 %>
+                    <% rowAmount = rowAmount +1%>
+
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Coupon korting</td>
+                        <td>-<%=Order.couponpriceModifierValue%>%</td>
+                        <td></td>
+                        <td>-<%=saleAmount2.toFixed(2)%></td>
+
+                    </tr>
+                    <% } %>
+                    <% var totalBTWstep1 = total * 1.06 %>
+                    <% var totalBTWstep2 = totalBTWstep1 - total %>
+                    <% total = total * 1.06 %>
+                    <% total = total + 2.00 %>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Belasting</td>
+                        <td>6%</td>
+                        <td></td>
+                        <td><%=totalBTWstep2.toFixed(2)%></td>
+                    </tr>
+                    <% rowAmount = rowAmount +1%>
+                    <tr>
+                        <th scope="row"><%=rowAmount%></th>
+                        <td>Verzendkosten</td>
+                        <td></td>
+                        <td></td>
+                        <td>2.00</td>
+
+                </tbody>
+
+
+
+            </table>
+            <div class="col-3"> 
+                <form class="form-inline" action="/betaling/afgerond" method="POST">
+                <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Email bevestiging versturen </button>
+                </form>
+            </div>
+            
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+<% include ./partials/footer %>
