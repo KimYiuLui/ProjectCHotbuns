@@ -8,8 +8,9 @@
     "\\views\\overige",
     "\\views\\partials",
     "\\views\\product",
-    "\\views\\purchases"
+    "\\views\\purchases",
+    "\\views\\stats"
   ],
-  "SelectedNode": "\\views\\overige\\about.ejs",
+  "SelectedNode": "\\routes\\admin.js",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,46 @@
+<% include ../partials/header %>
+<% var rowAmountOrder = 0 %>
+
+<div class="container mt-4 mb-4">
+    <a class="btn btn-sm btn-danger" href="/stats">Terug</a>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Gebruiker</th>
+                    <th scope="col">Producten</th>
+                    <th scope="col">Annuleer</th>
+                </tr>
+            <tbody>
+
+
+                <% order.forEach(function(order){ %>
+                <% rowAmountOrder = rowAmountOrder + 1%>
+                <tr>
+                    <th scope="row"><%=rowAmountOrder%></th>
+                    <% console.log(order.targetUser); %>
+                    <td><%= order.targetUser %></td>
+                    <td><%= order.orderedProductsName%></td>
+                    <td>
+                        <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                            <input type="hidden" name="order_id" value="<%= order._id %>">
+                            <button name="product_id" value="" class="btn btn-sm btn-danger">Annuleer </button>
+
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+
+
+            </tbody>
+
+
+
+        </table>
+
+    </div>
+</div>
+
+
+    <% include ../partials/footer %>
