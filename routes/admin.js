@@ -165,16 +165,7 @@ router.put("/admin/deleteOrder", function (req, res) {
     });
 });
 
-router.put("/admin/resetStats", function (req, res) {
-    Product.findByIdAndUpdate(req.body.product_id, { $set: { amountbought: 0 } }, function (err, updateAmount) {
-        if (err) {
-            console.log(err);
-            res.redirect(req.get("back"));
-        } else {
-            res.redirect(req.get("referer"));
-        }
-    });
-});
+
 
 //Verwijder een coupon.
 router.put("/admin/deleteCoupon", function (req, res) {

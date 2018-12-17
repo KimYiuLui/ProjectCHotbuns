@@ -1,0 +1,156 @@
+<% include ../partials/header %>
+<% var rowAmountStats = 0%>
+
+<div class="container mt-4 mb-4">
+    <div class="row">
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="All">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">Alle producten</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Brood">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">Broden</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Koek">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">Koeken</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Zoetigheid">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">Zoetigheden</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="All">
+                            <input type="hidden" name="Category" value="<%=currentCategory%>">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">Niks van verkocht</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Brood">
+                            <input type="hidden" name="Category" value="<%=currentCategory%>">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">1 of meer verkocht</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Koek">
+                            <input type="hidden" name="Category" value="<%=currentCategory%>">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">50 of meer verkocht</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/stats/filter" method="POST">
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-check-label col-md">
+                            <input type="hidden" name="Option" value="Zoetigheid">
+                            <input type="hidden" name="Category" value="<%=currentCategory%>">
+                        </label>  <!-- form-check.// -->
+                        <button class="btn btn-sm btn-dark">100 of meer verkocht</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+        <!-- Statistieken-->
+        
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Naam</th>
+                            <th scope="col">Gekocht</th>
+                            <th scope="col">Reset statistiek?</th>
+                        </tr>
+                    <tbody>
+
+                        <% result.forEach(function(product){ %>
+                        <% rowAmountStats = rowAmountStats + 1%>
+
+                        <tr>
+                            <th scope="row"><%=rowAmountStats%></th>
+                            <td><%= product.name%></td>
+                            <td><%= product.amountbought %></td>
+                            <td>
+                                <form class="form-inline" action="/stats/resetProduct?_method=PUT" method="POST">
+                                    <input type="hidden" name="product_id" value="<%= product._id %>">
+                                    <button name="Reset"  class="btn btn-sm btn-danger">Reset </button>
+
+                                </form>
+                        </tr>
+
+                        <% }) %>
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+
+
+
+<% include ../partials/footer %>
