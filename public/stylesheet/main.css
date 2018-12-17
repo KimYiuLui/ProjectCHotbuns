@@ -53,10 +53,12 @@ html {
 
 .img-thumbnail{
     padding: 0;
+    height: 50%;
 }
 
 .img-thumbnail .caption{
     padding: 9px;
+    height: 20%;
 }
 
 .img-carrousel{

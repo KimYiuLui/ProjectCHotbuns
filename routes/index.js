@@ -24,16 +24,48 @@ var transporter = nodemailer.createTransport({ //setting up email account
 //-------------------------------------
 //Homepagina met productcarrousel
 //-------------------------------------
-router.get("/", function (req, res, next) {
+/*router.get("/", function (req, res, next) {
+    Product
+        .find({ category: "brood" })
+        .count()
+        .exec(function (error, products) {
+            rand = Math.random()
+            //Product.find({ category: "brood" })
+            Product.collection.find({ category: "brood" }).limit(-1).skip(rand).next()
+                //.count()
+                .exec(function (error, count) {
+                    if (error) return next(error)
+                    //Product.collection.find().limit(-1).skip(rand).next()
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
+});*/
+
+/*router.get("/", function (req, res, next) {
     Product
         .find({ category: "brood" })
         .exec(function (error, products) {
-            //rand = Math.random()
             Product.find({ category: "brood" })
                 .count()
                 .exec(function (error, count) {
                     if (error) return next(error)
-                    //Product.find().limit(-1).skip(rand).next()
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
+});*/
+
+router.get("/", function (req, res, next) {
+    Product
+        .find({ category: "brood" })
+        .exec(function (error, products) {
+            Product.find({ category: "brood" })
+                .count()
+                .exec(function (error, count) {
+                    if (error) return next(error)
                     res.render("home", {
                         product: products,
                     })

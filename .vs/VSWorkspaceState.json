@@ -9,8 +9,8 @@
     "\\views\\admin",
     "\\views\\overige",
     "\\views\\partials",
-    "\\views\\product"
+    "\\views\\user"
   ],
-  "SelectedNode": "\\public\\stylesheet\\main.css",
+  "SelectedNode": "\\views\\user\\user.ejs",
   "PreviewInSolutionExplorer": false
 }
