@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var nodemailer = require('nodemailer');
+var Order = require('../models/order')
 
 var host, rand, link, emailHtml, mailOptions, fullaname, newName;
 var transporter = nodemailer.createTransport({ //setting up email account
@@ -16,6 +17,8 @@ var transporter = nodemailer.createTransport({ //setting up email account
 //-------------------------------------
 //Home and other informative pages 
 //-------------------------------------
+
+
 router.get("/", function (req, res) {
     res.render("home");
 });
