@@ -59,6 +59,18 @@ html {
     padding: 9px;
 }
 
+.img-carrousel{
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+img-carrousel2{
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+}
+
 #detailbutton{
     width: 250px;
 }
@@ -90,7 +102,7 @@ input:valid + span:after {
 }
 
 div.img-thumbnail{
-    height: 425px;;
+    height: 425px;; /*Aangepast, origineel = 425*/
 }
 
 .fa-heart{
@@ -412,6 +424,16 @@ dev {
         clear: both;
         display: table;
     }
+
+.container-carrousel {
+    padding: 0 10px;
+}
+
+.countainer-carrousel::after, .row-carrousel::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 /*misschien voor later maar is nu niet aantrekkelijk*/
 .title {
     color: grey;

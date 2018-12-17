@@ -28,10 +28,12 @@ router.get("/", function (req, res, next) {
     Product
         .find({ category: "brood" })
         .exec(function (error, products) {
+            //rand = Math.random()
             Product.find({ category: "brood" })
                 .count()
                 .exec(function (error, count) {
                     if (error) return next(error)
+                    //Product.find().limit(-1).skip(rand).next()
                     res.render("home", {
                         product: products,
                     })
