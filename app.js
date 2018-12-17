@@ -23,6 +23,7 @@ var FavoriteRoutes  = require("./routes/favorite");
 var AdminRoutes     = require("./routes/admin");
 var paymentRoutes = require("./routes/payment");
 var statsRoutes = require("./routes/stats");
+var ticketRoutes = require("./routes/helpdesk");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -68,6 +69,7 @@ app.use(UserRoutes);
 app.use(FavoriteRoutes);
 app.use(paymentRoutes);
 app.use(statsRoutes);
+app.use(ticketRoutes);
 
 app.set('port', process.env.PORT || 3000);
 

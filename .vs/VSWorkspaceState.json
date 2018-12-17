@@ -5,12 +5,12 @@
     "\\routes",
     "\\views",
     "\\views\\admin",
+    "\\views\\helpdesk",
     "\\views\\overige",
     "\\views\\partials",
     "\\views\\product",
-    "\\views\\purchases",
-    "\\views\\stats"
+    "\\views\\user"
   ],
-  "SelectedNode": "\\routes\\admin.js",
+  "SelectedNode": "\\models\\order.js",
   "PreviewInSolutionExplorer": false
 }
