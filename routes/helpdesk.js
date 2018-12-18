@@ -8,8 +8,13 @@ var Ticket = require("../models/ticket")
 var nodemailer = require('nodemailer');
 
 router.get("/help", function (req, res) {
+    console.log("CURRENT USER IS " + req.user.username)
     
-    res.render("helpdesk/help");
+    Ticket.find({ email: req.user.email }, function (error, tickets) {
+        console.log(tickets)
+        res.render("helpdesk/help", { ticket: tickets });
+    });
+
 })
 
 router.post("/helpdesk/sendTicket", function (req, res) {
@@ -24,7 +29,9 @@ router.post("/helpdesk/sendTicket", function (req, res) {
         subject: req.body.subject,
         content: req.body.content,
     }));
-    res.render("helpdesk/help");
+    res.redirect(req.get("referer"));
 })
+
+
 
 module.exports = router;

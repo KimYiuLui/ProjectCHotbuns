@@ -1,28 +1,77 @@
 <% include ../partials/header %>
-<div class="container">
+<% var count = 0 %>
+<div class="container mt-4 mb-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Mijn tickets</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Nieuwe ticket</a>
+        </li>
+    </ul>
 
-    <div class="row">
-        <div class="container mx-auto">
-            <h3>Helpdesk</h3>
-            <br />
-            <strong>Open hier een ticket</strong>
-            <br />
-
-            <form class="form-group float-left" action="/helpdesk/sendTicket" method="POST" id="helpForm">
-                <input type="hidden" name="name" value="<%= currentUser.name %>" />
-                <input type="hidden" name="email" value="<%= currentUser.email%>" />
-                <textarea rows="1" cols="70" name="subject" placeholder="Onderwerp" form="helpForm"></textarea>
-                <textarea rows="9" cols="70" name="content" placeholder="Bericht" form="helpForm"></textarea>
-                <div class="col-4 col-sm-2">
-                <button name="Goto" value="" class="btn btn-sm btn-Primary">Verzend</button>
-                </div>
-            </form>
+    <div class="tab-content">
+        <div class="tab-pane container fade" id="menu1">
 
 
+            <div class="container mx-auto">
+                <h3>Helpdesk</h3>
+                <br />
+                <strong>Open hier een ticket</strong>
+                <br />
+
+                <form class="form-group float-left" action="/helpdesk/sendTicket" method="POST" id="helpForm">
+                    <input type="hidden" name="name" value="<%= currentUser.username %>" />
+                    <input type="hidden" name="email" value="<%= currentUser.email%>" />
+                    <textarea rows="1" cols="70" name="subject" placeholder="Onderwerp" form="helpForm"></textarea>
+                    <textarea rows="9" cols="70" name="content" placeholder="Bericht" form="helpForm"></textarea>
+                    <div class="col-4 col-sm-2">
+                        <button name="Goto" value="" class="btn btn-sm btn-Primary">Verzend</button>
+                    </div>
+                </form>
+
+
+
+            </div>
 
         </div>
+        <div class="tab-pane container active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Gebruiker</th>
+                        <th scope="col">Onderwerp</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Meer info</th>
+                    </tr>
+                <tbody>
+
+
+                    <% ticket.forEach(function(ticket){ %>
+                    <% count = count + 1%>
+                    <tr>
+                        <th scope="row"><%=count%></th>
+                        <td><%= ticket.name %></td>
+                        <td><%= ticket.subject%></td>
+                        <td><%= ticket.status%></td>
+                        <td>
+                            <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
+                                <input type="hidden" name="order_id" value="<%= ticket._id %>">
+                                <button name="product_id" value="" class="btn btn-sm btn-danger">Annuleer </button>
+
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+
+
+                </tbody>
+
+
+
+            </table>
+        </div>
     </div>
-
 </div>
-
 <% include ../partials/footer %>

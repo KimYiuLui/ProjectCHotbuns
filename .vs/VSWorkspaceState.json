@@ -9,8 +9,8 @@
     "\\views\\overige",
     "\\views\\partials",
     "\\views\\product",
-    "\\views\\user"
+    "\\views\\stats"
   ],
-  "SelectedNode": "\\models\\order.js",
+  "SelectedNode": "\\routes\\admin.js",
   "PreviewInSolutionExplorer": false
 }
