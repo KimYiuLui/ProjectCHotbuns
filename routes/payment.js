@@ -80,7 +80,8 @@ router.post("/purchase/order", function (req, res) {
     orderedProducts =  req.body.product_id
     orderedProductsName = req.body.name
     price = req.body.price
-    status = "Uw betaling wordt momenteel verwerkt"
+    status = req.body.status || "In afwachting van betaling"
+    OrderNumber = req.body.orderId || 0
     
     intPrice = parseInt(price).toFixed(2)
 
@@ -93,7 +94,7 @@ router.post("/purchase/order", function (req, res) {
     
     Order.find({}, (error, allOrders) => {
         console.log(allOrders.length + "   Orders length")
-        if (allOrders.length >= 0){
+        if (OrderNumber != 0 && allOrders.length >= 0){
             OrderNumber = 2018000000 + (allOrders.length + 1)
             console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
             Order.create(new Order({
@@ -106,8 +107,7 @@ router.post("/purchase/order", function (req, res) {
                 status: status,
                 couponStatus: couponStatus,
                 couponpriceModifier: couponpriceModifierValue
-            }));
-            
+            }));   
         }
 
         AddOrdersToUser()

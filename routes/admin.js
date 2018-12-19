@@ -5,7 +5,7 @@ var Product = require("../models/product");
 var User = require("../models/user");
 var Coupon = require("../models/coupon");
 var nodemailer = require('nodemailer');
-var newName;
+var newName, fullname, mailOptions, emailHtml
 //Email gebeuren
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -43,7 +43,7 @@ router.get("/admin/", isLoggedIn, function (req, res) {
 });
 
 router.get("/admin/order/:id", isLoggedIn, (req, res) => {
-    Order.findById(req.params.id).populate("userId orderedProducts").exec(function(error, foundOrder){
+    Order.findById(req.params.id).populate("userId").populate("orderedProducts").exec(function(error, foundOrder){
         if(error){throw error}
         
         var amountToArray = foundOrder.amount[0].split(",")
@@ -231,10 +231,6 @@ router.get("/admin/deleteAllstats", function (req, res) {
     });
 });
 
-
-
-
-
 //Maak een coupon aan.
 router.post("/admin/makeACoupon", function (req, res) {
     Coupon.create(new Coupon({
@@ -259,13 +255,43 @@ router.post("/admin/makeACoupon", function (req, res) {
             console.log('Email sent: ' + info.response);
         }
     });
+})
 
+    router.post("/admin/order/:id/herinnering", function (req, res) {
+        if (req.body.additional.length > 0){
+            fullname = req.body.name + " " + req.body.additional + " " + req.body.surname;
+        }
+        else {
+            fullname = req.body.name + " " + req.body.surname;
+        }
+        // De email zelf.
+        emailHtml = "<a> Beste " + fullname + ", <br /> <br /> <a> <a>U heeft een order openstaan die nog betaald moet worden. Indien u deze order wil annuleren kan dit via het orderoverzicht. U kunt ons ook een e-mail sturen waarna wij uw order voor u zullen annuleren. <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> Hotbuns <a>"
+        mailOptions = {
+            from: 'hotbunsemail@gmail.com',
+            to: req.body.email,
+            subject: 'HotBuns Orderherinnering',
+            html: emailHtml
+        };
+    
+        // Stuurt de email + laat zien of het gelukt is.
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
 
-    req.flash('success', "Actie voltooid"),
-        res.redirect("/admin/")
+        res.redirect(req.get("referer"))
 });
 
-
+router.post("/order/:id/annuleren", function (req, res) {
+    console.log(req.body.orderId)
+    Order.findByIdAndUpdate(req.body.orderId, { $set: { status: "Geannuleerd"}}, (error, updatedOrder) => {
+        if (error){throw error}
+        res.redirect(req.get("referer"))
+    })
+});
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
@@ -274,4 +300,4 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login")
 };
 module.exports = router;
-/////ADMIN TEMP SPOT///// -Vraag ff aan kimyu of hij een route kan maken, Mij lukt het niet-
+/////ADMIN TEMP SPOT///// -Vraag ff aan kimyu of hij een route kan maken, Mij lukt het niet///
