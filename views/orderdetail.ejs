@@ -135,7 +135,7 @@
                     </form>
                 </div>
 
-            <% } if (Order.status == "In afwachting van betaling"){ %>
+            <% } if (Order.status == "Betaald"){ %>
                 <div class="col-3"> 
                     <form class="form-inline" action="/gebruiker/:id/order/:id" method="POST">
                         <input type="hidden" name="email" value="<%= Order.userId.email %>">
