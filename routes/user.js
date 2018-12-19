@@ -68,7 +68,7 @@ router.get("/gebruiker/:id/order/:id", isLoggedIn, (req, res) => {
 })
 
 
-router.post("/gebruiker/:id/order/:id", (req, res) => {
+router.post("/gebruiker/:id/order/:id", (req, res) => { //TRY req.params.userID._id
     // Voor de email opmaak. Zet alles onder elkaar.
     Order.findById(req.params.id).populate("userId").exec(function(error, foundOrder){
         if(error){throw error}
@@ -77,6 +77,7 @@ router.post("/gebruiker/:id/order/:id", (req, res) => {
         var notArray = []
         noLayout =  amountToArray
         withLayout = ""
+        console.log(foundOrder.userId)
         console.log(Array.isArray(amountToArray))
         
         if(Array.isArray(amountToArray) == false){
