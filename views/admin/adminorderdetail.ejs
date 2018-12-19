@@ -1,4 +1,4 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 
 <%
     var rowAmount = 0
@@ -14,15 +14,18 @@
             <p><strong>Status: <%= Order.status %></strong></p>
             <a> Bestellingsgegevens: </a>
             <address>
-                <% if(Order.userId.naamToevoeging.length > 0){ %>
-                    Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%> <%=Order.userId.surname%><br />
-                <% } else{ %>
-                    Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%>    
+                <% if(Order.userId != null){ %>
+                    <% if(Order.userId.naamToevoeging.length > 0){ %>
+                        Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%> <%=Order.userId.surname%><br />
+                    <% } else{ %>
+                        Naam: <%=Order.userId.name%> <%= Order.userId.naamToevoeging%>    
+                    <% } %>
+                    Email: <%=Order.userId.email%><br />
+                    Telefoon: <%=Order.userId.phonenumber%><br />
+                    Adres: <%=Order.userId.address.street%> <%=Order.userId.address.number%> <%=Order.userId.address.additionals%> <br />
+                <% } else {%>
+                    <p style="color: red" class="d-inline"><strong>Gebruiker verwijderd</strong></p> <br/><br/>
                 <% } %>
-                Email: <%=Order.userId.email%><br />
-                Telefoon: <%=Order.userId.phonenumber%><br />
-                Adres: <%=Order.userId.address.street%> <%=Order.userId.address.number%> <%=Order.userId.address.additionals%> <br />
-
             </address>
 
             <table class="table">
@@ -96,19 +99,10 @@
             <h5>
             Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
             </h5>
-            <div class="col-3"> 
-                <form class="form-inline" action="/betaling/afgerond" method="POST">
-                <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Email bevestiging versturen </button>
-                </form>
-            </div>
-            
-
-
-
 
         </div>
     </div>
 
 </div>
 
-<% include ./partials/footer %>
+<% include ../partials/footer %>

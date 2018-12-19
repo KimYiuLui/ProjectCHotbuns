@@ -15,7 +15,7 @@ var OrderSchema = new mongoose.Schema({
     }],
     status: String,
     orderedProductsName: [String],
-    amount: [Number],
+    amount: [String],
     date:  { type: Date, default: Date.now },
     price: String,
     couponStatus: String,

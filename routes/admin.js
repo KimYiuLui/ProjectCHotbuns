@@ -19,9 +19,16 @@ var transporter = nodemailer.createTransport({
 router.get("/admin/", isLoggedIn, function (req, res) {
     Product.find({}, function (error, allProducts) {
         User.find({}, function (err, allUsers) {
-            Order.find({}, function (broke, allOrders) {
+            Order
+                .find({})
+                .populate("userId")
+                .sort({date: 'descending'})
+                .exec(function (broke, allOrders) {
                 Coupon.find({}, function (broke, allCoupons) {
-                    Product.find({}).sort({ amountbought: 'descending' }).exec(function (err, productFilt) {
+                    Product
+                    .find({})
+                    .sort({ amountbought: 'descending' })
+                    .exec(function (err, productFilt) {
                         if (error || err || broke) {
                             console.log(error)
                             console.log(err)
@@ -34,6 +41,17 @@ router.get("/admin/", isLoggedIn, function (req, res) {
         });
     });
 });
+
+router.get("/admin/order/:id", isLoggedIn, (req, res) => {
+    Order.findById(req.params.id).populate("userId orderedProducts").exec(function(error, foundOrder){
+        if(error){throw error}
+        
+        var amountToArray = foundOrder.amount[0].split(",")
+        res.render("admin/adminorderdetail", {Order: foundOrder, amount: amountToArray})
+    })
+})
+
+
 
 //Pagina productbewerking.
 router.put("/admin/modifyProduct", isLoggedIn, function (req, res) {
@@ -246,6 +264,8 @@ router.post("/admin/makeACoupon", function (req, res) {
     req.flash('success', "Actie voltooid"),
         res.redirect("/admin/")
 });
+
+
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

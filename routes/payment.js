@@ -105,7 +105,7 @@ router.post("/purchase/order", function (req, res) {
                 price: price,
                 status: status,
                 couponStatus: couponStatus,
-                couponpriceModifier: couponpriceModifier
+                couponpriceModifier: couponpriceModifierValue
             }));
             
         }

@@ -10,7 +10,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Gebruiker</th>
                     <th scope="col">Producten</th>
-                    <th scope="col">Annuleer</th>
+                    <th scope="col">  Datum  </th>
+                    <th scope="col"></th>
                 </tr>
             <tbody>
 
@@ -20,15 +21,28 @@
                 <tr>
                     <th scope="row"><%=rowAmountOrder%></th>
                     <% console.log(order.targetUser); %>
-                    <td><%= order.targetUser %></td>
+                    <% if (order.userId != null){ %>
+                    <td><%= order.userId.username %></td>
+                    <% } else{ %>
+                    <td> gebruiker verwijderd</td>
+                    <% } %>
                     <td><%= order.orderedProductsName%></td>
                     <td>
+                        <%var day = order.date.getDate() %>
+                        <%var month = order.date.getMonth()+1 %>
+                        <%var year = order.date.getFullYear() %>
+                        <%= day + "-" + month + "-" + year %>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-white-text nav-bg"  data-toggle="tooltip" data-placement="top" title="Order bekijken"href="/admin/order/<%= order._id %>"> <i class="fas fa-search"></i></a>
+                    </td>
+                    <!--<td>
                         <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
                             <input type="hidden" name="order_id" value="<%= order._id %>">
                             <button name="product_id" value="" class="btn btn-sm btn-danger">Annuleer </button>
 
                         </form>
-                    </td>
+                    </td> -->
                 </tr>
                 <% }) %>
 

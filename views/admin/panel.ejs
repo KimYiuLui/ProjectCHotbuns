@@ -265,28 +265,33 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">Ordernummer</th>
                             <th scope="col">Gebruiker</th>
-                            <th scope="col">Producten</th>
-                            <th scope="col">Annuleer</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">  Datum  </th>
+                            <th scope="col"></th>
                         </tr>
                     <tbody>
 
 
                         <% order.forEach(function(order){ %>
-                        <% rowAmountOrder = rowAmountOrder + 1%>
                         <tr>
-                            <th scope="row"><%=rowAmountOrder%></th>
-                            <% console.log(order.targetUser); %>
-                            <td><%= order.targetUser %></td>
-                            <td><%= order.orderedProductsName%></td>
+                            <th scope="row"> <%= order._id %></th>
+                            <% if (order.userId != null){ %>
+                            <td><%= order.userId.username %></td>
+                            <% } else{ %>
+                            <td> gebruiker verwijderd</td>
+                            <% } %>
+                            <td><%= order.status%></td>
                             <td>
-                                <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
-                                    <input type="hidden" name="order_id" value="<%= order._id %>">
-                                    <button name="product_id" value="<%= user._id %>" class="btn btn-sm btn-danger">Annuleer </button>
-
-                                </form>
-                            </td>
+                            <%var day = order.date.getDate() %>
+                            <%var month = order.date.getMonth()+1 %>
+                            <%var year = order.date.getFullYear() %>
+                            <%= day + "-" + month + "-" + year %>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-white-text nav-bg"  data-toggle="tooltip" data-placement="top" title="Order bekijken"href="/admin/order/<%= order._id %>"> <i class="fas fa-search"></i></a>
+                        </td>
                         </tr>
                         <% }) %>
 
