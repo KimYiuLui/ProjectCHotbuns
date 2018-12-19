@@ -17,6 +17,16 @@ router.get("/help", function (req, res) {
 
 })
 
+router.get("/help/admin", function (req, res) {
+    console.log("CURRENT USER IS " + req.user.username)
+
+    Ticket.find({}).sort({ status: "descending" }).exec(function (error, tickets) {
+        console.log(tickets)
+        res.render("helpdesk/adminTicketsearch", { ticket: tickets });
+    });
+
+})
+
 router.post("/helpdesk/sendTicket", function (req, res) {
     console.log("DE USERNAME IS = " + req.body.name);
     console.log("DE EMAIL IS = " + req.body.email);
@@ -36,7 +46,11 @@ router.post("/helpdesk/updateTicket", function (req, res) {
     console.log("DE USERNAME IS = " + req.body.name);
     console.log("DE EMAIL IS = " + req.body.email);
     console.log("DE CONTENT IS = " + req.body.content);
-    var finalcontent = "Bericht van: " + req.body.name + ",\r\n\r\n" + req.body.content
+    if (req.body.admin == "no") {
+        var finalcontent = "Bericht van: " + req.body.name + ",\r\n\r\n" + req.body.content
+    } else {
+        var finalcontent = "Bericht van: " + "Administrator" + ",\r\n\r\n" + req.body.content
+    };
     Ticket.findById(req.body.ticketId, function (error, oldContent) {
     
         Ticket.findByIdAndUpdate(req.body.ticketId, { $set: { content: finalcontent }, $push: {history: oldContent.content} }, function (error, foundTicket) {

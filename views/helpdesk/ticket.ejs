@@ -15,42 +15,53 @@ console.log(historyCount)
     <!-- Werkt hetzelfde als de purchase pagina. grotendeels.-->
     <div class="row">
         
-            <div class="container mx-auto">
-                <% if(ticket.status == "Open"){ %>
-                <form action="/helpdesk/closeTicket/<%=ticket._id%>" method="Post">
-                    <button name="Goto" value="" class="btn btn-sm btn-danger">Sluit ticket</button>
-                </form>
-                <% } %>
-                <h3> Ticket: <%= ticket._id %> </h3> 
-                <%var day = ticket.date.getDate() %>
-                <%var month = ticket.date.getMonth()+1 %>
-                <%var year = ticket.date.getFullYear() %>
-                <% var dayMonthYear = day + "-" + month + "-" + year %>
-                Datum: <%= dayMonthYear %> <br />
-                Status: <strong> <%= ticket.status %> </strong><br /> <br />
-                <a> Ticket gegevens: </a>
-                <address>
-                    Naam: <%=ticket.name%><br />
-                    Email: <%=ticket.email%><br />
-                </address>
+        <div class="container mx-auto">
+            <% if(ticket.status == "Open"){ %>
+            <form action="/helpdesk/closeTicket/<%=ticket._id%>" method="Post">
+                <button name="Goto" value="" class="btn btn-sm btn-danger">Sluit ticket</button>
+            </form>
+            <% } %>
+            <h3> Ticket: <%= ticket._id %> </h3>
+            <%var day = ticket.date.getDate() %>
+            <%var month = ticket.date.getMonth()+1 %>
+            <%var year = ticket.date.getFullYear() %>
+            <% var dayMonthYear = day + "-" + month + "-" + year %>
+            Datum: <%= dayMonthYear %> <br />
+            Status: <strong> <%= ticket.status %> </strong> <br />
+            <% if(currentUser.role == "Admin"){ %>
+            <strong>U REAGEERT ALS EEN ADMIN</strong><br /> <br />
+            <% } %>
+            <a> Ticket gegevens: </a>
+            <address>
+                Naam: <%=ticket.name%><br />
+                Email: <%=ticket.email%><br />
+            </address>
         </div>
                 <% if(ticket.status == "Open"){ %>
-                <form class="form-group float-left" action="/helpdesk/updateTicket" method="POST" id="helpForm">
-                    <div class="col-4 col-sm-2">
-                        <button name="Goto" value="" class="btn btn-sm btn-primary">Verzend</button>
-                    </div>
-                    <input type="hidden" name="name" value="<%= currentUser.username %>" />
-                    <input type="hidden" name="ticketId" value="<%= ticket._id %>" />
-                    <input type="hidden" name="email" value="<%= currentUser.email%>" />
-                    <div class="col-4 col-sm-2">
-                        <textarea rows="9" cols="70" name="content" placeholder="Bericht" required form="helpForm"></textarea>
-                    </div>
-                </form>
+                
+                
+            <form class="form-group float-left" action="/helpdesk/updateTicket" method="POST" id="helpForm">
+
+                <div class="col-4 col-sm-2">
+                    <button name="Goto" value="" class="btn btn-sm btn-primary">Verzend</button>
+                </div>
+                <input type="hidden" name="name" value="<%= currentUser.username %>" />
+                <input type="hidden" name="ticketId" value="<%= ticket._id %>" />
+                <input type="hidden" name="email" value="<%= currentUser.email%>" />
+                <% if(currentUser.role == "Admin"){ %>
+                <input type="hidden" name="admin" value="yes" />
+                <% }else{ %>
+                <input type="hidden" name="admin" value="no" />
+                <% } %>
+                <div class="col-4 col-sm-2">
+                    <textarea rows="9" cols="70" name="content" placeholder="Bericht" required form="helpForm"></textarea>
+                </div>
+            </form>
                 <% }%>
                 <div class="col-4 col-sm-6">
                     <br />
                     <br />
-                    
+
                     <a> <strong>Oude berichten:</strong> </a>
 
                     <textarea readonly rows="5" cols="70" name="content"><%=ticket.content%></textarea>
@@ -67,7 +78,7 @@ console.log(historyCount)
 
 
                 </div>
-    </div>
+</div>
 
 </div>
 <% include ../partials/footer %>

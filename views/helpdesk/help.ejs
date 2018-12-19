@@ -23,8 +23,8 @@
                 <form class="form-group float-left" action="/helpdesk/sendTicket" method="POST" id="helpForm">
                     <input type="hidden" name="name" value="<%= currentUser.username %>" />
                     <input type="hidden" name="email" value="<%= currentUser.email%>" />
-                    <textarea rows="1" cols="70" name="subject" placeholder="Onderwerp" form="helpForm"></textarea>
-                    <textarea rows="9" cols="70" name="content" placeholder="Bericht" form="helpForm"></textarea>
+                    <textarea rows="1" cols="70" name="subject" placeholder="Onderwerp" form="helpForm" required></textarea>
+                    <textarea rows="9" cols="70" name="content" placeholder="Bericht" form="helpForm" required></textarea>
                     <div class="col-4 col-sm-2">
                         <button name="Goto" value="" class="btn btn-sm btn-Primary">Verzend</button>
                     </div>
