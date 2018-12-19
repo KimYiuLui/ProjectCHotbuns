@@ -176,6 +176,11 @@ router.get('/betaling/succes', (req, res) => {
         console.log("length != > 1 ")
         modifyAmountbought(allProductIds.length, allProductIds, userAmount)
     }
+
+    
+    Order.findByIdAndUpdate(OrderNumber, { $set: { status: "Betaald"}}, (error, updatedOrder) => {
+        if (error){throw error}
+    })
     
     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
         if (error) {
@@ -218,7 +223,7 @@ router.post('/betaling/afgerond', (req, res) => {
       } 
       console.log(noLayout)
   
-      if (userAdditionals != null) {
+      if (userAdditionals > 0) {
           fullaname = userFirstname + " " + userAdditionals + " " + userSurname;
       }
       else {
@@ -229,7 +234,7 @@ router.post('/betaling/afgerond', (req, res) => {
       mailOptions = {
           from: 'hotbunsemail@gmail.com',
           to: userEmail,
-          subject: 'Uw bestelling bij HotBuns',
+          subject: 'HotBuns bestelling: ' + OrderNumber,
           html: emailHtml
       };
   

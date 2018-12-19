@@ -68,16 +68,14 @@ router.get("/gebruiker/:id/order/:id", isLoggedIn, (req, res) => {
 })
 
 
-router.post("/gebruiker/:id/order/:id", (req, res) => { //TRY req.params.userID._id
+router.post("/gebruiker/:id/order/:id", (req, res) => { 
     // Voor de email opmaak. Zet alles onder elkaar.
-    Order.findById(req.params.id).populate("userId").exec(function(error, foundOrder){
-        if(error){throw error}
-        var amountToArray = foundOrder.amount[0].split(",")
-
+        var amountToArray = req.params.amount
+        console.log(amountToArray)
         var notArray = []
         noLayout =  amountToArray
         withLayout = ""
-        console.log(foundOrder.userId)
+        console.log(req.body.orderId)
         console.log(Array.isArray(amountToArray))
         
         if(Array.isArray(amountToArray) == false){
@@ -93,18 +91,18 @@ router.post("/gebruiker/:id/order/:id", (req, res) => { //TRY req.params.userID.
         } 
         console.log(noLayout)
 
-        if (foundOrder.userId.naamToevoeging > 0){
-            fullaname = foundOrder.userId.name + " " + foundOrder.userId.naamToevoeging + " " + foundOrder.userId.surname;
+        if (req.body.additional > 0){
+            fullaname = req.body.name + " " + req.body.additional + " " + req.body.surname;
         }
         else {
-            fullaname = foundOrder.userId.name + " " + foundOrder.userId.surname;
+            fullaname = req.body.name + " " + req.body.surname;
         }
 
         emailHtml = "<a> Beste " + fullaname + ", <br /> <br /> <a> <a> Bedankt dat u heeft gekozen voor HotBuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> HotBuns <a>"
         mailOptions = {
             from: 'hotbunsemail@gmail.com',
-            to: foundOrder.userId.email,
-            subject: 'HotBuns bestelling: ' + foundOrder._id,
+            to: req.body.email,
+            subject: 'HotBuns bestelling: ' + req.body.orderId,
             html: emailHtml
         };
 
@@ -118,7 +116,6 @@ router.post("/gebruiker/:id/order/:id", (req, res) => { //TRY req.params.userID.
         });
 
         res.redirect(req.get("referer"))
-    })
 })
 
 function isLoggedIn(req, res, next) {

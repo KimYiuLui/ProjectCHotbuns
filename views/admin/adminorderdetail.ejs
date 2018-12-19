@@ -11,7 +11,12 @@
     <div class="row">
         <div class="container mx-auto">
             <h3> Order: <%= Order._id %> </h3>
-            <p><strong>Status: <%= Order.status %></strong></p>
+            <%var day = Order.date.getDate() %>
+            <%var month = Order.date.getMonth()+1 %>
+            <%var year = Order.date.getFullYear() %>
+            <% var dayMonthYear = day + "-" + month + "-" + year %>
+            Datum: <%= dayMonthYear %> <br/>
+            Status: <%= Order.status %><br/> <br/>
             <a> Bestellingsgegevens: </a>
             <address>
                 <% if(Order.userId != null){ %>
