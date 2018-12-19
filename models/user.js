@@ -27,7 +27,8 @@ var UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"  
     }],
-    amount: [String]
+    amount: [String],
+    orders:[Number]
 });
 
 

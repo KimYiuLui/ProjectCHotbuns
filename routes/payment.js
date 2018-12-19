@@ -20,7 +20,7 @@ paypal.configure({
     'client_secret': 'ENaW1JIVm0cUQgLJMGZmTosNy1sNG5xgE0NOAWsM35hd35ABFcPvY6ZVG6MijWDljAOXptidmcErhQYk'
   });
 
-var noLayout, withLayout, emailHtml, mailOptions, allProductIds, userAmount, Username, userFirstname,userAdditionals,userSurname,userEmail,productAmount,orderedProducts,orderedProductsName, price, status, couponStatus, couponpriceModifierValue, UserId, intPrice, productArray,amountSearch
+var noLayout, withLayout, emailHtml, mailOptions, allProductIds, userAmount, Username, userFirstname,userAdditionals,userSurname,userEmail,productAmount,orderedProducts,orderedProductsName, price, status, couponStatus, couponpriceModifierValue, UserId, intPrice, productArray,amountSearch, OrderNumber
 
 
 
@@ -58,6 +58,14 @@ function modifyAmountbought(i, x, y) {
     })
 }
 
+function AddOrdersToUser(){
+    User.findByIdAndUpdate(UserId, {$push: {orders: OrderNumber}}, function(error, newOrderList){
+        if(error){throw error}
+        console.log(newOrderList)
+    })
+}
+
+
 // Plaats order, maakt er eentje aan met data gegeven van account + website.
 router.post("/purchase/order", function (req, res) {
 
@@ -82,53 +90,67 @@ router.post("/purchase/order", function (req, res) {
     allProductIds = req.body.product_id,
     userAmount = res.locals.currentUser.amount
 
-    Order.create(new Order({
-        targetUser: Username,
-        amount: productAmount,
-        orderedProducts: orderedProducts,
-        orderedProductsName: orderedProductsName,
-        price: price,
-        status: status
-    }));
-
-    const create_payment_json = {
-        "intent": "sale",
-        "payer": {
-            "payment_method": "paypal"
-        },
-        "redirect_urls": {
-            "return_url": "http://localhost:3000/betaling/succes",
-            "cancel_url": "http://localhost:3000/betaling/mislukt"
-        },
-        "transactions": [{
-            "item_list": {
-                "items": [{
-                    "name": "HotBuns Order",
-                    "sku": "2018",
-                    "price": intPrice,
-                    "currency": "EUR",
-                    "quantity": 1
-                }]
-            },
-            "amount": {
-                "currency": "EUR",
-                "total": intPrice
-            },
-            "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
-        }]
-    }
     
-    paypal.payment.create(create_payment_json, function (error, payment) {
-      if (error) {
-          throw error;
-      } else {
-          for(let i = 0;i < payment.links.length;i++){
-            if(payment.links[i].rel === 'approval_url'){
-              res.redirect(payment.links[i].href);
-            }
+    Order.find({}, (error, allOrders) => {
+        console.log(allOrders.length + "   Orders length")
+        if (allOrders.length >= 0){
+            OrderNumber = 2018000000 + (allOrders.length + 1)
+            console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
+            Order.create(new Order({
+                _id: OrderNumber,
+                userId: UserId,
+                amount: productAmount,
+                orderedProducts: orderedProducts,
+                orderedProductsName: orderedProductsName,
+                price: price,
+                status: status,
+                couponStatus: couponStatus,
+                couponpriceModifier: couponpriceModifierValue
+            }));
+            
+        }
+
+        AddOrdersToUser()
+        
+        const create_payment_json = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "http://localhost:3000/betaling/succes",
+                "cancel_url": "http://localhost:3000/betaling/mislukt"
+            },
+            "transactions": [{
+                "item_list": {
+                    "items": [{
+                        "name": "HotBuns Order",
+                        "sku": "2018",
+                        "price": intPrice,
+                        "currency": "EUR",
+                        "quantity": 1
+                    }]
+                },
+                "amount": {
+                    "currency": "EUR",
+                    "total": intPrice
+                },
+                "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
+            }]
+        }
+        
+        paypal.payment.create(create_payment_json, function (error, payment) {
+          if (error) {
+              throw error;
+          } else {
+              for(let i = 0;i < payment.links.length;i++){
+                if(payment.links[i].rel === 'approval_url'){
+                  res.redirect(payment.links[i].href);
+                }
+              }
           }
-      }
-    });
+        });
+    })
 });
 
 router.get('/betaling/succes', (req, res) => {
@@ -154,6 +176,11 @@ router.get('/betaling/succes', (req, res) => {
         console.log("length != > 1 ")
         modifyAmountbought(allProductIds.length, allProductIds, userAmount)
     }
+
+    
+    Order.findByIdAndUpdate(OrderNumber, { $set: { status: "Betaald"}}, (error, updatedOrder) => {
+        if (error){throw error}
+    })
     
     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
         if (error) {
@@ -176,9 +203,6 @@ router.get('/betaling/afgerond', (req, res) => {
     })
 })
 
-
-noLayout, withLayout, emailHtml, mailOptions, allProductIds, userAmount, Username, userFirstname,userAdditionals,userSurname,userEmail,productAmount,orderedProducts,orderedProductsName, price, status, couponStatus, couponpriceModifierValue, UserId, intPrice, productArray,amountSearch
-
 router.post('/betaling/afgerond', (req, res) => {
       // Voor de email opmaak. Zet alles onder elkaar.
       var notArray = []
@@ -199,7 +223,7 @@ router.post('/betaling/afgerond', (req, res) => {
       } 
       console.log(noLayout)
   
-      if (userAdditionals != null) {
+      if (userAdditionals > 0) {
           fullaname = userFirstname + " " + userAdditionals + " " + userSurname;
       }
       else {
@@ -210,7 +234,7 @@ router.post('/betaling/afgerond', (req, res) => {
       mailOptions = {
           from: 'hotbunsemail@gmail.com',
           to: userEmail,
-          subject: 'Uw bestelling bij HotBuns',
+          subject: 'HotBuns bestelling: ' + OrderNumber,
           html: emailHtml
       };
   

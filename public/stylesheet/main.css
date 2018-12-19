@@ -10,6 +10,13 @@ html {
     background-color:rgb(239, 95, 61);
 }
 
+.btn-white-text{
+    color: white;
+}
+
+.btn-white-text:hover {
+    color: lightgray;
+}
 
 .foot-link {
     display: block;

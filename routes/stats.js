@@ -64,12 +64,15 @@ router.post("/stats/filter", isLoggedIn, function (req, res) {
 router.post("/stats/orderFind", isLoggedIn, function (req, res) {
     var Filter = req.body.productName
     console.log("HUIDIGE PRODUCT = " + req.body.productName)
-    Order.find({ orderedProductsName: { $regex: Filter } }).exec(function (err, result) {
-        if (err) {
-            console.log(err)
-        }
-        console.log("HUIDIGE RESULTAAT = " + result)
-        res.render("stats/orderTable", { order: result })
+    Order.find({ orderedProductsName: { $regex: Filter } })
+        .populate("userId")
+        .sort({date: 'descending'})
+        .exec(function (err, result) {
+            if (err) {
+                console.log(err)
+            }
+            console.log("HUIDIGE RESULTAAT = " + result)
+            res.render("stats/orderTable", { order: result })
         
     });
 });
