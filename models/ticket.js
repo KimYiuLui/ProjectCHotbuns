@@ -10,7 +10,7 @@ var TicketSchema = new mongoose.Schema({
     content: String,
     history: [String],
     status: { type: String, default: 'Open' },
-    time: { type: Date, default: Date.now },
+    date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Ticket", TicketSchema);

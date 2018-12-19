@@ -56,11 +56,7 @@
                         <td><%= ticket.subject%></td>
                         <td><%= ticket.status%></td>
                         <td>
-                            <form class="form-inline" action="/admin/deleteOrder?_method=PUT" method="POST">
-                                <input type="hidden" name="order_id" value="<%= ticket._id %>">
-                                <button name="product_id" value="" class="btn btn-sm btn-danger">Annuleer </button>
-
-                            </form>
+                            <a class="btn btn-sm btn-white-text nav-bg" data-toggle="tooltip" data-placement="top" title="Ticket bekijken" href="/help/ticket/<%= ticket._id %>"> <i class="fas fa-search"></i></a>
                         </td>
                     </tr>
                     <% }) %>
