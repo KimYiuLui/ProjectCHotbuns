@@ -104,15 +104,25 @@
 
             <% if(Order.status == "In afwachting van betaling") { %>
                 <div class="col-3"> 
-                    <form class="form-inline" action="/purchase/order" method="POST">
-                        <input type="hidden" name="username" value="<%= Order.userId.username %>">
+                    <form class="form-inline" action="/order/betaling" method="POST">
+
                         <input type="hidden" name="email" value="<%= Order.userId.email %>">
-                        <input type="hidden" name="additional" value="<%= Order.userId.naamToevoeging %>">
-                        <input type="hidden" name="surname" value="<%= Order.userId.surname %>">
-                        <input type="hidden" name="orderId" value="<%= Order._id %>">
-                        <input type="hidden" name="orderedProducts" value="<%= Order.orderedProducts %>">
+
+                        <input type="hidden" name="username" value="<%= Order.userId.username %>">
+
                         <input type="hidden" name="amount" value="<%= amount %>">
-                        <input type="hidden" name="date" value="<%= dayMonthYear %>">
+
+                        <input type="hidden" name="product_id" value="<%= Order.orderedProducts %>">
+
+                        <input type="hidden" name="name" value="<%= Order.orderedProductsName %>">
+
+                        <input type="hidden" name="price" value="<%= Order.price %>">
+
+                        <input type="hidden" name="status" value="<%= Order.status %>">
+
+                        <input type="hidden" name="orderId" value="<%= Order._id %>">
+                        <input type="hidden" name="couponStatus" value="<%= Order.couponStatus %>">
+                        <input type="hidden" name="couponpriceModifierValue" value="<%= Order.couponpriceModifier %>">
 
                         <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Order betalen</button>
                     </form>
@@ -124,28 +134,23 @@
                         <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Order annuleren</button>
                     </form>
                 </div>
+
             <% } if (Order.status == "In afwachting van betaling"){ %>
+                <div class="col-3"> 
+                    <form class="form-inline" action="/gebruiker/:id/order/:id" method="POST">
+                        <input type="hidden" name="email" value="<%= Order.userId.email %>">
+                        <input type="hidden" name="name" value="<%= Order.userId.name %>">
+                        <input type="hidden" name="additional" value="<%= Order.userId.naamToevoeging %>">
+                        <input type="hidden" name="surname" value="<%= Order.userId.surname %>">
+                        <input type="hidden" name="orderId" value="<%= Order._id %>">
+                        <input type="hidden" name="orderedProducts" value="<%= Order.orderedProducts %>">
+                        <input type="hidden" name="amount" value="<%= amount %>">
+                        <input type="hidden" name="date" value="<%= dayMonthYear %>">
 
-            <div class="col-3"> 
-                <form class="form-inline" action="/gebruiker/:id/order/:id" method="POST">
-                    <input type="hidden" name="email" value="<%= Order.userId.email %>">
-                    <input type="hidden" name="name" value="<%= Order.userId.name %>">
-                    <input type="hidden" name="additional" value="<%= Order.userId.naamToevoeging %>">
-                    <input type="hidden" name="surname" value="<%= Order.userId.surname %>">
-                    <input type="hidden" name="orderId" value="<%= Order._id %>">
-                    <input type="hidden" name="orderedProducts" value="<%= Order.orderedProducts %>">
-                    <input type="hidden" name="amount" value="<%= amount %>">
-                    <input type="hidden" name="date" value="<%= dayMonthYear %>">
-
-                <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Email bevestiging versturen </button>
-                </form>
-            </div>
+                    <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Email bevestiging versturen </button>
+                    </form>
+                </div>
             <% } %>
-            
-
-
-
-
         </div>
     </div>
 

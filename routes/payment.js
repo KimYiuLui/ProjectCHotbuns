@@ -22,9 +22,6 @@ paypal.configure({
 
 var noLayout, withLayout, emailHtml, mailOptions, allProductIds, userAmount, Username, userFirstname,userAdditionals,userSurname,userEmail,productAmount,orderedProducts,orderedProductsName, price, status, couponStatus, couponpriceModifierValue, UserId, intPrice, productArray,amountSearch, OrderNumber
 
-
-
-
 // x = allProductIds, i = de for loop teller. y = amount DIT VERANDERD DE HOEVEELHEDEN IN DE DATABASE BIJ product.amountbought.
 // DIT WERKT DOOR MIDDEL VAN GOED GELUK DUS AUB NIET AANRAKEN.
 function modifyAmountbought(i, x, y) {
@@ -80,8 +77,8 @@ router.post("/purchase/order", function (req, res) {
     orderedProducts =  req.body.product_id
     orderedProductsName = req.body.name
     price = req.body.price
-    status = req.body.status || "In afwachting van betaling"
-    OrderNumber = req.body.orderId || 0
+    status = "In afwachting van betaling"
+    
     
     intPrice = parseInt(price).toFixed(2)
 
@@ -91,10 +88,9 @@ router.post("/purchase/order", function (req, res) {
     allProductIds = req.body.product_id,
     userAmount = res.locals.currentUser.amount
 
-    
     Order.find({}, (error, allOrders) => {
         console.log(allOrders.length + "   Orders length")
-        if (OrderNumber != 0 && allOrders.length >= 0){
+        if (allOrders.length >= 0){
             OrderNumber = 2018000000 + (allOrders.length + 1)
             console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
             Order.create(new Order({
@@ -125,7 +121,7 @@ router.post("/purchase/order", function (req, res) {
                 "item_list": {
                     "items": [{
                         "name": "HotBuns Order",
-                        "sku": "2018",
+                        "sku": OrderNumber,
                         "price": intPrice,
                         "currency": "EUR",
                         "quantity": 1
@@ -152,6 +148,69 @@ router.post("/purchase/order", function (req, res) {
         });
     })
 });
+
+router.post("/order/betaling", function (req, res) {
+    UserId = res.locals.currentUser._id
+    userFirstname = res.locals.currentUser.name
+    userAdditionals = res.locals.currentUser.naamToevoeging
+    userSurname = res.locals.currentUser.surname
+
+    userEmail = req.body.email
+    Username = req.body.username
+    productAmount = req.body.amount
+    orderedProducts =  req.body.product_id
+    orderedProductsName = req.body.name
+    price = req.body.price
+    status = req.body.status
+    OrderNumber = req.body.orderId || 0
+    
+    intPrice = parseInt(price).toFixed(2)
+
+    couponStatus = req.body.couponStatus
+    couponpriceModifierValue = req.body.couponpriceModifierValue
+
+    allProductIds = req.body.product_id,
+    userAmount = productAmount
+
+    const create_payment_json = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": "http://localhost:3000/betaling/succes",
+            "cancel_url": "http://localhost:3000/betaling/mislukt"
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "HotBuns Order",
+                    "sku": OrderNumber,
+                    "price": intPrice,
+                    "currency": "EUR",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "currency": "EUR",
+                "total": intPrice
+            },
+            "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
+        }]
+    }
+    
+    paypal.payment.create(create_payment_json, function (error, payment) {
+        if (error) {
+            throw error;
+        } else {
+            for(let i = 0;i < payment.links.length;i++){
+            if(payment.links[i].rel === 'approval_url'){
+                res.redirect(payment.links[i].href);
+            }
+            }
+        }
+    });
+})
 
 router.get('/betaling/succes', (req, res) => {
     const payerId = req.query.PayerID;
@@ -195,11 +254,11 @@ router.get('/betaling/succes', (req, res) => {
 })
 
 router.get('/betaling/afgerond', (req, res) => {
-    User.findById(UserId).populate("shoppingcart").exec(function (error, foundUser) {
+    Order.findById(OrderNumber).populate("userId").populate("orderedProducts").exec(function(error, foundOrder){
         if(error){throw error}
-        console.log(couponStatus)
-        console.log(couponpriceModifierValue)
-        res.render("purchases/thankyou", { User: foundUser, couponStatus: couponStatus, couponpriceModifierValue: couponpriceModifierValue })
+        
+        var amountToArray = foundOrder.amount[0].split(",")
+        res.render("orderdetail", {Order: foundOrder, amount: amountToArray})
     })
 })
 
