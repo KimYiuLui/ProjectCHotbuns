@@ -60,9 +60,9 @@ var transporter = nodemailer.createTransport({ //setting up email account
 
 router.get("/", function (req, res, next) {
     Product
-        .find({ category: "brood" })
+        .find(/*{ category: "brood" }*/)
         .exec(function (error, products) {
-            Product.find({ category: "brood" })
+            Product.find(/*{ category: "brood" }*/)
                 .count()
                 .exec(function (error, count) {
                     if (error) return next(error)
