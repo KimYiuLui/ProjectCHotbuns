@@ -11,6 +11,6 @@
     "\\views\\product",
     "\\views\\stats"
   ],
-  "SelectedNode": "\\routes\\stats.js",
+  "SelectedNode": "\\models\\ticket.js",
   "PreviewInSolutionExplorer": false
 }

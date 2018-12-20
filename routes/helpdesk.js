@@ -18,13 +18,32 @@ router.get("/help", function (req, res) {
 })
 
 router.get("/help/admin", function (req, res) {
-    console.log("CURRENT USER IS " + req.user.username)
 
-    Ticket.find({}).sort({ status: "descending" }).exec(function (error, tickets) {
-        console.log(tickets)
-        res.render("helpdesk/adminTicketsearch", { ticket: tickets });
+    Ticket.find({}).sort({ status: 'descending' }).exec(function (err, result) {
+        if (err) {
+            console.log(err)
+        }
+        res.render("helpdesk/adminTicketsearch", { ticket: result })
     });
+});
 
+router.post("/help/filter", function (req, res) {
+    var query = Ticket.find();
+
+    console.log("CURRENT USER IS " + req.user.username)
+    if (req.body.Filter == "open") {
+        query.where('status').equals('Open');
+    }
+    else if (req.body.Filter == "closed") {
+        query.where('status').equals('Gesloten');
+    }
+
+    query.sort({ status: 'descending' });
+    query.exec().then(result => {
+
+        res.render("helpdesk/adminTicketsearch", { ticket: result})
+    });
+    
 })
 
 router.post("/helpdesk/sendTicket", function (req, res) {
