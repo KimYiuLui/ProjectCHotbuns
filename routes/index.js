@@ -15,152 +15,19 @@ var transporter = nodemailer.createTransport({ //setting up email account
 });
 
 //-------------------------------------
-//Home and other informative pages 
+//Homepage en productcarrousel
 //-------------------------------------
-/*router.get("/", function (req, res) {
-    res.render("home");
-});*/
-
-//-------------------------------------
-//Homepagina met productcarrousel
-//-------------------------------------
-/*router.get("/", function (req, res, next) {
-    Product
-        .find({ category: "brood" })
-        .count()
-        .exec(function (error, products) {
-            rand = Math.random()
-            //Product.find({ category: "brood" })
-            Product.collection.find({ category: "brood" }).limit(-1).skip(rand).next()
-                //.count()
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    //Product.collection.find().limit(-1).skip(rand).next()
-                    res.render("home", {
-                        product: products,
-                    })
-                })
-        })
-});*/
-
-/*router.get("/", function (req, res, next) {
-    Product
-        .find({ category: "brood" })
-        .exec(function (error, products) {
-            Product.find({ category: "brood" })
-                .count()
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: products,
-                    })
-                })
-        })
-});*/
-
-/*router.get("/", function (req, res, next) {
-    Product
-        .find({ category: "brood" })
-        .exec(function (error, products) {
-            Product.find({ category: "brood" })
-                .count()
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: products,
-                    })
-                })
-        })
-});*/
-/*router.get("/", function (req, res, next) {
-    Product
-        .find({ category: "koek" })
-        .exec(function (error, products) {
-            Product
-                .count()
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: products,
-                    })
-                })
-        })
-});*/
-
 router.get("/", function (req, res, next) {
-    var rand = Math.floor(Math.random() * Math.floor(617))
-    var rand2 = Math.floor(Math.random() * Math.floor(617))
-    var rand3 = Math.floor(Math.random() * Math.floor(617))
+    var rand = Math.floor(Math.random() * Math.floor(617)) //617 = aantal producten (618 producten, maar 0 telt ook mee)
     Product
-        .find().limit(-1).skip(rand)
-        .find().limit(-1).skip(rand2)
-        .find().limit(-1).skip(rand3)
-        .exec(function (error, products, products2, products3) {
+        .find().limit(12).skip(rand) //Zoekt alle producten op en skipt naar random producten toe, met een limiet van 12x (3x4 plekken in de carrousel)
+        .exec(function (error, products) {
             res.render("home", {
                 product: products,
-                product2: products2,
-                product3: products3,
             })
         })
 });
 
-/*router.get("/", function (req, res, next) {
-    res.render("home", {
-        product: Product.aggregate(
-            [ { $sample: { size: 3 } } ]
-        ),
-    })
-});*/
-
-/*router.get("/", function (req, res, next) {
-    Product
-        //.find({ category: "koek" })
-        .count()
-        .exec(function (error, count) {
-            var random = Math.floor(Math.random() * count);
-            Product.findOne().skip(random)
-                //.count()
-                .exec(function (error, products) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: products,
-                    })
-                })
-        })
-});*/
-
-
-//TEST
-/*
-router.get("/", function (req, res, next) {
-    Product
-        .count().exec(function (err, count) {
-            var random = Math.floor(Math.random() * count)
-            Product.findOne().skip(random)
-                .exec(function (err, result) {
-                    console.log(result)
-                    res.render("home", {
-                        product: result,
-                    })
-                })
-        })
-});*/
-/*
-router.get("/", function (req, res, next) {
-    Product
-        .find({ category: "brood" })
-        .count()
-        .exec(function (error, count) {
-            var random = Math.floor(Math.random() * count)
-            Product.findOne({ category: "brood" }).skip(random)
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: count,
-                    })
-                })
-        })
-});*/
 
 //-------------------------------------
 // Register and login

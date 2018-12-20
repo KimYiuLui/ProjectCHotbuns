@@ -1,4 +1,5 @@
 <% include ./partials/header %>
+<!--Voor elke pagina op de carrousel een aparte timer, kan ook één gebruiken en die telkens naar 0 resetten, maar dat leverde soms fouten op-->
 <% var countOne = 0 %>
 <% var countTwo = 0 %>
 <% var countThree = 0 %>
@@ -51,14 +52,14 @@
     </div>
 </div>
 
-
+<!-- Carrousel, 3 pagina's van 4 producten per stuk-->
 <div class="slideshow-container">
-
-    <!-- Full-width images with number and caption text -->
+    <!--Eerste kolom-->
     <div class="mySlides">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <% product.forEach(function(product){ %>
                     <% countOne = countOne + 1 %>
+                    <!--Pakt de eerste 4 van de in totaal 12 random producten-->
                     <% if (countOne <= 4){ %>
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                             <div class="img-thumbnail">
@@ -81,12 +82,13 @@
                 <% } %>
             </div>
         </div>
-      
+        <!--Tweede kolom-->
         <div class="mySlides">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <% product.forEach(function(product){ %>
                     <% countTwo = countTwo + 1 %>
-                    <% if (countTwo <= 4){ %>
+                    <!--Pakt de 5de t/m de 8ste van de in totaal 12 random producten-->
+                    <% if (countTwo > 4 && countTwo <= 8){ %>
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                             <div class="img-thumbnail">
                                 <a href="/<%=product.category %>/<%= product._id %>"> 
@@ -108,12 +110,13 @@
                 <% } %>
             </div>
         </div>
-      
+        <!--Derde kolom-->
         <div class="mySlides">
             <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                 <% product.forEach(function(product){ %>
                     <% countThree = countThree + 1 %>
-                    <% if (countThree <= 4){ %>
+                    <!--Pakt de 9de t/m de 12de van de in totaal 12 random producten-->
+                    <% if (countThree > 8 && countThree <= 12){ %>
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                             <div class="img-thumbnail">
                                 <a href="/<%=product.category %>/<%= product._id %>"> 
@@ -136,13 +139,13 @@
             </div>
         </div>
   
-    <!-- Next and previous buttons -->
+    <!-- Volgende en vorige knopjes -->
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
   <br>
   
-  <!-- The dots/circles -->
+  <!-- Pagina-indicatoren onder de carrousel -->
   <div style="text-align:center">
     <span class="dotdot" onclick="currentSlide(1)"></span>
     <span class="dotdot" onclick="currentSlide(2)"></span>
@@ -151,6 +154,7 @@
 
   
 
+  <!--Dit script zorgt ervoor dat de volgende- en vorige-knoppen op de carrousel functioneel zijn-->
 <script>
     var slideIndex = 1;
     showSlides(slideIndex);
