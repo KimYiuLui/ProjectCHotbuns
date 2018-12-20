@@ -58,11 +58,25 @@ var transporter = nodemailer.createTransport({ //setting up email account
         })
 });*/
 
+/*router.get("/", function (req, res, next) {
+    Product
+        .find({ category: "brood" })
+        .exec(function (error, products) {
+            Product.find({ category: "brood" })
+                .count()
+                .exec(function (error, count) {
+                    if (error) return next(error)
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
+});*/
 router.get("/", function (req, res, next) {
     Product
-        .find(/*{ category: "brood" }*/)
+        .find({ category: "brood" })
         .exec(function (error, products) {
-            Product.find(/*{ category: "brood" }*/)
+            Product
                 .count()
                 .exec(function (error, count) {
                     if (error) return next(error)
@@ -72,6 +86,24 @@ router.get("/", function (req, res, next) {
                 })
         })
 });
+
+/*router.get("/", function (req, res, next) {
+    Product
+        //.find({ category: "koek" })
+        .count()
+        .exec(function (error, count) {
+            var random = Math.floor(Math.random() * count);
+            Product.findOne().skip(random)
+                //.count()
+                .exec(function (error, products) {
+                    if (error) return next(error)
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
+});*/
+
 
 //TEST
 /*

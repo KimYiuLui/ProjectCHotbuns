@@ -607,12 +607,11 @@ span.psw {
 }
 
 /* Position the "next button" to the right */
-/* Position the "next button" to the right */
 .next {
     right: -45px;
-    border-radius: 3px 0 0 3px;
+    border-radius: 0 3px 3px 0;
   }
-  
+
 .prev{
     left: -45px;
     border-radius: 3px 0 0 3px;
@@ -620,8 +619,8 @@ span.psw {
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
+    background-color: rgba(239, 95, 61);
+  }
 
 /* Caption text */
 .text {
