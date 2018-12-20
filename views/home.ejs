@@ -1,5 +1,7 @@
 <% include ./partials/header %>
-<% var count = 0 %>
+<% var countOne = 0 %>
+<% var countTwo = 0 %>
+<% var countThree = 0 %>
 
 <!--De wow mid factor  -->
 <div class="full-width">
@@ -50,42 +52,14 @@
 </div>
 
 
-<!--Originele code voor carrousel-->
-<!--div class="container">
- <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-        <% product.forEach(function(product){ %>
-            <% count = count + 1 %>
-			<% if (count <= 4){ %>
-				<div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
-					<div class="img-thumbnail">
-						<a href="/<%=product.category %>/<%= product._id %>"> 
-							<img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
-                        
-					   <div class="caption">
-						   <p><%= product.name %></h4>
-					   </div>
-					  <p><strong>€ <%=product.price %></strong></p>
-					   <p>
-						   <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
-					   </p>
-					</div>
-				</div>
-			<% } %>
-        <% } ); %>
-        <% if(count == 0){%>
-        <h3> Er zijn geen producten gevonden!</h3>
-        <% } %>
-    </div>
-</div-->
-
 <div class="slideshow-container">
 
     <!-- Full-width images with number and caption text -->
     <div class="mySlides">
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <% product.forEach(function(product){ %>
-                <% count = count + 1 %>
-                <% if (count <= 4){ %>
+                <% countOne = countOne + 1 %>
+                <% if (countOne <= 4){ %>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
                             <a href="/<%=product.category %>/<%= product._id %>"> 
@@ -102,7 +76,7 @@
                     </div>
                 <% } %>
             <% } ); %>
-            <% if(count == 0){%>
+            <% if(countOne == 0){%>
             <h3> Er zijn geen producten gevonden!</h3>
             <% } %>
         </div>
@@ -111,8 +85,8 @@
     <div class="mySlides">
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <% product.forEach(function(product){ %>
-                <% count = count + 1 %>
-                <% if (count <= 4){ %>
+                <% countTwo = countTwo + 1 %>
+                <% if (countTwo <= 4){ %>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
                             <a href="/<%=product.category %>/<%= product._id %>"> 
@@ -129,7 +103,7 @@
                     </div>
                 <% } %>
             <% } ); %>
-            <% if(count == 0){%>
+            <% if(countTwo == 0){%>
             <h3> Er zijn geen producten gevonden!</h3>
             <% } %>
         </div>
@@ -138,7 +112,8 @@
     <div class="mySlides">
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <% product.forEach(function(product){ %>
-                <% count = count + 1 %>
+                <% countThree = countThree + 1 %>
+                <% if (countThree <= 4){ %>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
                         <div class="img-thumbnail">
                             <a href="/<%=product.category %>/<%= product._id %>"> 
@@ -153,8 +128,9 @@
                            </p>
                         </div>
                     </div>
+                <% } %>
             <% } ); %>
-            <% if(count == 0){%>
+            <% if(countThree == 0){%>
             <h3> Er zijn geen producten gevonden!</h3>
             <% } %>
         </div>
