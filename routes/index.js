@@ -89,17 +89,18 @@ var transporter = nodemailer.createTransport({ //setting up email account
 
 router.get("/", function (req, res, next) {
     var rand = Math.floor(Math.random() * Math.floor(617))
+    var rand2 = Math.floor(Math.random() * Math.floor(617))
+    var rand3 = Math.floor(Math.random() * Math.floor(617))
     Product
         .find().limit(-1).skip(rand)
-        .exec(function (error, products) {
-            Product
-                .count()
-                .exec(function (error, count) {
-                    if (error) return next(error)
-                    res.render("home", {
-                        product: products,
-                    })
-                })
+        .find().limit(-1).skip(rand2)
+        .find().limit(-1).skip(rand3)
+        .exec(function (error, products, products2, products3) {
+            res.render("home", {
+                product: products,
+                product2: products2,
+                product3: products3,
+            })
         })
 });
 
