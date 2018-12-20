@@ -1,32 +1,3 @@
-<script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-    
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-    
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-    
-    function showSlides(n) {
-      var i;
-      var slides = document.getElementsByClassName("mySlides");
-      var dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";  
-      }
-      for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-    }
-</script>
-
 <% include ./partials/header %>
 <% var count = 0 %>
 
@@ -93,7 +64,7 @@
 					   <div class="caption">
 						   <p><%= product.name %></h4>
 					   </div>
-					  <p><strong>� <%=product.price %></strong></p>
+					  <p><strong>€ <%=product.price %></strong></p>
 					   <p>
 						   <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
 					   </p>
@@ -111,21 +82,82 @@
 
     <!-- Full-width images with number and caption text -->
     <div class="mySlides">
-      <div class="numbertext">1 / 3</div>
-      <img src="/image/brood/ahcasinowitheel.jpg" style="width:100%">
-      <div class="text">Caption Text</div>
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+            <% product.forEach(function(product){ %>
+                <% count = count + 1 %>
+                <% if (count <= 4){ %>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                        <div class="img-thumbnail">
+                            <a href="/<%=product.category %>/<%= product._id %>"> 
+                                <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                            
+                           <div class="caption">
+                               <p><%= product.name %></h4>
+                           </div>
+                          <p><strong>€ <%=product.price %></strong></p>
+                           <p>
+                               <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                           </p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } ); %>
+            <% if(count == 0){%>
+            <h3> Er zijn geen producten gevonden!</h3>
+            <% } %>
+        </div>
     </div>
   
     <div class="mySlides">
-      <div class="numbertext">2 / 3</div>
-      <img src="/image/brood/ahtijgerbruinhalf.jpg" style="width:100%">
-      <div class="text">Caption Two</div>
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+            <% product.forEach(function(product){ %>
+                <% count = count + 1 %>
+                <% if (count <= 4){ %>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                        <div class="img-thumbnail">
+                            <a href="/<%=product.category %>/<%= product._id %>"> 
+                                <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                            
+                           <div class="caption">
+                               <p><%= product.name %></h4>
+                           </div>
+                          <p><strong>€ <%=product.price %></strong></p>
+                           <p>
+                               <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                           </p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } ); %>
+            <% if(count == 0){%>
+            <h3> Er zijn geen producten gevonden!</h3>
+            <% } %>
+        </div>
     </div>
   
     <div class="mySlides">
-      <div class="numbertext">3 / 3</div>
-      <img src="/image/brood/ahtijgerwitheel.jpg" style="width:100%">
-      <div class="text">Caption Three</div>
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+            <% product.forEach(function(product){ %>
+                <% count = count + 1 %>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                        <div class="img-thumbnail">
+                            <a href="/<%=product.category %>/<%= product._id %>"> 
+                                <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                            
+                           <div class="caption">
+                               <p><%= product.name %></h4>
+                           </div>
+                          <p><strong>€ <%=product.price %></strong></p>
+                           <p>
+                               <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                           </p>
+                        </div>
+                    </div>
+            <% } ); %>
+            <% if(count == 0){%>
+            <h3> Er zijn geen producten gevonden!</h3>
+            <% } %>
+        </div>
     </div>
   
     <!-- Next and previous buttons -->
@@ -143,6 +175,33 @@
 
   
 
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+</script>
 
 <% include ./partials/footer %>
-
