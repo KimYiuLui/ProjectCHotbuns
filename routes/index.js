@@ -72,9 +72,25 @@ var transporter = nodemailer.createTransport({ //setting up email account
                 })
         })
 });*/
-router.get("/", function (req, res, next) {
+/*router.get("/", function (req, res, next) {
     Product
-        .find({ category: "brood" })
+        .find({ category: "koek" })
+        .exec(function (error, products) {
+            Product
+                .count()
+                .exec(function (error, count) {
+                    if (error) return next(error)
+                    res.render("home", {
+                        product: products,
+                    })
+                })
+        })
+});*/
+
+router.get("/", function (req, res, next) {
+    var rand = Math.floor(Math.random() * Math.floor(617))
+    Product
+        .find().limit(-1).skip(rand)
         .exec(function (error, products) {
             Product
                 .count()
@@ -88,8 +104,11 @@ router.get("/", function (req, res, next) {
 });
 
 /*router.get("/", function (req, res, next) {
-
-
+    res.render("home", {
+        product: Product.aggregate(
+            [ { $sample: { size: 3 } } ]
+        ),
+    })
 });*/
 
 /*router.get("/", function (req, res, next) {
@@ -278,4 +297,3 @@ function isLoggedIn(req, res, next) {
 
 //exports every router so app.js can use these routes
 module.exports = router;
-
