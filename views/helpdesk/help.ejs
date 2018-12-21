@@ -1,0 +1,73 @@
+<% include ../partials/header %>
+<% var count = 0 %>
+<div class="container mt-4 mb-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Mijn tickets</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Nieuwe ticket</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane container fade" id="menu1">
+
+
+            <div class="container mx-auto">
+                <h3>Helpdesk</h3>
+                <br />
+                <strong>Open hier een ticket</strong>
+                <br />
+
+                <form class="form-group float-left" action="/helpdesk/sendTicket" method="POST" id="helpForm">
+                    <input type="hidden" name="name" value="<%= currentUser.username %>" />
+                    <input type="hidden" name="email" value="<%= currentUser.email%>" />
+                    <textarea rows="1" cols="70" name="subject" placeholder="Onderwerp" form="helpForm" required></textarea>
+                    <textarea rows="9" cols="70" name="content" placeholder="Bericht" form="helpForm" required></textarea>
+                    <div class="col-4 col-sm-2">
+                        <button name="Goto" value="" class="btn btn-sm btn-Primary">Verzend</button>
+                    </div>
+                </form>
+
+
+
+            </div>
+
+        </div>
+        <div class="tab-pane container active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Gebruiker</th>
+                        <th scope="col">Onderwerp</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Meer info</th>
+                    </tr>
+                <tbody>
+
+
+                    <% ticket.forEach(function(ticket){ %>
+                    <% count = count + 1%>
+                    <tr>
+                        <th scope="row"><%=count%></th>
+                        <td><%= ticket.name %></td>
+                        <td><%= ticket.subject%></td>
+                        <td><%= ticket.status%></td>
+                        <td>
+                            <a class="btn btn-sm btn-white-text nav-bg" data-toggle="tooltip" data-placement="top" title="Ticket bekijken" href="/help/ticket/<%= ticket._id %>"> <i class="fas fa-search"></i></a>
+                        </td>
+                    </tr>
+                    <% }) %>
+
+
+                </tbody>
+
+
+
+            </table>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>
