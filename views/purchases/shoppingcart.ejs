@@ -32,7 +32,7 @@
                         <div class="img-thumbnail">
 
                             <!-- Voor elk product maakt hij zo'n leuk plaatje en text aan-->
-                            <a href="/<%=product.category %>/detail/<%= product._id %>"><img class="rounded img-thumbnail" src="/image/<%= product.image %>"></a>
+                            <a><img class="rounded img-thumbnail" src="/image/<%= product.image %>"></a>
 
                             <p>€ <%=product.price %></p>
                             <form action="/shoppingcart/modifyAmount?_method=PUT" method="POST">
