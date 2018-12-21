@@ -107,5 +107,15 @@ router.post("/helpdesk/closeTicket/:id", function (req, res) {
     });
 });
 
+router.post("/help/admin/:id", function (req, res) {
+    Ticket.findByIdAndUpdate(req.params.id, { $set: { status: "Gesloten" } }, function (error, foundTicket) {
+        Ticket.find({}).sort({ status: 'descending' }).exec(function (err, result) {
+            if (err) {
+                console.log(err)
+            }
+            res.render("helpdesk/adminTicketsearch", { ticket: result })
+        });
+    });
+});
 
 module.exports = router;
