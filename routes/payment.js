@@ -87,69 +87,66 @@ router.post("/purchase/order", function (req, res) {
 
     allProductIds = req.body.product_id,
     userAmount = res.locals.currentUser.amount
+    
+    Order.find({}, (error, allOrders) => {
+        console.log(allOrders.length + "   Orders length")
+        if (allOrders.length >= 0){
+            OrderNumber = 2018000000 + (allOrders.length + 1)
+            console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
+            Order.create(new Order({
+                _id: OrderNumber,
+                userId: UserId,
+                amount: productAmount,
+                orderedProducts: orderedProducts,
+                orderedProductsName: orderedProductsName,
+                price: price,
+                status: status,
+                couponStatus: couponStatus,
+                couponpriceModifier: couponpriceModifierValue
+            }));   
+        }
 
-    console.log(allProductIds)
-    console.log ("-------------")
-    console.log(userAmount)
-    // Order.find({}, (error, allOrders) => {
-    //     console.log(allOrders.length + "   Orders length")
-    //     if (allOrders.length >= 0){
-    //         OrderNumber = 2018000000 + (allOrders.length + 1)
-    //         console.log("nextIndex: " + allOrders.length + "+ 1 =" + OrderNumber)
-    //         Order.create(new Order({
-    //             _id: OrderNumber,
-    //             userId: UserId,
-    //             amount: productAmount,
-    //             orderedProducts: orderedProducts,
-    //             orderedProductsName: orderedProductsName,
-    //             price: price,
-    //             status: status,
-    //             couponStatus: couponStatus,
-    //             couponpriceModifier: couponpriceModifierValue
-    //         }));   
-    //     }
-
-    //     AddOrdersToUser()
+        AddOrdersToUser()
         
-    //     const create_payment_json = {
-    //         "intent": "sale",
-    //         "payer": {
-    //             "payment_method": "paypal"
-    //         },
-    //         "redirect_urls": {
-    //             "return_url": "http://localhost:3000/betaling/succes",
-    //             "cancel_url": "http://localhost:3000/betaling/mislukt"
-    //         },
-    //         "transactions": [{
-    //             "item_list": {
-    //                 "items": [{
-    //                     "name": "HotBuns Order",
-    //                     "sku": OrderNumber,
-    //                     "price": intPrice,
-    //                     "currency": "EUR",
-    //                     "quantity": 1
-    //                 }]
-    //             },
-    //             "amount": {
-    //                 "currency": "EUR",
-    //                 "total": intPrice
-    //             },
-    //             "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
-    //         }]
-    //     }
+        const create_payment_json = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "http://localhost:3000/betaling/succes",
+                "cancel_url": "http://localhost:3000/betaling/mislukt"
+            },
+            "transactions": [{
+                "item_list": {
+                    "items": [{
+                        "name": "HotBuns Order",
+                        "sku": OrderNumber,
+                        "price": intPrice,
+                        "currency": "EUR",
+                        "quantity": 1
+                    }]
+                },
+                "amount": {
+                    "currency": "EUR",
+                    "total": intPrice
+                },
+                "description": "Al ruim 2500 jaar de beste bakker van Nederland!"
+            }]
+        }
         
-    //     paypal.payment.create(create_payment_json, function (error, payment) {
-    //       if (error) {
-    //           throw error;
-    //       } else {
-    //           for(let i = 0;i < payment.links.length;i++){
-    //             if(payment.links[i].rel === 'approval_url'){
-    //               res.redirect(payment.links[i].href);
-    //             }
-    //           }
-    //       }
-    //     });
-    // })
+        paypal.payment.create(create_payment_json, function (error, payment) {
+          if (error) {
+              throw error;
+          } else {
+              for(let i = 0;i < payment.links.length;i++){
+                if(payment.links[i].rel === 'approval_url'){
+                  res.redirect(payment.links[i].href);
+                }
+              }
+          }
+        });
+    })
 });
 
 router.post("/order/betaling", function (req, res) {

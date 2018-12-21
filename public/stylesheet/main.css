@@ -60,10 +60,24 @@ html {
 
 .img-thumbnail{
     padding: 0;
+    height: 50%;
 }
 
 .img-thumbnail .caption{
     padding: 9px;
+    height: 20%;
+}
+
+.img-carrousel{
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+img-carrousel2{
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
 }
 
 #detailbutton{
@@ -97,7 +111,7 @@ input:valid + span:after {
 }
 
 div.img-thumbnail{
-    height: 425px;;
+    height: 425px;; /*Aangepast, origineel = 425*/
 }
 
 .fa-heart{
@@ -235,7 +249,7 @@ header a {
 }
 /*menu in toon houden*/
 header li {
-    float: left;
+    /*float: left;*/
     display: inline;
     padding: 0 20px 0 20px;
 }
@@ -264,8 +278,8 @@ header a:hover {
     color: black;
 }
 
-img {
-    !important height:100px;
+.img {
+    height:100px;
 }
 
 /*in het plaatje tekst opmaak*/
@@ -419,6 +433,16 @@ dev {
         clear: both;
         display: table;
     }
+
+.container-carrousel {
+    padding: 0 10px;
+}
+
+.countainer-carrousel::after, .row-carrousel::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 /*misschien voor later maar is nu niet aantrekkelijk*/
 .title {
     color: grey;
@@ -537,4 +561,124 @@ span.psw {
     .cancelbtn {
         width: 100%;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Dit is voor de carrousel TEST */
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: -45px;
+    border-radius: 0 3px 3px 0;
+  }
+
+.prev{
+    left: -45px;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(239, 95, 61);
+  }
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dotdot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.activedot, .dotdot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
 }

@@ -1,9 +1,12 @@
 <% include ./partials/header %>
-
+<!--Voor elke pagina op de carrousel een aparte timer, kan ook één gebruiken en die telkens naar 0 resetten, maar dat leverde soms fouten op-->
+<% var countOne = 0 %>
+<% var countTwo = 0 %>
+<% var countThree = 0 %>
 
 <!--De wow mid factor  -->
 <div class="full-width">
-    <div id="imagecase" style="height:440px;">
+    <div id="imagecase" style="height:240px;"> <!--440 was origineel-->
         <section id="showcase">
             <h1> Voor de beste kwaliteit!</h1>
             <p> Gewoon bij HotBuns </p>
@@ -49,7 +52,136 @@
     </div>
 </div>
 
+<!-- Carrousel, 3 pagina's van 4 producten per stuk-->
+<div class="slideshow-container">
+    <!--Eerste kolom-->
+    <div class="mySlides">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <% product.forEach(function(product){ %>
+                    <% countOne = countOne + 1 %>
+                    <!--Pakt de eerste 4 van de in totaal 12 random producten-->
+                    <% if (countOne <= 4){ %>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                            <div class="img-thumbnail">
+                                <a href="/<%=product.category %>/<%= product._id %>"> 
+                                    <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                                
+                               <div class="caption">
+                                   <p><%= product.name %></h4>
+                               </div>
+                              <p><strong>€ <%=product.price %></strong></p>
+                               <p>
+                                   <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                               </p>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } ); %>
+                <% if(countOne == 0){%>
+                <h3> Er zijn geen producten gevonden!</h3>
+                <% } %>
+            </div>
+        </div>
+        <!--Tweede kolom-->
+        <div class="mySlides">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <% product.forEach(function(product){ %>
+                    <% countTwo = countTwo + 1 %>
+                    <!--Pakt de 5de t/m de 8ste van de in totaal 12 random producten-->
+                    <% if (countTwo > 4 && countTwo <= 8){ %>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                            <div class="img-thumbnail">
+                                <a href="/<%=product.category %>/<%= product._id %>"> 
+                                    <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                                
+                               <div class="caption">
+                                   <p><%= product.name %></h4>
+                               </div>
+                              <p><strong>€ <%=product.price %></strong></p>
+                               <p>
+                                   <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                               </p>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } ); %>
+                <% if(countTwo == 0){%>
+                <h3> Er zijn geen producten gevonden!</h3>
+                <% } %>
+            </div>
+        </div>
+        <!--Derde kolom-->
+        <div class="mySlides">
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <% product.forEach(function(product){ %>
+                    <% countThree = countThree + 1 %>
+                    <!--Pakt de 9de t/m de 12de van de in totaal 12 random producten-->
+                    <% if (countThree > 8 && countThree <= 12){ %>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
+                            <div class="img-thumbnail">
+                                <a href="/<%=product.category %>/<%= product._id %>"> 
+                                    <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
+                                
+                               <div class="caption">
+                                   <p><%= product.name %></h4>
+                               </div>
+                              <p><strong>€ <%=product.price %></strong></p>
+                               <p>
+                                   <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
+                               </p>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } ); %>
+                <% if(countThree == 0){%>
+                <h3> Er zijn geen producten gevonden!</h3>
+                <% } %>
+            </div>
+        </div>
+  
+    <!-- Volgende en vorige knopjes -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- Pagina-indicatoren onder de carrousel -->
+  <div style="text-align:center">
+    <span class="dotdot" onclick="currentSlide(1)"></span>
+    <span class="dotdot" onclick="currentSlide(2)"></span>
+    <span class="dotdot" onclick="currentSlide(3)"></span>
+  </div>
 
+  
+
+  <!--Dit script zorgt ervoor dat de volgende- en vorige-knoppen op de carrousel functioneel zijn-->
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dotdot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" activedot", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " activedot";
+    }
+</script>
 
 <% include ./partials/footer %>
-

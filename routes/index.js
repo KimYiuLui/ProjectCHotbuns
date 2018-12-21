@@ -4,6 +4,7 @@ var User = require("../models/user");
 var passport = require("passport");
 var nodemailer = require('nodemailer');
 var Order = require('../models/order')
+var Product = require("../models/product");
 
 var host, rand, link, emailHtml, mailOptions, fullaname, newName;
 var transporter = nodemailer.createTransport({ //setting up email account
@@ -15,13 +16,19 @@ var transporter = nodemailer.createTransport({ //setting up email account
 });
 
 //-------------------------------------
-//Home and other informative pages 
+//Homepage en productcarrousel
 //-------------------------------------
-
-
-router.get("/", function (req, res) {
-    res.render("home");
+router.get("/", function (req, res, next) {
+    var rand = Math.floor(Math.random() * Math.floor(617)) //617 = aantal producten (618 producten, maar 0 telt ook mee)
+    Product
+        .find().limit(12).skip(rand) //Zoekt alle producten op en skipt naar random producten toe, met een limiet van 12x (3x4 plekken in de carrousel)
+        .exec(function (error, products) {
+            res.render("home", {
+                product: products,
+            })
+        })
 });
+
 
 //-------------------------------------
 // Register and login
@@ -159,4 +166,3 @@ function isLoggedIn(req, res, next) {
 
 //exports every router so app.js can use these routes
 module.exports = router;
-
