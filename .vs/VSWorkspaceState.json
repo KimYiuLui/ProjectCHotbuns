@@ -13,6 +13,6 @@
     "\\views\\product",
     "\\views\\stats"
   ],
-  "SelectedNode": "\\models\\ticket.js",
+  "SelectedNode": "\\views\\partials\\footer.ejs",
   "PreviewInSolutionExplorer": false
 }
