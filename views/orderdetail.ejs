@@ -5,6 +5,9 @@
     var count = -1
     var total = 0.00
     var amountString = ""
+    var count2 = -1
+    var amountString2 = ""
+    var productIdArray =[]
 %>
 <div class="container">
     <!-- Werkt hetzelfde als de purchase pagina. grotendeels.-->
@@ -105,25 +108,38 @@
             <% if(Order.status == "In afwachting van betaling") { %>
                 <div class="col-3"> 
                     <form class="form-inline" action="/order/betaling" method="POST">
-
-                        <input type="hidden" name="email" value="<%= Order.userId.email %>">
+                        <input type="hidden" name="user_id" value="<%= currentUser._id%>" />
 
                         <input type="hidden" name="username" value="<%= Order.userId.username %>">
 
-                        <input type="hidden" name="amount" value="<%= amount %>">
+                        <input type="hidden" name="email" value="<%= Order.userId.email %>">
+                        <input type="hidden" name="couponStatus" value="<%= Order.couponStatus %>">
+                        <%if (Order.couponStatus == "Yes"){%>
+                        <input type="hidden" name="couponpriceModifierValue" value="<%= Order.couponpriceModifierValue%>" />
+                        <% } %>
+    
 
+                        <input type="hidden" name="amount" value="<%= amount %>">
+                        
                         <input type="hidden" name="product_id" value="<%= Order.orderedProducts %>">
 
                         <input type="hidden" name="name" value="<%= Order.orderedProductsName %>">
 
-                        <input type="hidden" name="price" value="<%= Order.price %>">
+                        <% Order.orderedProducts.forEach(function(product){ %>
+                        <% count2 = count2 + 1 %>
+                        <% amountString2 =  amount[count2] %>
+                        <% productIdArray.push(product._id) %>
+                        <input type="hidden" name="name" value="<%= amountString2.charAt(0) %> <%=product.name%>" />
 
+                        <% }) %>
+
+                        <input type="hidden" name="product_id" 
+                        value="<%=productIdArray%>">
+                        <% console.log(productIdArray) %>
+
+                        <input type="hidden" name="price" value="<%= Order.price.split(',')[0] %>">
                         <input type="hidden" name="status" value="<%= Order.status %>">
-
                         <input type="hidden" name="orderId" value="<%= Order._id %>">
-                        <input type="hidden" name="couponStatus" value="<%= Order.couponStatus %>">
-                        <input type="hidden" name="couponpriceModifierValue" value="<%= Order.couponpriceModifier %>">
-
                         <button name="product_id" class="btn btn-sm btn-block btn-danger" style="white-space:normal" >Order betalen</button>
                     </form>
                 </div>

@@ -61,9 +61,9 @@ router.post("/user/finishModifyUser", isLoggedIn, function (req, res) {
 router.get("/gebruiker/:id/order/:id", isLoggedIn, (req, res) => {
     Order.findById(req.params.id).populate("userId").populate("orderedProducts").exec(function(error, foundOrder){
         if(error){throw error}
-        
+        var productID = foundOrder.orderedProducts._id
         var amountToArray = foundOrder.amount[0].split(",")
-        res.render("orderdetail", {Order: foundOrder, amount: amountToArray})
+        res.render("orderdetail", {Order: foundOrder, amount: amountToArray, productID: productID})
     })
 })
 
