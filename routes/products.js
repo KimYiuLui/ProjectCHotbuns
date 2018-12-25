@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Product = require("../models/product");
 
-var perPage, page, koekfilter, zoetigheidfilter, broodfilter, zadenfilter, korstfilter, overigefilter
+var perPage, page, koekfilter, zoetigheidfilter, broodfilter, zadenfilter, korstfilter, overigefilter, Filter
 //-------------------------------------------------------------------
 //-------------------------------BROOD
 //-------------------------------------------------------------------
@@ -250,17 +250,47 @@ router.post("/zoetigheid/filter/:page", function (req, res) {
     });
 });
 
-router.post("/product/search", function (req, res) {
-    var Filter = req.body.query
+router.post("/product/search/:page", function (req, res) {
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
+
+    Filter = req.body.query
+
     Product.find({ name: { $regex: Filter, $options: 'i' } })
         .sort({ name: 'descending' })
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
         .exec(function (err, result) {
-            if (err) {
-                console.log(err)
-            }
-            console.log("HUIDIGE RESULTAAT = " + result)
-            res.render("product/searchResults", { product: result })
-
+            Product.find({ name: { $regex: Filter, $options: 'i' } })
+                .count()
+                .exec(function(error, count){
+                    if(error){throw error}
+                    console.log("HUIDIGE RESULTAAT = " + result)
+                    res.render("product/searchResults", { product: result, current:page, pages: Math.ceil(count / perPage) 
+                    })
+                })
         });
 });
+
+router.get("/product/search/:page", function (req, res) {
+    perPage = req.params.perPage || 24
+    page = req.params.page ||  1 
+
+    Product.find({ name: { $regex: Filter, $options: 'i' } })
+        .sort({ name: 'descending' })
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function (err, result) {
+            Product.find({ name: { $regex: Filter, $options: 'i' } })
+                .count()
+                .exec(function(error, count){
+                    if(error){throw error}
+                    console.log("HUIDIGE RESULTAAT = " + result)
+                    res.render("product/searchResults", { product: result, current:page, pages: Math.ceil(count / perPage) 
+                    })
+                })
+        });
+});
+
+
 module.exports = router;
