@@ -47,12 +47,13 @@
                         <a class="nav-link font-weight-bold" href="/zoetigheid/1">Zoetigheid</a>
                     </li>
                 </ul>
+                <form action="/product/search" method="POST">
 
+                    <input type="text" name="query" required value="" placeholder="Zoeken" />
+                </form>
 
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mr-2 ml-2">
-                        <a class="nav-link font-weight-bold" href="/contact">Contact</a>
-                    </li>
+
                     <% if(!currentUser){ %>
                     <li class="nav-item mr-2 ml-2">
                         <a class="nav-link font-weight-bold" href="/login"><i class="fas fa-user"></i></a>
