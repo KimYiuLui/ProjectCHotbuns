@@ -250,4 +250,17 @@ router.post("/zoetigheid/filter/:page", function (req, res) {
     });
 });
 
+router.post("/product/search", function (req, res) {
+    var Filter = req.body.query
+    Product.find({ name: { $regex: Filter, $options: 'i' } })
+        .sort({ name: 'descending' })
+        .exec(function (err, result) {
+            if (err) {
+                console.log(err)
+            }
+            console.log("HUIDIGE RESULTAAT = " + result)
+            res.render("product/searchResults", { product: result })
+
+        });
+});
 module.exports = router;
