@@ -17,7 +17,7 @@
     <div class="tab-content" style="min-height:460px;">
         <!-- gebruikergegevens-->
         <div class="tab-pane container active" id="home">
-
+		<p style="font-family:georgia,garamond,serif;font-size:20px;">
             <strong>Gebruikersnaam:</strong>    <%= currentUser.username%>             <br />
             <strong>Voornaam:</strong>          <%= currentUser.name%>                 <br />
             <strong>Tussenvoegsel:</strong>        <%= currentUser.naamToevoeging%>       <br />
@@ -27,6 +27,9 @@
             <strong>Adres:</strong>            <%= currentUser.address.street%> <%= currentUser.address.number%> <%= currentUser.address.additional %>                <br />
             <strong>Stad:</strong>              <%= currentUser.address.city%>         <br />
             <strong>Postcode:</strong>          <%= currentUser.address.zipcode%>      <br />
+			</p>
+			<br><br>
+			Kloppen uw gegevens niet?
             <form  action="/user/modifyUser?_method=PUT" method="POST">
                 <div class="form-group float-left">
                 <input type="hidden" name="user_id" value="<%= currentUser._id %>">

@@ -93,8 +93,8 @@
  <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% product.forEach(function(product){ %>
             <% count = count + 1 %>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-2 d-block">
-                <div class="img-thumbnail">
+            <div class="col-lg-2 mb-1 d-block">
+                <div class="img-thumbnail" style="height:275px;">
                     <a href="/<%=product.category %>/detail/<%= product._id %>"> 
                         <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
                         
@@ -102,9 +102,6 @@
                        <p><%= product.name %></h4>
                    </div>
                   <p><strong>€ <%=product.price %></strong></p>
-                   <p>
-                       <a href="/<%=product.category %>/detail/<%= product._id %>" class="btn btn-info">Meer info</a>
-                   </p>
                 </div>
             </div>
         <% } ); %>

@@ -9,10 +9,8 @@
     "\\views\\admin",
     "\\views\\helpdesk",
     "\\views\\overige",
-    "\\views\\partials",
-    "\\views\\product",
-    "\\views\\stats"
+    "\\views\\partials"
   ],
-  "SelectedNode": "\\views\\partials\\footer.ejs",
+  "SelectedNode": "\\views\\product\\koekFilter.ejs",
   "PreviewInSolutionExplorer": false
 }
