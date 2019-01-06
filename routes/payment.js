@@ -114,8 +114,8 @@ router.post("/purchase/order", function (req, res) {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:3000/betaling/succes",
-                "cancel_url": "http://localhost:3000/betaling/mislukt"
+                "return_url": "https://hotbunsjs.herokuapp.com/betaling/succes",
+                "cancel_url": "https://hotbunsjs.herokuapp.com/betaling/mislukt"
             },
             "transactions": [{
                 "item_list": {
@@ -182,8 +182,8 @@ router.post("/order/betaling", function (req, res) {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:3000/betaling/succes",
-            "cancel_url": "http://localhost:3000/betaling/mislukt"
+            "return_url": "https://hotbunsjs.herokuapp.com/betaling/succes",
+            "cancel_url": "https://hotbunsjs.herokuapp.com/betaling/mislukt"
         },
         "transactions": [{
             "item_list": {
