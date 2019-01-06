@@ -14,7 +14,7 @@
                         <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
                         
                    <div class="caption">
-                       <p><%= product.name %></h4>
+                       <a class="links" href="/<%=product.category %>/detail/<%= product._id %>"><%= product.name %></a>
                    </div>
                   <p><strong>€ <%=product.price %></strong></p>
                 </div>
@@ -27,7 +27,7 @@
             <h3> Er zijn geen producten gevonden!</h3>
         </div>
     <% } %>
-    <% if(product.length > 23 || pages > 1){ %>
+    <% if(product.length >= 24 || pages > 1){ %>
         <div class="text-center container">
             <% if (pages > 0){ %>
                 <ul class="pagination justify-content-center" style="margin:20px 0">

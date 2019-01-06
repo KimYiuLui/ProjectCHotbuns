@@ -56,7 +56,7 @@
                         <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
                         
                    <div class="caption">
-                       <p><%= product.name %></h4>
+                       <a class="links" href="/<%=product.category %>/detail/<%= product._id %>"><%= product.name %></a>
                    </div>
                   <p><strong>€ <%=product.price %></strong></p>
                 </div>

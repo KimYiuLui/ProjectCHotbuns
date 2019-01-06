@@ -99,7 +99,7 @@
                         <img class="rounded img-thumbnail" src="/image/<%= product.image %>"> </a>
                         
                    <div class="caption">
-                       <p><%= product.name %></h4>
+                       <a class="links" href="/<%=product.category %>/detail/<%= product._id %>" ><%= product.name %></a>
                    </div>
                   <p><strong>€ <%=product.price %></strong></p>
                 </div>
@@ -110,7 +110,7 @@
         <% } %>
     </div>
     <div class="text-center container">
-        <% if (pages > 0){ %>
+        <% if (product.length >= 24 || pages > 1){ %>
             <ul class="pagination justify-content-center" style="margin:20px 0">
                 <% if (current == 1){ %>
                     <li class="page-item disabled"><a class="page-link">Eerste</a></li>

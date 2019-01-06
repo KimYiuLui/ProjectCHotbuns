@@ -759,3 +759,10 @@ span.psw {
     width: 20px;
     height: 20px;
 }
+
+.links,
+.links:visited,
+.link:focus, 
+.links:hover{
+    color: black;
+}
