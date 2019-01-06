@@ -107,7 +107,7 @@
 
             </table>
             <h5>
-                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
+                Totaal: €<%=total.toFixed(2)%>, inclusief €<%= totalBTWstep2.toFixed(2) %> BTW (9%) en €2.00 verzendkosten.
             </h5>
             <!-- Als er geen coupon gegeven was (Net naar pagina gegaan) of een verkeerde coupon, geef een melding-->
             <% if (couponStatus == "noInsert" || couponStatus == "No"){ %>

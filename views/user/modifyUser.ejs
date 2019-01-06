@@ -16,18 +16,18 @@
                         </div>
 
                         <div class="form-group col-md-5">
-                            <label for="Name">Naam<p style="color: red" class="d-inline">*</p></label>
-                            <input class="form-control" type="text" id="Name" name="name" placeholder="Naam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.name%>" required>
+                            <label for="Name">Voornaam<p style="color: red" class="d-inline">*</p></label>
+                            <input class="form-control" type="text" id="Name" name="name" placeholder="Voornaam" pattern="[a-z A-Z \s]+{1,50}" value="<%=user.name%>" required>
                         </div>
 
                         <% if(user.naamToevoeging == null){ %>
                             <div class="form-group col-md-2">
-                                <label for="NaamToevoeging">Toevoeging </label>
+                                <label for="NaamToevoeging">Tussenvoegsel </label>
                                 <input class="form-control" type="text" id="NaamToevoeging" name="naamToevoeging" placeholder="v/d">
                             </div>
                         <% } else { %>
                             <div class="form-group col-md-2">
-                                <label for="NaamToevoeging">Toevoeging </label>
+                                <label for="NaamToevoeging">Tussenvoegsel </label>
                                 <input class="form-control" type="text" id="NaamToevoeging" name="naamToevoeging" value="<%= user.naamToevoeging %>">
                             </div>
                         <% } %>
@@ -65,7 +65,7 @@
                         </div>
 
 
-                        <small class="form-group col-md-12">Er zijn vereiste velden in dit formulier gemarkeerd met <p style="color: red" class="d-inline">*</p></small>
+                        <small class="form-group col-md-12"><p style="color: red" class="d-inline">*</p> Vereist veld</small>
                         <input type="hidden" name="user_id" value="<%= user._id %>">
                         <div class="form-group">
                             <button class="btn btn-lg btn-primary btn-block">Voltooien</button>
