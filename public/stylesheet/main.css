@@ -215,12 +215,17 @@ ul {
 
 /* knopje */
 .button_1 {
-    height: 28px;
-    background: rgb(64, 64, 255);
-    border: 0;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 10px;
+    background: rgba(82, 101, 199, 0);
+    border: 0px;
+    padding-left: 0px;
+    padding-right: 100px;
     color: white;
+    float: right;
+    width: 0px;
+    position: relative;
+    top: -55px;
+    left: 150px;
 }
 
 /* knopje vertalen */
@@ -578,7 +583,9 @@ span.psw {
     }
 }
 
-
+.postcodehoofdletters {
+    text-transform: uppercase;
+}
 
 
 
@@ -748,3 +755,7 @@ span.psw {
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 } 
+.vergroot{
+    width: 20px;
+    height: 20px;
+}
