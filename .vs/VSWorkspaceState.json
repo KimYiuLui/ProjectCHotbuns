@@ -11,6 +11,6 @@
     "\\views\\overige",
     "\\views\\partials"
   ],
-  "SelectedNode": "\\views\\product\\koekFilter.ejs",
+  "SelectedNode": "\\routes\\index.js",
   "PreviewInSolutionExplorer": false
 }
