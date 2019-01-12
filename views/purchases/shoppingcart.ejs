@@ -12,7 +12,7 @@
             <h4> Winkelwagen </h4>
             <br />
 
-            <a> De winkelwagen bevat alle geselecteerde items.</a>
+            <a> Uw winkelwagen bevat de volgende producten:</a>
             <br />
             <br />
 
@@ -36,7 +36,7 @@
 
                             <p>€ <%=product.price %></p>
                             <form action="/shoppingcart/modifyAmount?_method=PUT" method="POST">
-                                <input type="number" name="amount" value="<%=amountString.charAt(0)%>" min="1" max="9" required>stuks
+                                <input type="number" name="amount" value="<%=amountString.charAt(0)%>" min="1" max="9" required>stuk(s)
                                 <input type="hidden" name="product_id" value="<%=product._id.toString()%>" />
                                 <% User.shoppingcart.forEach(function(product){
                                 formcount = formcount + 1%>
@@ -46,7 +46,7 @@
                                 <input type="hidden" name="user_id" value="<%=currentUser._id%>" />
                                 <input type="hidden" name="formcount" value="<%=formcount%>" />
                             </form>
-                            <p><strong>Totaal: € <%= priceProduct.toFixed(2)%></strong></p>
+                            <p><strong>Totaal: €<%= priceProduct.toFixed(2)%></strong></p>
 
 
 
@@ -65,7 +65,7 @@
                     <!-- BTW en verzendkosten-->
                     <% var totalBTWstep1 = total * 1.06 %>
                     <% var totalBTWstep2 = totalBTWstep1 - total %>
-                    <% total = total * 1.06 %>
+                    <% total = total * 1.09 %>
                     <% total = total + 2.00 %>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <% } %>
             <% if (count > -1){ %>
             <h5>
-                Totaal: € <%=total.toFixed(2)%>, inclusief <%= totalBTWstep2.toFixed(2) %> euro btw(6%) en € 2.00 verzendkosten.
+                Totaal: €<%=total.toFixed(2)%>, inclusief €<%= totalBTWstep2.toFixed(2) %> BTW (9%) en €2.00 verzendkosten.
             </h5>
 
             <a href="/purchase/<%= currentUser._id %>" class="btn btn-primary">Nu afrekenen</a>

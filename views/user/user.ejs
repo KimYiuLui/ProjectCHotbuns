@@ -6,7 +6,7 @@
         <a class="nav-link active" data-toggle="tab" href="#home">Mijn profiel</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#menu1">Mijn Bestellingen</a>
+        <a class="nav-link" data-toggle="tab" href="#menu1">Mijn bestellingen</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#menu2">Mijn favorietenlijst</a>
@@ -86,9 +86,6 @@
                             <p><%= product.name %></h4>
                         </div>
                         <p><strong>€ <%=product.price %></strong></p>
-                        <p>
-                            <a href="/<%=product.category %>/<%= product._id %>" class="btn btn-info">Meer info</a>
-                        </p>
                     </div>
                 </div>
                 <% }); %>
