@@ -7,13 +7,6 @@ var Coupon = require("../models/coupon");
 var Ticket = require("../models/ticket")
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'hotbunsemail@gmail.com',
-        pass: 'Hotbuns123'
-    }
-});
 
 router.get("/help", function (req, res) {
     console.log("CURRENT USER IS " + req.user.username)
@@ -86,26 +79,6 @@ router.post("/helpdesk/updateTicket", function (req, res) {
                 console.log(error)
             }
             else {
-                if (req.body.admin == "yes") {
-                    // De email zelf.
-                    emailHtml = "<a> Beste " + fullaname + ", <br /> <br /> <a> <a> Bedankt dat u heeft gekozen voor HotBuns! <a> <br /> <br /> <a> Overzicht van de bestelling: <br /> " + withLayout + "<br /> <a> Wij hopen u snel terug te zien voor een volgende bestelling! <a> <br />  <br /> <a> Met vriendelijke groet, <br /><br /> HotBuns <a>"
-                    mailOptions = {
-                        from: 'hotbunsemail@gmail.com',
-                        to: userEmail,
-                        subject: 'HotBuns bestelling: ' + OrderNumber,
-                        html: emailHtml
-                    };
-
-                    // Stuurt de email + laat zien of het gelukt is.
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Email sent: ' + info.response);
-                        }
-                    });
-
-                };
                 res.redirect(req.get("referer"));
             }
             });
