@@ -9,8 +9,8 @@
     "\\views\\admin",
     "\\views\\helpdesk",
     "\\views\\overige",
-    "\\views\\purchases"
+    "\\views\\partials"
   ],
-  "SelectedNode": "\\views\\purchases\\purchase.ejs",
+  "SelectedNode": "\\views\\partials\\header.ejs",
   "PreviewInSolutionExplorer": false
 }
